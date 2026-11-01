@@ -19,8 +19,8 @@ android {
         applicationId = "id.jurkon.smsgateway"
         minSdk = 26
         targetSdk = 34
-        versionCode = 3
-        versionName = "1.2"
+        versionCode = 4
+        versionName = "1.3"
         buildConfigField("String", "SB_URL", "\"" + cfg("url") + "\"")
         buildConfigField("String", "SB_ANON", "\"" + cfg("key") + "\"")
     }

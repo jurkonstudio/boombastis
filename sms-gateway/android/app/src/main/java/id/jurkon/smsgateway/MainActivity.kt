@@ -51,6 +51,17 @@ class MainActivity : Activity() {
     private lateinit var tvBeat: TextView
     private lateinit var btnPerm: Button
     private lateinit var btnBat: Button
+    private lateinit var setupCard: LinearLayout
+    private lateinit var rowRestricted: LinearLayout
+    private lateinit var pairCard: LinearLayout
+    private lateinit var simCard: LinearLayout
+    private lateinit var advBox: LinearLayout
+    private lateinit var btnRePair: Button
+    private lateinit var startBtn: Button
+    private lateinit var stopBtn: Button
+    private lateinit var tvHelp: TextView
+    private lateinit var tipView: TextView
+    private var showPair = false
     private var simIds: List<Int> = listOf(-1)
 
     private val tick = object : Runnable {
@@ -140,7 +151,7 @@ class MainActivity : Activity() {
         return c
     }
 
-    private fun row(parent: LinearLayout, title: String, desc: String, action: Button, top: Int) {
+    private fun row(parent: LinearLayout, title: String, desc: String, action: Button, top: Int): LinearLayout {
         val r = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER_VERTICAL }
         val t = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         t.put(label(title, 15f, INK, true))
@@ -150,6 +161,7 @@ class MainActivity : Activity() {
             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
         ).apply { marginStart = dp(12) })
         parent.put(r, top)
+        return r
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -174,6 +186,12 @@ class MainActivity : Activity() {
             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
         ).apply { marginStart = dp(12) })
         col.put(head)
+        // tekan lama judul untuk membuka mode lanjutan (disembunyikan untuk pengguna awam)
+        head.setOnLongClickListener {
+            advBox.visibility = View.VISIBLE
+            Toast.makeText(this, "Mode lanjutan dibuka", Toast.LENGTH_SHORT).show()
+            true
+        }
 
         // Kartu status
         val sc = card(col, 20)
@@ -196,9 +214,12 @@ class MainActivity : Activity() {
         sc.put(stats, 16)
         tvBeat = label("", 12f, MUTED)
         sc.put(tvBeat, 12)
+        tvHelp = label("", 14f, INK)
+        sc.put(tvHelp, 12)
 
         // Siapkan HP
         val sp = card(col)
+        setupCard = sp
         sp.put(label("Siapkan HP", 16f, INK, true))
         btnPerm = chip("Atur") { requestPerms() }
         btnBat = chip("Atur") {
@@ -210,7 +231,7 @@ class MainActivity : Activity() {
         }
         row(sp, "Izin SMS", "Untuk kirim dan terima SMS", btnPerm, 12)
         row(sp, "Tetap berjalan", "Matikan penghematan baterai", btnBat, 14)
-        row(sp, "Setelan terbatas", "Perlu untuk aplikasi dari luar Play Store", chip("Buka") {
+        rowRestricted = row(sp, "Setelan terbatas", "Perlu untuk aplikasi dari luar Play Store", chip("Buka") {
             Toast.makeText(
                 this,
                 "Ketuk ⋮ di kanan atas, lalu pilih 'Izinkan setelan terbatas', baru izinkan SMS.",
@@ -230,6 +251,7 @@ class MainActivity : Activity() {
         if (Store.get(this, "pass").isNotEmpty()) etPass.hint = "Password tersimpan (kosongkan jika tidak diganti)"
 
         val pc = card(col)
+        pairCard = pc
         pc.put(label(if (Store.get(this, "mode") == "pair") "Pasangkan ulang HP ini" else "Pasangkan HP ini", 16f, INK, true))
         pc.put(label("Di panel Boombastis: Perangkat > Tambah perangkat, lalu masukkan kodenya di sini.", 13f, MUTED), 4)
         etCode = field("KODE 8 KARAKTER", InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS).apply {
@@ -240,26 +262,38 @@ class MainActivity : Activity() {
         }
         pc.put(etCode, 14)
         pc.put(btn("Pasangkan & Mulai") { pairAndStart() }, 12)
+        btnRePair = btn("Pasangkan ke akun lain", 1) { showPair = true; render() }
+        col.put(btnRePair, 12)
 
         // SIM
         val ic = card(col)
+        simCard = ic
         ic.put(label("SIM untuk mengirim", 16f, INK, true))
         spSim = Spinner(this)
         ic.put(spSim, 6)
 
-        col.put(btn("Berhenti", 2) { stopGateway() }, 16)
+        startBtn = btn("Mulai kirim SMS") { startGateway() }
+        stopBtn = btn("Hentikan layanan", 2) { stopGateway() }
+        startBtn.visibility = View.GONE
+        stopBtn.visibility = View.GONE
+        col.put(startBtn, 16)
+        col.put(stopBtn, 16)
 
         legacyBox = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         legacyBox.put(etUrl, 8); legacyBox.put(etAnon, 8); legacyBox.put(etEmail, 8); legacyBox.put(etPass, 8)
         legacyBox.put(btn("Simpan & Mulai (email)", 1) { saveAndStart() }, 8)
         legacyBox.visibility =
             if (Store.get(this, "email").isNotEmpty() && Store.get(this, "mode") != "pair") View.VISIBLE else View.GONE
-        col.put(btn("Mode lanjutan (email & password)", 1) {
+        advBox = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        advBox.put(btn("Mode lanjutan (email & password)", 1) {
             legacyBox.visibility = if (legacyBox.visibility == View.VISIBLE) View.GONE else View.VISIBLE
         }, 10)
-        col.put(legacyBox)
+        advBox.put(legacyBox)
+        advBox.visibility = if (legacyBox.visibility == View.VISIBLE) View.VISIBLE else View.GONE
+        col.put(advBox)
 
-        col.put(label("Samsung: matikan Auto Blocker sebelum memasang APK, dan masukkan aplikasi ini ke daftar 'Aplikasi yang tidak pernah tidur'.", 12f, MUTED), 16)
+        tipView = label("Samsung: matikan Auto Blocker sebelum memasang APK, dan masukkan aplikasi ini ke daftar 'Aplikasi yang tidak pernah tidur'.", 12f, MUTED)
+        col.put(tipView, 16)
 
         refreshSims()
     }
@@ -293,6 +327,7 @@ class MainActivity : Activity() {
             } catch (_: Exception) {}
         }
         simIds = ids
+        simCard.visibility = if (labels.size > 2) View.VISIBLE else View.GONE
         spSim.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, labels)
         val saved = Store.get(this, "sim").toIntOrNull() ?: -1
         spSim.setSelection(ids.indexOf(saved).coerceAtLeast(0))
@@ -345,6 +380,7 @@ class MainActivity : Activity() {
                 val name = Api(app).pair(code)
                 runOnUiThread {
                     etCode.setText("")
+                    showPair = false
                     Store.setEnabled(this, true)
                     Status.message = "Terpasang" + if (name.isNotEmpty()) ": $name" else ""
                     startForegroundService(Intent(this, GatewayService::class.java))
@@ -362,6 +398,16 @@ class MainActivity : Activity() {
                 }
             }
         }.start()
+    }
+
+    private fun startGateway() {
+        if (!hasPerm(Manifest.permission.SEND_SMS) || !hasPerm(Manifest.permission.RECEIVE_SMS)) {
+            Toast.makeText(this, "Izinkan SMS dulu, lalu tekan Mulai lagi", Toast.LENGTH_LONG).show()
+            requestPerms(); return
+        }
+        Store.setEnabled(this, true)
+        Status.message = "Memulai..."
+        startForegroundService(Intent(this, GatewayService::class.java))
     }
 
     private fun stopGateway() {
@@ -389,6 +435,28 @@ class MainActivity : Activity() {
         else SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date(Status.lastHeartbeat))
         tvBeat.text = "Terakhir sinkron: $hb"
         setChip(btnPerm, hasPerm(Manifest.permission.SEND_SMS) && hasPerm(Manifest.permission.RECEIVE_SMS))
-        setChip(btnBat, getSystemService(PowerManager::class.java).isIgnoringBatteryOptimizations(packageName))
+        val batOk = getSystemService(PowerManager::class.java).isIgnoringBatteryOptimizations(packageName)
+        setChip(btnBat, batOk)
+
+        // Tampilan disederhanakan: tampilkan hanya yang masih perlu dikerjakan
+        val permOk = hasPerm(Manifest.permission.SEND_SMS) && hasPerm(Manifest.permission.RECEIVE_SMS)
+        val paired = Store.get(this, "mode") == "pair" || Store.get(this, "email").isNotEmpty()
+        val online = m.startsWith("Online")
+        val enabled = Store.enabled(this)
+        setupCard.visibility = if (permOk && batOk) View.GONE else View.VISIBLE
+        rowRestricted.visibility = if (permOk) View.GONE else View.VISIBLE
+        pairCard.visibility = if (!paired || showPair) View.VISIBLE else View.GONE
+        btnRePair.visibility = if (paired && !showPair) View.VISIBLE else View.GONE
+        startBtn.visibility = if (paired && !enabled) View.VISIBLE else View.GONE
+        stopBtn.visibility = if (paired && enabled) View.VISIBLE else View.GONE
+        tipView.visibility = if (online) View.GONE else View.VISIBLE
+        tvHelp.text = when {
+            !paired -> "Langkah berikutnya: di panel Boombastis buka menu Perangkat > Tambah perangkat, lalu masukkan kode 8 karakter di bawah."
+            !permOk -> "Izinkan SMS dulu lewat kartu Siapkan HP di bawah."
+            !enabled -> "Layanan berhenti. Tekan Mulai kirim SMS untuk mengaktifkan lagi."
+            online -> "HP siap. Biarkan aplikasi ini berjalan, lalu kirim SMS dari panel Boombastis."
+            st == "Bermasalah" -> "Ada masalah. Cek internet dan izin SMS, atau pasangkan ulang dengan kode baru dari panel."
+            else -> "Sedang menyambungkan, mohon tunggu sebentar."
+        }
     }
 }
