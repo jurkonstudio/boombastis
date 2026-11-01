@@ -1,0 +1,391 @@
+# -*- coding: utf-8 -*-
+# Terjemahan landing page Boombastis. Edit di sini, lalu jalankan: python3 tools/build_i18n.py
+# Urutan = urutan di menu bahasa. Indonesia (id) adalah halaman utama di "/".
+
+ORDER = ["id", "en", "zh", "hi", "es", "ar", "fr", "pt", "ru"]
+
+NAMES = {
+    "id": ("Bahasa Indonesia", "id_ID", "ltr"),
+    "en": ("English", "en_US", "ltr"),
+    "zh": ("中文", "zh_CN", "ltr"),
+    "hi": ("हिन्दी", "hi_IN", "ltr"),
+    "es": ("Español", "es_ES", "ltr"),
+    "ar": ("العربية", "ar_AR", "rtl"),
+    "fr": ("Français", "fr_FR", "ltr"),
+    "pt": ("Português", "pt_BR", "ltr"),
+    "ru": ("Русский", "ru_RU", "ltr"),
+}
+
+# html lang attribute / hreflang value
+HREFLANG = {"id": "id", "en": "en", "zh": "zh-Hans", "hi": "hi", "es": "es",
+            "ar": "ar", "fr": "fr", "pt": "pt-BR", "ru": "ru"}
+
+T = {}
+
+T["en"] = dict(
+    title="Boombastis – SMS Gateway Using Your Own Android Phone and SIM",
+    desc="Send and receive SMS from your browser or API through your own Android phone and SIM. Auto-replies, offline-safe queue, plans from Rp29,000.",
+    nav=["Features", "How it works", "Pricing", "FAQ"], login="Log in / Sign up",
+    pill="SMS gateway · your own phone and SIM",
+    h1=("SMS gateway from ", "your own phone and SIM"),
+    lead="Sign up, install the app on an Android phone, then send and receive SMS from your browser. Auto-replies and device monitoring included.",
+    cta=("Sign up now →", "See pricing"),
+    trust=["Offline-safe queue", "Auto-replies", "Your data stays yours"],
+    feat=("Features", "Everything you need to manage SMS", [
+        ("Send from the panel", "Write a message in your browser; it is queued and sent through the SIM in your gateway phone, with clear status at every stage."),
+        ("Real-time inbox", "SMS received on the phone appear instantly in the panel with sender and time."),
+        ("Auto-reply", "Set keyword-based rules, with a per-sender cooldown and a daily limit."),
+        ("Device monitoring", "See whether your gateway phone is online through a heartbeat every minute."),
+        ("Survives outages", "Results and incoming SMS are stored locally and re-sent when the internet returns, with no duplicates."),
+        ("Your data, your control", "Each customer's data is separate and readable only by its owner. Admins cannot open SMS content."),
+    ]),
+    how=("How it works", "Three steps, no server of your own", [
+        ("Write in the panel", "Your message enters the outbox queue on Supabase as pending."),
+        ("The phone fetches and sends", "The Android app checks the queue regularly, sends via the SIM, and reports the result."),
+        ("Track the result", "Sent, failed and reply statuses appear in real time in the panel."),
+    ]),
+    price=("Pricing", "Pick a plan that fits", [
+        "1 gateway phone, for small businesses", "2 gateway phones, larger quota", "5 gateway phones for high volume"],
+        ("{n} SMS", "{n} days active", "{n} gateway phone(s)", "Max. {n} SMS/day"), "Choose plan",
+        "Prices are in Indonesian rupiah (IDR) and cover the panel, quota and device monitoring. SMS still use the airtime or SMS bundle of the SIM in your gateway phone. Payment is by bank transfer."),
+    apk=("Android app coming soon", "Download the Android app"),
+    sec=("Security", "Closed by design", [
+        ("Separate data per account.", "Each customer only sees their own messages."),
+        ("Database-level access control.", "Row Level Security is on; devices can only call permitted functions."),
+        ("No secret keys in code.", "The panel uses the public anon key, never the service role."),
+        ("Auto-reply limits.", "A per-sender cooldown and a daily cap prevent accidental mass sending."),
+    ]),
+    faq=("Frequently asked questions", [
+        ("What is Boombastis?", "Boombastis is an SMS gateway service. You install an Android app on your own phone, then send and receive SMS from your browser or through an API. Messages leave from the SIM in your phone."),
+        ("Do SMS use my airtime?", "Yes. SMS are sent through the SIM in your gateway phone, so they use that SIM's credit or SMS bundle. The plan fee covers the panel, quota, queue and device monitoring."),
+        ("What phone do I need?", "An Android phone with an active SIM and internet connection. The app is downloaded as an APK from this site, not from Google Play."),
+        ("Can I send SMS from my own website or app?", "Yes. Create an API key in the panel and send HTTPS requests from your server. SMS still go out through your gateway phone and count against your plan quota."),
+        ("Can the admin read my SMS?", "No. Each account's data is separate and readable only by its owner. Admins only see summaries such as the number of SMS sent."),
+    ]),
+    fin=("Ready to manage your SMS?", "Sign up, choose a plan, then install the app on your gateway phone.", "Log in / Sign up →"),
+    sticky="Sign up & start now →",
+    foot=("SMS Gateway Mandiri", "Other projects", "Terms", "Privacy", "The Terms and Privacy pages are in Indonesian."),
+    skip="Skip to content",
+)
+
+T["zh"] = dict(
+    title="Boombastis – 用自己的安卓手机和SIM卡搭建短信网关",
+    desc="通过自己的安卓手机和SIM卡，在浏览器或API中收发短信。自动回复、离线安全队列，套餐低至 Rp29.000。",
+    nav=["功能", "工作原理", "价格", "常见问题"], login="登录 / 注册",
+    pill="短信网关 · 使用自己的手机和SIM卡",
+    h1=("短信网关，", "用你自己的手机和SIM卡"),
+    lead="注册后在安卓手机上安装应用，即可在浏览器中收发短信。已包含自动回复和设备监控。",
+    cta=("立即注册 →", "查看价格"),
+    trust=["离线安全队列", "自动回复", "数据归你所有"],
+    feat=("功能", "管理短信所需的一切", [
+        ("在面板中发送", "在浏览器中编写消息，系统自动排队并通过网关手机的SIM卡发送，每个阶段状态清晰。"),
+        ("实时收件箱", "手机收到的短信会立即显示在面板中，包含发件人和接收时间。"),
+        ("自动回复", "按关键词设置规则，并有每位发件人的间隔和每日上限。"),
+        ("设备监控", "通过每分钟一次的心跳查看网关手机是否在线。"),
+        ("断网也不怕", "发送结果和收到的短信先保存在本地，网络恢复后重新上传，不会重复。"),
+        ("数据由你掌控", "每位客户的数据相互隔离，只有所有者可以查看。管理员无法查看短信内容。"),
+    ]),
+    how=("工作原理", "三步完成，无需自建服务器", [
+        ("在面板中编写", "消息以“待发送”状态进入 Supabase 的发件队列。"),
+        ("手机获取并发送", "安卓应用定期检查队列，通过SIM卡发送并回报结果。"),
+        ("跟踪结果", "已发送、失败和回复状态会实时显示在面板中。"),
+    ]),
+    price=("价格", "选择适合你的套餐", [
+        "1台网关手机，适合小型业务", "2台网关手机，额度更大", "5台网关手机，适合大流量"],
+        ("{n} 条短信", "有效期 {n} 天", "{n} 台网关手机", "每天最多 {n} 条短信"), "选择套餐",
+        "价格以印尼盾（IDR）计，包含面板、额度和设备监控。短信仍使用网关手机SIM卡的话费或短信套餐。付款方式为银行转账。"),
+    apk=("安卓应用即将上线", "下载安卓应用"),
+    sec=("安全", "从设计之初就是封闭的", [
+        ("账户间数据隔离。", "每位客户只能看到自己的消息。"),
+        ("数据库级访问控制。", "已启用行级安全（RLS），设备只能调用被允许的函数。"),
+        ("代码中没有密钥。", "面板使用公开的 anon key，而不是 service role。"),
+        ("自动回复限制。", "发件人间隔和每日上限可防止意外群发。"),
+    ]),
+    faq=("常见问题", [
+        ("什么是 Boombastis？", "Boombastis 是一项短信网关服务。你在自己的手机上安装安卓应用，然后通过浏览器或API收发短信，短信从你手机的SIM卡发出。"),
+        ("发短信会消耗话费吗？", "会。短信通过网关手机的SIM卡发送，因此会使用该SIM卡的话费或短信套餐。套餐费用用于面板、额度、队列和设备监控。"),
+        ("需要什么样的手机？", "需要带有可用SIM卡并能上网的安卓手机。应用以APK形式从本站下载，而非来自 Google Play。"),
+        ("可以从我自己的网站或应用发送短信吗？", "可以。在面板中创建API密钥，然后从你的服务器发送HTTPS请求。短信仍通过网关手机发出，并计入套餐额度。"),
+        ("管理员能看到我的短信吗？", "不能。每个账户的数据相互隔离，只有所有者可以读取。管理员只能看到已发送数量等汇总信息。"),
+    ]),
+    fin=("准备好管理你的短信了吗？", "注册、选择套餐，然后在网关手机上安装应用。", "登录 / 注册 →"),
+    sticky="注册并立即开始 →",
+    foot=("短信网关 Mandiri", "其他项目", "服务条款", "隐私政策", "服务条款和隐私政策页面为印尼语。"),
+    skip="跳到内容",
+)
+
+T["hi"] = dict(
+    title="Boombastis – अपने Android फ़ोन और SIM से SMS गेटवे",
+    desc="अपने Android फ़ोन और SIM के ज़रिए ब्राउज़र या API से SMS भेजें और प्राप्त करें। ऑटो-रिप्लाई, ऑफ़लाइन-सुरक्षित क्यू, Rp29.000 से प्लान।",
+    nav=["सुविधाएँ", "कैसे काम करता है", "कीमत", "सवाल-जवाब"], login="लॉग इन / साइन अप",
+    pill="SMS गेटवे · अपना फ़ोन और SIM",
+    h1=("SMS गेटवे, ", "आपके अपने फ़ोन और SIM से"),
+    lead="साइन अप करें, Android फ़ोन पर ऐप इंस्टॉल करें, फिर ब्राउज़र से SMS भेजें और प्राप्त करें। ऑटो-रिप्लाई और डिवाइस मॉनिटरिंग शामिल हैं।",
+    cta=("अभी साइन अप करें →", "कीमत देखें"),
+    trust=["ऑफ़लाइन-सुरक्षित क्यू", "ऑटो-रिप्लाई", "डेटा आपका अपना"],
+    feat=("सुविधाएँ", "SMS संभालने के लिए ज़रूरी सब कुछ", [
+        ("पैनल से भेजें", "ब्राउज़र में संदेश लिखें; वह क्यू में जाकर गेटवे फ़ोन की SIM से भेजा जाता है, हर चरण की स्थिति साफ़ दिखती है।"),
+        ("रियल-टाइम इनबॉक्स", "फ़ोन पर आए SMS तुरंत पैनल में भेजने वाले और समय के साथ दिखते हैं।"),
+        ("ऑटो-रिप्लाई", "कीवर्ड आधारित नियम बनाएँ, हर भेजने वाले के लिए अंतराल और दैनिक सीमा के साथ।"),
+        ("डिवाइस मॉनिटरिंग", "हर मिनट के हार्टबीट से देखें कि गेटवे फ़ोन ऑनलाइन है या नहीं।"),
+        ("नेटवर्क टूटने पर भी सुरक्षित", "नतीजे और आए हुए SMS पहले फ़ोन में सेव होते हैं और इंटरनेट लौटने पर बिना दोहराव के दोबारा भेजे जाते हैं।"),
+        ("आपका डेटा, आपका नियंत्रण", "हर ग्राहक का डेटा अलग रहता है और सिर्फ़ मालिक पढ़ सकता है। एडमिन SMS की सामग्री नहीं खोल सकते।"),
+    ]),
+    how=("कैसे काम करता है", "तीन चरण, अपना सर्वर नहीं चाहिए", [
+        ("पैनल में लिखें", "संदेश Supabase की आउटबॉक्स क्यू में 'पेंडिंग' स्थिति में जाता है।"),
+        ("फ़ोन उठाकर भेजता है", "Android ऐप समय-समय पर क्यू जाँचता है, SIM से भेजता है और नतीजा बताता है।"),
+        ("नतीजा देखें", "भेजे गए, विफल और जवाब वाले SMS की स्थिति पैनल में रियल-टाइम दिखती है।"),
+    ]),
+    price=("कीमत", "अपनी ज़रूरत का प्लान चुनें", [
+        "1 गेटवे फ़ोन, छोटे कारोबार के लिए", "2 गेटवे फ़ोन, बड़ा कोटा", "5 गेटवे फ़ोन, ज़्यादा वॉल्यूम के लिए"],
+        ("{n} SMS", "{n} दिन सक्रिय", "{n} गेटवे फ़ोन", "अधिकतम {n} SMS/दिन"), "प्लान चुनें",
+        "कीमतें इंडोनेशियाई रुपये (IDR) में हैं और पैनल, कोटा व डिवाइस मॉनिटरिंग के लिए हैं। SMS गेटवे फ़ोन की SIM का बैलेंस या SMS बंडल ही इस्तेमाल करते हैं। भुगतान बैंक ट्रांसफ़र से होता है।"),
+    apk=("Android ऐप जल्द आ रहा है", "Android ऐप डाउनलोड करें"),
+    sec=("सुरक्षा", "शुरू से बंद डिज़ाइन", [
+        ("हर अकाउंट का डेटा अलग।", "हर ग्राहक सिर्फ़ अपने संदेश देखता है।"),
+        ("डेटाबेस स्तर पर एक्सेस कंट्रोल।", "Row Level Security चालू है; डिवाइस केवल अनुमत फ़ंक्शन चला सकते हैं।"),
+        ("कोड में कोई गुप्त कुंजी नहीं।", "पैनल सार्वजनिक anon key इस्तेमाल करता है, service role नहीं।"),
+        ("ऑटो-रिप्लाई की सीमाएँ।", "हर भेजने वाले के लिए अंतराल और दैनिक सीमा गलती से बल्क भेजने से रोकती है।"),
+    ]),
+    faq=("अक्सर पूछे जाने वाले सवाल", [
+        ("Boombastis क्या है?", "Boombastis एक SMS गेटवे सेवा है। आप अपने फ़ोन पर Android ऐप इंस्टॉल करते हैं, फिर ब्राउज़र या API से SMS भेजते-प्राप्त करते हैं। संदेश आपके फ़ोन की SIM से जाते हैं।"),
+        ("क्या SMS में बैलेंस खर्च होता है?", "हाँ। SMS गेटवे फ़ोन की SIM से जाते हैं, इसलिए उसी SIM का बैलेंस या SMS बंडल खर्च होता है। प्लान की फ़ीस पैनल, कोटा, क्यू और डिवाइस मॉनिटरिंग के लिए है।"),
+        ("कैसा फ़ोन चाहिए?", "सक्रिय SIM और इंटरनेट वाला Android फ़ोन। ऐप इसी साइट से APK के रूप में डाउनलोड होता है, Google Play से नहीं।"),
+        ("क्या मैं अपनी वेबसाइट या ऐप से SMS भेज सकता/सकती हूँ?", "हाँ। पैनल में API key बनाएँ और अपने सर्वर से HTTPS अनुरोध भेजें। SMS फिर भी गेटवे फ़ोन से जाते हैं और प्लान के कोटे में गिने जाते हैं।"),
+        ("क्या एडमिन मेरे SMS पढ़ सकता है?", "नहीं। हर अकाउंट का डेटा अलग है और सिर्फ़ मालिक पढ़ सकता है। एडमिन को भेजे गए SMS की संख्या जैसा सारांश ही दिखता है।"),
+    ]),
+    fin=("SMS संभालने के लिए तैयार?", "साइन अप करें, प्लान चुनें, फिर गेटवे फ़ोन पर ऐप इंस्टॉल करें।", "लॉग इन / साइन अप →"),
+    sticky="साइन अप करें और शुरू करें →",
+    foot=("SMS गेटवे Mandiri", "अन्य प्रोजेक्ट", "सेवा की शर्तें", "गोपनीयता नीति", "शर्तों और गोपनीयता नीति के पृष्ठ इंडोनेशियाई भाषा में हैं।"),
+    skip="सामग्री पर जाएँ",
+)
+
+T["es"] = dict(
+    title="Boombastis – Pasarela SMS con tu propio teléfono Android y SIM",
+    desc="Envía y recibe SMS desde el navegador o la API con tu propio teléfono Android y SIM. Respuestas automáticas, cola segura sin conexión, planes desde Rp29.000.",
+    nav=["Funciones", "Cómo funciona", "Precios", "Preguntas"], login="Iniciar sesión / Registrarse",
+    pill="Pasarela SMS · tu propio teléfono y SIM",
+    h1=("Pasarela SMS con ", "tu propio teléfono y SIM"),
+    lead="Regístrate, instala la app en un teléfono Android y envía y recibe SMS desde el navegador. Incluye respuestas automáticas y monitoreo de dispositivos.",
+    cta=("Regístrate ahora →", "Ver precios"),
+    trust=["Cola segura sin conexión", "Respuestas automáticas", "Tus datos son tuyos"],
+    feat=("Funciones", "Todo lo necesario para gestionar SMS", [
+        ("Envía desde el panel", "Escribe el mensaje en el navegador; se pone en cola y sale por la SIM de tu teléfono pasarela, con estado claro en cada etapa."),
+        ("Bandeja en tiempo real", "Los SMS recibidos en el teléfono aparecen al instante en el panel, con remitente y hora."),
+        ("Respuesta automática", "Define reglas por palabra clave, con pausa por remitente y límite diario."),
+        ("Monitoreo de dispositivos", "Comprueba si tu teléfono pasarela está en línea con un latido cada minuto."),
+        ("Resiste cortes de red", "Los resultados y los SMS recibidos se guardan localmente y se reenvían al volver internet, sin duplicados."),
+        ("Tus datos, tu control", "Los datos de cada cliente están separados y solo los lee su propietario. Los administradores no pueden abrir el contenido de los SMS."),
+    ]),
+    how=("Cómo funciona", "Tres pasos, sin servidor propio", [
+        ("Escribe en el panel", "El mensaje entra en la cola de salida de Supabase como pendiente."),
+        ("El teléfono recoge y envía", "La app Android revisa la cola periódicamente, envía por la SIM e informa del resultado."),
+        ("Sigue el resultado", "Los estados enviado, fallido y respuesta aparecen en tiempo real en el panel."),
+    ]),
+    price=("Precios", "Elige el plan que necesitas", [
+        "1 teléfono pasarela, para pequeños negocios", "2 teléfonos pasarela, más cuota", "5 teléfonos pasarela para alto volumen"],
+        ("{n} SMS", "{n} días activo", "{n} teléfono(s) pasarela", "Máx. {n} SMS/día"), "Elegir plan",
+        "Los precios están en rupias indonesias (IDR) e incluyen panel, cuota y monitoreo de dispositivos. Los SMS siguen usando el saldo o el paquete de SMS de la SIM de tu teléfono pasarela. El pago es por transferencia bancaria."),
+    apk=("App Android próximamente", "Descargar la app Android"),
+    sec=("Seguridad", "Cerrado por diseño", [
+        ("Datos separados por cuenta.", "Cada cliente solo ve sus propios mensajes."),
+        ("Control de acceso en la base de datos.", "Row Level Security está activo; los dispositivos solo llaman a funciones permitidas."),
+        ("Sin claves secretas en el código.", "El panel usa la clave anon pública, nunca la service role."),
+        ("Límites de respuesta automática.", "La pausa por remitente y el tope diario evitan envíos masivos accidentales."),
+    ]),
+    faq=("Preguntas frecuentes", [
+        ("¿Qué es Boombastis?", "Boombastis es un servicio de pasarela SMS. Instalas una app Android en tu propio teléfono y envías y recibes SMS desde el navegador o por API. Los mensajes salen por la SIM de tu teléfono."),
+        ("¿Los SMS consumen mi saldo?", "Sí. Los SMS se envían por la SIM de tu teléfono pasarela, así que usan el saldo o el paquete de SMS de esa SIM. El plan cubre el panel, la cuota, la cola y el monitoreo."),
+        ("¿Qué teléfono necesito?", "Un teléfono Android con SIM activa y conexión a internet. La app se descarga como APK desde este sitio, no desde Google Play."),
+        ("¿Puedo enviar SMS desde mi propio sitio web o app?", "Sí. Crea una clave API en el panel y envía solicitudes HTTPS desde tu servidor. Los SMS salen igualmente por tu teléfono pasarela y descuentan de la cuota del plan."),
+        ("¿Puede el administrador leer mis SMS?", "No. Los datos de cada cuenta están separados y solo los lee su propietario. Los administradores solo ven resúmenes, como el número de SMS enviados."),
+    ]),
+    fin=("¿Listo para gestionar tus SMS?", "Regístrate, elige un plan e instala la app en tu teléfono pasarela.", "Iniciar sesión / Registrarse →"),
+    sticky="Regístrate y empieza →",
+    foot=("Pasarela SMS Mandiri", "Otros proyectos", "Términos", "Privacidad", "Las páginas de términos y privacidad están en indonesio."),
+    skip="Saltar al contenido",
+)
+
+T["ar"] = dict(
+    title="Boombastis – بوابة رسائل SMS عبر هاتف أندرويد وشريحة SIM الخاصة بك",
+    desc="أرسل واستقبل رسائل SMS من المتصفح أو واجهة API عبر هاتف أندرويد وشريحة SIM الخاصة بك. ردود تلقائية، وقائمة انتظار آمنة دون اتصال، وخطط تبدأ من Rp29.000.",
+    nav=["المزايا", "كيف يعمل", "الأسعار", "الأسئلة الشائعة"], login="تسجيل الدخول / إنشاء حساب",
+    pill="بوابة SMS · هاتفك وشريحتك",
+    h1=("بوابة SMS عبر ", "هاتفك وشريحة SIM الخاصة بك"),
+    lead="أنشئ حسابًا، وثبّت التطبيق على هاتف أندرويد، ثم أرسل واستقبل الرسائل من المتصفح. الردود التلقائية ومراقبة الجهاز مشمولة.",
+    cta=("أنشئ حسابك الآن ←", "عرض الأسعار"),
+    trust=["قائمة انتظار آمنة دون اتصال", "ردود تلقائية", "بياناتك ملكك"],
+    feat=("المزايا", "كل ما تحتاجه لإدارة الرسائل", [
+        ("أرسل من اللوحة", "اكتب الرسالة في المتصفح لتدخل قائمة الانتظار وتُرسل عبر شريحة هاتف البوابة، مع حالة واضحة في كل مرحلة."),
+        ("صندوق وارد فوري", "تظهر الرسائل الواردة إلى الهاتف فورًا في اللوحة مع المرسل والوقت."),
+        ("رد تلقائي", "حدّد قواعد بالكلمات المفتاحية مع فاصل زمني لكل مرسل وحد يومي."),
+        ("مراقبة الأجهزة", "اعرف إن كان هاتف البوابة متصلًا عبر نبضة كل دقيقة."),
+        ("يتحمل انقطاع الشبكة", "تُحفظ النتائج والرسائل الواردة محليًا وتُعاد عند عودة الإنترنت دون تكرار."),
+        ("بياناتك تحت سيطرتك", "بيانات كل عميل منفصلة ولا يقرأها إلا صاحبها. لا يستطيع المشرفون فتح محتوى الرسائل."),
+    ]),
+    how=("كيف يعمل", "ثلاث خطوات دون خادم خاص", [
+        ("اكتب في اللوحة", "تدخل الرسالة قائمة الصادر في Supabase بحالة قيد الانتظار."),
+        ("الهاتف يجلب ويرسل", "يفحص تطبيق أندرويد القائمة دوريًا ويرسل عبر الشريحة ثم يبلّغ بالنتيجة."),
+        ("تابع النتيجة", "تظهر حالات المرسَل والفاشل والردود فورًا في اللوحة."),
+    ]),
+    price=("الأسعار", "اختر الخطة المناسبة", [
+        "هاتف بوابة واحد، للأعمال الصغيرة", "هاتفا بوابة، حصة أكبر", "5 هواتف بوابة للأحجام الكبيرة"],
+        ("{n} رسالة SMS", "نشطة لمدة {n} يومًا", "{n} هاتف بوابة", "حتى {n} رسالة يوميًا"), "اختر الخطة",
+        "الأسعار بالروبية الإندونيسية (IDR) وتشمل اللوحة والحصة ومراقبة الأجهزة. تظل الرسائل تستهلك رصيد شريحة هاتف البوابة أو باقة الرسائل فيها. الدفع بالتحويل المصرفي."),
+    apk=("تطبيق أندرويد قريبًا", "حمّل تطبيق أندرويد"),
+    sec=("الأمان", "مغلق بالتصميم", [
+        ("بيانات منفصلة لكل حساب.", "يرى كل عميل رسائله فقط."),
+        ("التحكم بالوصول في قاعدة البيانات.", "أمان مستوى الصف (RLS) مفعّل، والأجهزة تستدعي الدوال المسموحة فقط."),
+        ("لا مفاتيح سرية في الكود.", "تستخدم اللوحة مفتاح anon العام وليس service role."),
+        ("حدود الرد التلقائي.", "الفاصل لكل مرسل والحد اليومي يمنعان الإرسال الجماعي غير المقصود."),
+    ]),
+    faq=("الأسئلة الشائعة", [
+        ("ما هو Boombastis؟", "Boombastis خدمة بوابة رسائل SMS. تثبّت تطبيق أندرويد على هاتفك ثم ترسل وتستقبل الرسائل من المتصفح أو عبر API، وتخرج الرسائل من شريحة هاتفك."),
+        ("هل تستهلك الرسائل رصيدي؟", "نعم. تُرسل الرسائل عبر شريحة هاتف البوابة فتستهلك رصيد تلك الشريحة أو باقة الرسائل. تغطي رسوم الخطة اللوحة والحصة والقائمة ومراقبة الأجهزة."),
+        ("ما الهاتف المطلوب؟", "هاتف أندرويد بشريحة فعالة واتصال بالإنترنت. يُنزَّل التطبيق بصيغة APK من هذا الموقع وليس من Google Play."),
+        ("هل يمكنني الإرسال من موقعي أو تطبيقي؟", "نعم. أنشئ مفتاح API في اللوحة وأرسل طلبات HTTPS من خادمك. تظل الرسائل تخرج عبر هاتف البوابة وتُحسب من حصة الخطة."),
+        ("هل يستطيع المشرف قراءة رسائلي؟", "لا. بيانات كل حساب منفصلة ولا يقرأها إلا صاحبها. يرى المشرف ملخصات فقط مثل عدد الرسائل المرسلة."),
+    ]),
+    fin=("هل أنت جاهز لإدارة رسائلك؟", "أنشئ حسابًا واختر خطة ثم ثبّت التطبيق على هاتف البوابة.", "تسجيل الدخول / إنشاء حساب ←"),
+    sticky="أنشئ حسابك وابدأ ←",
+    foot=("بوابة SMS Mandiri", "مشاريع أخرى", "الشروط", "الخصوصية", "صفحتا الشروط والخصوصية باللغة الإندونيسية."),
+    skip="انتقل إلى المحتوى",
+)
+
+T["fr"] = dict(
+    title="Boombastis – Passerelle SMS avec votre propre téléphone Android et SIM",
+    desc="Envoyez et recevez des SMS depuis le navigateur ou l'API via votre propre téléphone Android et SIM. Réponses automatiques, file d'attente sûre hors ligne, forfaits dès Rp29.000.",
+    nav=["Fonctionnalités", "Fonctionnement", "Tarifs", "FAQ"], login="Connexion / Inscription",
+    pill="Passerelle SMS · votre propre téléphone et SIM",
+    h1=("Passerelle SMS avec ", "votre propre téléphone et SIM"),
+    lead="Inscrivez-vous, installez l'appli sur un téléphone Android, puis envoyez et recevez des SMS depuis le navigateur. Réponses automatiques et suivi des appareils inclus.",
+    cta=("S'inscrire maintenant →", "Voir les tarifs"),
+    trust=["File d'attente sûre hors ligne", "Réponses automatiques", "Vos données restent à vous"],
+    feat=("Fonctionnalités", "Tout pour gérer vos SMS", [
+        ("Envoi depuis le panneau", "Rédigez dans le navigateur ; le message est mis en file et envoyé via la SIM de votre téléphone passerelle, avec un statut clair à chaque étape."),
+        ("Boîte de réception en temps réel", "Les SMS reçus sur le téléphone apparaissent aussitôt dans le panneau, avec expéditeur et heure."),
+        ("Réponse automatique", "Définissez des règles par mot-clé, avec délai par expéditeur et plafond quotidien."),
+        ("Suivi des appareils", "Sachez si votre téléphone passerelle est en ligne grâce à un signal de vie chaque minute."),
+        ("Résiste aux coupures", "Les résultats et SMS reçus sont stockés localement puis renvoyés au retour d'internet, sans doublon."),
+        ("Vos données, votre contrôle", "Les données de chaque client sont séparées et lisibles par leur seul propriétaire. Les administrateurs ne peuvent pas ouvrir le contenu des SMS."),
+    ]),
+    how=("Fonctionnement", "Trois étapes, sans serveur à gérer", [
+        ("Écrivez dans le panneau", "Le message entre dans la file d'envoi Supabase avec le statut en attente."),
+        ("Le téléphone récupère et envoie", "L'appli Android consulte régulièrement la file, envoie via la SIM et rapporte le résultat."),
+        ("Suivez le résultat", "Les statuts envoyé, échec et réponse s'affichent en temps réel dans le panneau."),
+    ]),
+    price=("Tarifs", "Choisissez le forfait adapté", [
+        "1 téléphone passerelle, pour les petites entreprises", "2 téléphones passerelle, quota plus large", "5 téléphones passerelle pour les gros volumes"],
+        ("{n} SMS", "actif {n} jours", "{n} téléphone(s) passerelle", "Max. {n} SMS/jour"), "Choisir",
+        "Les prix sont en roupies indonésiennes (IDR) et couvrent le panneau, le quota et le suivi des appareils. Les SMS utilisent toujours le crédit ou le forfait SMS de la SIM du téléphone passerelle. Le paiement se fait par virement bancaire."),
+    apk=("Appli Android bientôt disponible", "Télécharger l'appli Android"),
+    sec=("Sécurité", "Fermé dès la conception", [
+        ("Données séparées par compte.", "Chaque client ne voit que ses propres messages."),
+        ("Contrôle d'accès dans la base.", "Le Row Level Security est actif ; les appareils n'appellent que les fonctions autorisées."),
+        ("Aucune clé secrète dans le code.", "Le panneau utilise la clé anon publique, jamais la service role."),
+        ("Limites de réponse automatique.", "Le délai par expéditeur et le plafond quotidien évitent les envois massifs accidentels."),
+    ]),
+    faq=("Questions fréquentes", [
+        ("Qu'est-ce que Boombastis ?", "Boombastis est un service de passerelle SMS. Vous installez une appli Android sur votre téléphone, puis envoyez et recevez des SMS depuis le navigateur ou par API. Les messages partent de la SIM de votre téléphone."),
+        ("Les SMS utilisent-ils mon crédit ?", "Oui. Les SMS partent de la SIM de votre téléphone passerelle et consomment donc son crédit ou son forfait SMS. Le prix du forfait couvre le panneau, le quota, la file et le suivi."),
+        ("Quel téléphone faut-il ?", "Un téléphone Android avec SIM active et connexion internet. L'appli se télécharge en APK depuis ce site, pas depuis Google Play."),
+        ("Puis-je envoyer des SMS depuis mon site ou mon appli ?", "Oui. Créez une clé API dans le panneau et envoyez des requêtes HTTPS depuis votre serveur. Les SMS partent toujours via votre téléphone passerelle et comptent dans le quota."),
+        ("L'administrateur peut-il lire mes SMS ?", "Non. Les données de chaque compte sont séparées et lisibles par leur seul propriétaire. L'administrateur ne voit que des résumés, comme le nombre de SMS envoyés."),
+    ]),
+    fin=("Prêt à gérer vos SMS ?", "Inscrivez-vous, choisissez un forfait, puis installez l'appli sur votre téléphone passerelle.", "Connexion / Inscription →"),
+    sticky="S'inscrire et commencer →",
+    foot=("Passerelle SMS Mandiri", "Autres projets", "Conditions", "Confidentialité", "Les pages Conditions et Confidentialité sont en indonésien."),
+    skip="Aller au contenu",
+)
+
+T["pt"] = dict(
+    title="Boombastis – Gateway de SMS com seu próprio celular Android e chip",
+    desc="Envie e receba SMS pelo navegador ou API usando seu próprio celular Android e chip. Respostas automáticas, fila segura offline, planos a partir de Rp29.000.",
+    nav=["Recursos", "Como funciona", "Preços", "Perguntas"], login="Entrar / Cadastrar",
+    pill="Gateway de SMS · seu próprio celular e chip",
+    h1=("Gateway de SMS com ", "seu próprio celular e chip"),
+    lead="Cadastre-se, instale o app em um celular Android e envie e receba SMS pelo navegador. Respostas automáticas e monitoramento de dispositivos incluídos.",
+    cta=("Cadastre-se agora →", "Ver preços"),
+    trust=["Fila segura offline", "Respostas automáticas", "Seus dados são seus"],
+    feat=("Recursos", "Tudo para gerenciar seus SMS", [
+        ("Envie pelo painel", "Escreva a mensagem no navegador; ela entra na fila e sai pelo chip do seu celular gateway, com status claro em cada etapa."),
+        ("Caixa de entrada em tempo real", "Os SMS recebidos no celular aparecem na hora no painel, com remetente e horário."),
+        ("Resposta automática", "Crie regras por palavra-chave, com intervalo por remetente e limite diário."),
+        ("Monitoramento de dispositivos", "Veja se o celular gateway está online por um sinal de vida a cada minuto."),
+        ("Resiste a quedas de rede", "Resultados e SMS recebidos ficam salvos localmente e são reenviados quando a internet volta, sem duplicidade."),
+        ("Seus dados, seu controle", "Os dados de cada cliente são separados e só o dono pode lê-los. Administradores não conseguem abrir o conteúdo dos SMS."),
+    ]),
+    how=("Como funciona", "Três passos, sem servidor próprio", [
+        ("Escreva no painel", "A mensagem entra na fila de saída do Supabase como pendente."),
+        ("O celular busca e envia", "O app Android consulta a fila periodicamente, envia pelo chip e informa o resultado."),
+        ("Acompanhe o resultado", "Os status enviado, falha e resposta aparecem em tempo real no painel."),
+    ]),
+    price=("Preços", "Escolha o plano ideal", [
+        "1 celular gateway, para pequenos negócios", "2 celulares gateway, cota maior", "5 celulares gateway para alto volume"],
+        ("{n} SMS", "{n} dias ativo", "{n} celular(es) gateway", "Máx. {n} SMS/dia"), "Escolher plano",
+        "Os preços são em rupias indonésias (IDR) e cobrem painel, cota e monitoramento de dispositivos. Os SMS continuam usando o saldo ou o pacote de SMS do chip do celular gateway. O pagamento é por transferência bancária."),
+    apk=("App Android em breve", "Baixar o app Android"),
+    sec=("Segurança", "Fechado desde o projeto", [
+        ("Dados separados por conta.", "Cada cliente vê apenas as próprias mensagens."),
+        ("Controle de acesso no banco de dados.", "O Row Level Security está ativo; os dispositivos só chamam funções permitidas."),
+        ("Sem chaves secretas no código.", "O painel usa a chave anon pública, nunca a service role."),
+        ("Limites de resposta automática.", "O intervalo por remetente e o teto diário evitam envios em massa acidentais."),
+    ]),
+    faq=("Perguntas frequentes", [
+        ("O que é o Boombastis?", "O Boombastis é um serviço de gateway de SMS. Você instala um app Android no seu celular e envia e recebe SMS pelo navegador ou por API. As mensagens saem do chip do seu celular."),
+        ("O SMS gasta meu saldo?", "Sim. Os SMS saem pelo chip do celular gateway, então usam o saldo ou o pacote de SMS desse chip. O valor do plano cobre painel, cota, fila e monitoramento."),
+        ("Que celular preciso?", "Um celular Android com chip ativo e conexão à internet. O app é baixado como APK neste site, não pelo Google Play."),
+        ("Posso enviar SMS pelo meu site ou app?", "Sim. Crie uma chave de API no painel e envie requisições HTTPS do seu servidor. Os SMS continuam saindo pelo celular gateway e descontam da cota do plano."),
+        ("O administrador consegue ler meus SMS?", "Não. Os dados de cada conta são separados e só o dono pode lê-los. O administrador vê apenas resumos, como o número de SMS enviados."),
+    ]),
+    fin=("Pronto para gerenciar seus SMS?", "Cadastre-se, escolha um plano e instale o app no celular gateway.", "Entrar / Cadastrar →"),
+    sticky="Cadastre-se e comece →",
+    foot=("Gateway de SMS Mandiri", "Outros projetos", "Termos", "Privacidade", "As páginas de termos e privacidade estão em indonésio."),
+    skip="Ir para o conteúdo",
+)
+
+T["ru"] = dict(
+    title="Boombastis – SMS-шлюз на вашем Android-телефоне и SIM-карте",
+    desc="Отправляйте и принимайте SMS из браузера или через API с помощью собственного Android-телефона и SIM-карты. Автоответы, надёжная очередь офлайн, тарифы от Rp29.000.",
+    nav=["Возможности", "Как это работает", "Цены", "FAQ"], login="Войти / Регистрация",
+    pill="SMS-шлюз · ваш телефон и SIM-карта",
+    h1=("SMS-шлюз на ", "вашем телефоне и SIM-карте"),
+    lead="Зарегистрируйтесь, установите приложение на Android-телефон и отправляйте и принимайте SMS из браузера. Автоответы и мониторинг устройств включены.",
+    cta=("Зарегистрироваться →", "Смотреть цены"),
+    trust=["Надёжная очередь офлайн", "Автоответы", "Данные принадлежат вам"],
+    feat=("Возможности", "Всё для работы с SMS", [
+        ("Отправка из панели", "Пишите сообщение в браузере: оно встаёт в очередь и уходит через SIM-карту шлюзового телефона, а статус виден на каждом этапе."),
+        ("Входящие в реальном времени", "SMS, полученные телефоном, сразу появляются в панели с отправителем и временем."),
+        ("Автоответ", "Настраивайте правила по ключевым словам с паузой для каждого отправителя и дневным лимитом."),
+        ("Мониторинг устройств", "Проверяйте, в сети ли шлюзовой телефон, по сигналу каждую минуту."),
+        ("Переживает обрывы связи", "Результаты и входящие SMS сохраняются локально и отправляются повторно при возврате интернета без дублей."),
+        ("Ваши данные под вашим контролем", "Данные каждого клиента изолированы и доступны только владельцу. Администраторы не могут открыть содержимое SMS."),
+    ]),
+    how=("Как это работает", "Три шага, без собственного сервера", [
+        ("Пишите в панели", "Сообщение попадает в очередь исходящих Supabase со статусом «ожидает»."),
+        ("Телефон забирает и отправляет", "Android-приложение регулярно проверяет очередь, отправляет через SIM-карту и сообщает результат."),
+        ("Следите за результатом", "Статусы «отправлено», «ошибка» и ответы появляются в панели в реальном времени."),
+    ]),
+    price=("Цены", "Выберите подходящий тариф", [
+        "1 шлюзовой телефон, для малого бизнеса", "2 шлюзовых телефона, больше квота", "5 шлюзовых телефонов для больших объёмов"],
+        ("{n} SMS", "активен {n} дн.", "шлюзовых телефонов: {n}", "до {n} SMS в день"), "Выбрать тариф",
+        "Цены указаны в индонезийских рупиях (IDR) и покрывают панель, квоту и мониторинг устройств. SMS по-прежнему расходуют баланс или SMS-пакет SIM-карты шлюзового телефона. Оплата банковским переводом."),
+    apk=("Android-приложение скоро", "Скачать Android-приложение"),
+    sec=("Безопасность", "Закрыто по замыслу", [
+        ("Данные раздельно по аккаунтам.", "Каждый клиент видит только свои сообщения."),
+        ("Контроль доступа в базе данных.", "Включена Row Level Security; устройства вызывают только разрешённые функции."),
+        ("Нет секретных ключей в коде.", "Панель использует публичный ключ anon, а не service role."),
+        ("Ограничения автоответов.", "Пауза для отправителя и дневной лимит исключают случайную массовую рассылку."),
+    ]),
+    faq=("Частые вопросы", [
+        ("Что такое Boombastis?", "Boombastis — сервис SMS-шлюза. Вы устанавливаете Android-приложение на свой телефон и отправляете и принимаете SMS из браузера или через API. Сообщения уходят с SIM-карты вашего телефона."),
+        ("SMS расходуют мой баланс?", "Да. SMS отправляются через SIM-карту шлюзового телефона, поэтому тратят её баланс или SMS-пакет. Стоимость тарифа покрывает панель, квоту, очередь и мониторинг."),
+        ("Какой нужен телефон?", "Android-телефон с активной SIM-картой и доступом в интернет. Приложение скачивается в виде APK с этого сайта, а не из Google Play."),
+        ("Можно ли отправлять SMS с моего сайта или приложения?", "Да. Создайте API-ключ в панели и отправляйте HTTPS-запросы со своего сервера. SMS по-прежнему уходят через шлюзовой телефон и списываются с квоты тарифа."),
+        ("Может ли администратор читать мои SMS?", "Нет. Данные каждого аккаунта изолированы и доступны только владельцу. Администратор видит лишь сводки, например число отправленных SMS."),
+    ]),
+    fin=("Готовы управлять SMS?", "Зарегистрируйтесь, выберите тариф и установите приложение на шлюзовой телефон.", "Войти / Регистрация →"),
+    sticky="Зарегистрироваться и начать →",
+    foot=("SMS-шлюз Mandiri", "Другие проекты", "Условия", "Конфиденциальность", "Страницы условий и конфиденциальности на индонезийском языке."),
+    skip="Перейти к содержимому",
+)

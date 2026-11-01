@@ -7,8 +7,18 @@
 <meta name="description" content="Kirim dan terima SMS dari browser atau API lewat HP Android dan SIM milikmu. Balasan otomatis, antrean aman saat offline, paket mulai Rp29.000.">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <link rel="canonical" href="https://boombastis.my.id/">
+<link rel="alternate" hreflang="id" href="https://boombastis.my.id/">
+<link rel="alternate" hreflang="en" href="https://boombastis.my.id/en/">
+<link rel="alternate" hreflang="zh-Hans" href="https://boombastis.my.id/zh/">
+<link rel="alternate" hreflang="hi" href="https://boombastis.my.id/hi/">
+<link rel="alternate" hreflang="es" href="https://boombastis.my.id/es/">
+<link rel="alternate" hreflang="ar" href="https://boombastis.my.id/ar/">
+<link rel="alternate" hreflang="fr" href="https://boombastis.my.id/fr/">
+<link rel="alternate" hreflang="pt-BR" href="https://boombastis.my.id/pt/">
+<link rel="alternate" hreflang="ru" href="https://boombastis.my.id/ru/">
+<link rel="alternate" hreflang="x-default" href="https://boombastis.my.id/en/">
 <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
-<meta property="og:type" content="website"><meta property="og:locale" content="id_ID"><meta property="og:site_name" content="Boombastis">
+<meta property="og:type" content="website"><meta property="og:locale" content="id_ID"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="zh_CN"><meta property="og:locale:alternate" content="hi_IN"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="ar_AR"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:site_name" content="Boombastis">
 <meta property="og:title" content="Boombastis – SMS Gateway Indonesia dari HP dan SIM Sendiri"><meta property="og:description" content="Kirim dan terima SMS dari browser atau API lewat HP Android dan SIM milikmu. Balasan otomatis, antrean aman saat offline, paket mulai Rp29.000.">
 <meta property="og:url" content="https://boombastis.my.id/"><meta property="og:image" content="https://boombastis.my.id/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Boombastis, SMS gateway dari HP dan SIM sendiri">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Boombastis – SMS Gateway Indonesia dari HP dan SIM Sendiri"><meta name="twitter:description" content="Kirim dan terima SMS dari browser atau API lewat HP Android dan SIM milikmu. Balasan otomatis, antrean aman saat offline, paket mulai Rp29.000."><meta name="twitter:image" content="https://boombastis.my.id/og.png">
@@ -162,6 +172,22 @@
     footer{padding-bottom:84px}
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+
+  /* ---------- bahasa ---------- */
+  .lang{position:relative}
+  .lang summary{cursor:pointer;list-style:none;font-size:14px;color:var(--muted);padding:6px 12px;border-radius:99px;border:.5px solid var(--line);white-space:nowrap}
+  .lang summary::-webkit-details-marker{display:none}
+  .lang-list{position:absolute;right:0;top:38px;min-width:180px;background:var(--card);border:.5px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:6px;display:grid;z-index:40}
+  .nav-links .lang-list a{display:block!important;padding:8px 12px;border-radius:10px;font-size:14.5px;color:var(--text)}
+  .nav-links .lang-list a:hover,.nav-links .lang-list a[aria-current]{background:var(--bg2)}
+  .langrow{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center;padding:0 20px 26px;font-size:13.5px;color:var(--muted)}
+  .langrow a:hover{color:var(--text)}
+  [dir=rtl] .lang-list{right:auto;left:0}
+  [dir=rtl] .faq summary::after{float:left}
+  [dir=rtl] .checks li{flex-direction:row}
+  .hero.single .wrap{grid-template-columns:1fr}
+  .hero.single p.lead{max-width:640px}
 </style>
 <script src="config.js"></script>
 </head>
@@ -180,6 +206,7 @@
       <a href="#keamanan">Keamanan</a>
       <a href="#faq">FAQ</a>
       <a href="#harga">Harga</a>
+      <details class="lang"><summary aria-label="Language">🌐 Bahasa Indonesia</summary><div class="lang-list"><a href="https://boombastis.my.id/" hreflang="id" lang="id" aria-current="true">Bahasa Indonesia</a><a href="https://boombastis.my.id/en/" hreflang="en" lang="en">English</a><a href="https://boombastis.my.id/zh/" hreflang="zh-Hans" lang="zh-Hans">中文</a><a href="https://boombastis.my.id/hi/" hreflang="hi" lang="hi">हिन्दी</a><a href="https://boombastis.my.id/es/" hreflang="es" lang="es">Español</a><a href="https://boombastis.my.id/ar/" hreflang="ar" lang="ar">العربية</a><a href="https://boombastis.my.id/fr/" hreflang="fr" lang="fr">Français</a><a href="https://boombastis.my.id/pt/" hreflang="pt-BR" lang="pt-BR">Português</a><a href="https://boombastis.my.id/ru/" hreflang="ru" lang="ru">Русский</a></div></details>
       <a href="app/" class="btn primary sm">Masuk / Daftar</a>
     </nav>
   </div>
@@ -336,6 +363,7 @@
     <span>Proyek lain: <a href="https://jurkon.my.id/">Journal Connection</a> &middot; <a href="https://smartphone-empire.my.id/">Smartphone Empire</a></span>
     <span><a href="app/">Masuk</a> · <a href="terms.html">Syarat Layanan</a> · <a href="privacy.html">Kebijakan Privasi</a></span>
   </div>
+    <div class="langrow">🌐 <a href="https://boombastis.my.id/" hreflang="id" lang="id">Bahasa Indonesia</a> · <a href="https://boombastis.my.id/en/" hreflang="en" lang="en">English</a> · <a href="https://boombastis.my.id/zh/" hreflang="zh-Hans" lang="zh-Hans">中文</a> · <a href="https://boombastis.my.id/hi/" hreflang="hi" lang="hi">हिन्दी</a> · <a href="https://boombastis.my.id/es/" hreflang="es" lang="es">Español</a> · <a href="https://boombastis.my.id/ar/" hreflang="ar" lang="ar">العربية</a> · <a href="https://boombastis.my.id/fr/" hreflang="fr" lang="fr">Français</a> · <a href="https://boombastis.my.id/pt/" hreflang="pt-BR" lang="pt-BR">Português</a> · <a href="https://boombastis.my.id/ru/" hreflang="ru" lang="ru">Русский</a></div>
 </footer>
 <script>
 (async()=>{
