@@ -45,6 +45,8 @@ Pilih salah satu:
 - **Lewat dashboard**: buka Supabase > SQL Editor, lalu jalankan **berurutan** (tempel isi file, Run, baru file berikutnya):
   1. `supabase/migrations/20261101000000_init.sql`
   2. `supabase/migrations/20261101010000_auto_reply.sql`
+  3. `supabase/migrations/20261101020000_improvements.sql`
+  4. `supabase/migrations/20261101030000_multi_tenant.sql` (multi-akun, langganan, kuota; lihat `docs/multi-akun.md`)
 
 ### 2. Akun admin dan akun HP
 
@@ -69,7 +71,7 @@ Pilih salah satu:
 
 ### 4. Balasan otomatis
 
-SMS yang masuk ke nomor SIM di HP gateway (082243562960) dibalas otomatis. Atur di panel admin, tab **Balasan Otomatis**:
+SMS yang masuk ke nomor SIM di HP gateway dibalas otomatis. Atur di panel admin, tab **Balasan Otomatis**:
 
 - Aktif/nonaktif, jeda per pengirim (bawaan 60 menit), dan batas balasan per hari (bawaan 50).
 - Aturan: balas semua pesan, atau hanya yang mengandung / sama persis / diawali kata tertentu. Aturan bawaan: satu balasan umum untuk semua pesan.

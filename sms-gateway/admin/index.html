@@ -407,11 +407,11 @@
 
   // ---------- Balasan Otomatis ----------
   async function vAuto() {
-    const st = await sb.from('auto_reply_settings').select('*').eq('id', 1).maybeSingle();
+    const st = await sb.from('auto_reply_settings').select('*').maybeSingle();
     if (st.error) throw st.error;
     const rl = await sb.from('auto_reply_rules').select('*').order('priority').order('created_at');
     if (rl.error) throw rl.error;
-    const s = st.data || { enabled: true, cooldown_minutes: 60, daily_cap: 50 };
+    const s = st.data || { enabled: false, cooldown_minutes: 60, daily_cap: 50 };
 
     // --- pengaturan global ---
     const en = h('input', { type: 'checkbox', style: 'width:auto' });
@@ -423,7 +423,7 @@
     saveS.onclick = async () => {
       sOut.replaceChildren();
       const { error } = await sb.from('auto_reply_settings').upsert({
-        id: 1, enabled: en.checked,
+        owner_id: session.user.id, enabled: en.checked,
         cooldown_minutes: Math.max(0, parseInt(cd.value, 10) || 0),
         daily_cap: Math.max(1, parseInt(cap.value, 10) || 1),
         updated_at: new Date().toISOString()
