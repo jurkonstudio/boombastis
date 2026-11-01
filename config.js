@@ -1,3 +1,4 @@
+
 // Konfigurasi publik (dipakai landing page dan /app/). Isi anon key, BUKAN service_role.
 // Supabase > Project Settings > API > "anon public".
 window.CFG = {
