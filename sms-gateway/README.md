@@ -83,9 +83,15 @@ Uji tanpa HP: jalankan perintah tes di bagian 4 `supabase/setup_admin.sql`, lalu
 
 ### 5. Aplikasi HP gateway
 
-Belum termasuk di paket ini. Kontrak API-nya ada di `docs/android-contract.md`.
+Kode aplikasi ada di `android/` (build APK lewat workflow GitHub Actions). Kontrak API: `docs/android-contract.md`. Pairing HP: `docs/multi-akun.md`.
 
 ## Catatan
 
 - SMS tetap memakai pulsa/bonus SMS dari SIM di HP gateway. Pakai SIM khusus agar nomor utama aman jika diblokir operator.
 - Skrip dan migrasi belum pernah dijalankan ke project Supabase-mu. Kalau ada error, kirim pesan errornya agar bisa diperbaiki.
+
+## Layanan multi-akun (tahap 2)
+
+- `index.html` = landing page (harga dan tombol unduh APK dibaca dari tabel `plans` dan `site_settings`).
+- `app/index.html` = panel pelanggan. Akun admin otomatis mendapat tab **Admin** (pembayaran menunggu, daftar pelanggan, beri paket, tangguhkan, pengaturan situs/APK).
+- `config.js` = Project URL + anon key publik untuk keduanya. Isi `key` sebelum deploy.
