@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel SMS Gateway</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --card:#fff; --text:#1c1f26; --muted:#6b7280; --line:#e5e7eb;
+    --brand:#2563eb; --ok:#16a34a; --warn:#d97706; --bad:#dc2626;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0f1115; --card:#181b22; --text:#e8eaf0; --muted:#8b93a3; --line:#2a2f3a; --brand:#60a5fa; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+  header{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:10px}
+  header h1{font-size:16px;margin:0;flex:1}
+  main{max-width:900px;margin:0 auto;padding:16px}
+  nav{display:flex;gap:6px;overflow-x:auto;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--line)}
+  nav button{white-space:nowrap}
+  button,input,select,textarea{font:inherit;color:inherit}
+  button{border:1px solid var(--line);background:var(--card);padding:8px 12px;border-radius:8px;cursor:pointer}
+  button.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+  button.active{border-color:var(--brand);color:var(--brand);font-weight:600}
+  button.small{padding:4px 8px;font-size:13px}
+  button:disabled{opacity:.5;cursor:default}
+  input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+  textarea{min-height:110px;resize:vertical}
+  label{display:block;margin:12px 0 4px;font-size:13px;color:var(--muted)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+  .stat b{display:block;font-size:24px}
+  .stat span{color:var(--muted);font-size:13px}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .item{border-top:1px solid var(--line);padding:10px 0}
+  .item:first-child{border-top:0}
+  .meta{color:var(--muted);font-size:12.5px}
+  .body{margin:4px 0;white-space:pre-wrap;word-break:break-word}
+  .badge{display:inline-block;padding:1px 8px;border-radius:99px;font-size:12px;border:1px solid currentColor}
+  .pending{color:var(--warn)} .sending{color:var(--brand)} .sent{color:var(--ok)}
+  .failed{color:var(--bad)} .cancelled{color:var(--muted)}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--muted)}
+  .dot.on{background:var(--ok)}
+  .msg{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .msg.err{background:#dc262615;color:var(--bad)} .msg.ok{background:#16a34a15;color:var(--ok)}
+  .hidden{display:none}
+  .center{max-width:420px;margin:8vh auto}
+  small{color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📨 Panel SMS Gateway</h1>
+  <span id="who" class="meta"></span>
+  <button id="btnLogout" class="small hidden">Keluar</button>
+</header>
+
+<!-- SETUP: URL & anon key Supabase -->
+<main id="vSetup" class="center hidden">
+  <div class="card">
+    <h2 style="margin-top:0">Hubungkan ke Supabase</h2>
+    <small>Ada di Supabase &gt; Project Settings &gt; API. Pakai <b>anon / publishable key</b>, jangan pernah service_role.</small>
+    <label>Project URL</label>
+    <input id="cfgUrl" placeholder="https://xxxx.supabase.co" autocomplete="off">
+    <label>Anon (publishable) key</label>
+    <input id="cfgKey" placeholder="eyJ..." autocomplete="off">
+    <div class="row" style="margin-top:14px"><button id="btnSaveCfg" class="primary">Simpan</button></div>
+    <div id="setupMsg"></div>
+  </div>
+</main>
+
+<!-- LOGIN -->
+<main id="vLogin" class="center hidden">
+  <div class="card">
+    <h2 style="margin-top:0">Masuk admin</h2>
+    <label>Email</label>
+    <input id="email" type="email" autocomplete="username">
+    <label>Password</label>
+    <input id="password" type="password" autocomplete="current-password">
+    <div class="row" style="margin-top:14px">
+      <button id="btnLogin" class="primary">Masuk</button>
+      <button id="btnResetCfg" class="small">Ubah koneksi</button>
+    </div>
+    <div id="loginMsg"></div>
+  </div>
+</main>
+
+<!-- APP -->
+<div id="vApp" class="hidden">
+  <nav id="tabs">
+    <button data-tab="dash" class="active">Ringkasan</button>
+    <button data-tab="send">Kirim</button>
+    <button data-tab="outbox">Outbox</button>
+    <button data-tab="inbox">Inbox</button>
+    <button data-tab="devices">Perangkat</button>
+  </nav>
+  <main id="content"></main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  'use strict';
+
+  const $ = (id) => document.getElementById(id);
+  const STATUSES = ['pending', 'sending', 'sent', 'failed', 'cancelled'];
+  let sb = null, session = null, tab = 'dash', outboxFilter = 'all', rt = null, timer = null;
+
+  // ---------- util DOM aman (semua teks lewat textContent, anti-XSS) ----------
+  function h(tag, attrs, ...kids) {
+    const el = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) {
+      if (k === 'class') el.className = v;
+      else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+      else if (v !== false && v != null) el.setAttribute(k, v);
+    }
+    for (const kid of kids.flat()) {
+      if (kid == null || kid === false) continue;
+      el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+    }
+    return el;
+  }
+  const fmt = (d) => d ? new Date(d).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }) : '-';
+  const show = (id, on) => $(id).classList.toggle('hidden', !on);
+  function note(id, text, ok) {
+    const box = $(id); box.replaceChildren();
+    if (text) box.append(h('div', { class: 'msg ' + (ok ? 'ok' : 'err') }, text));
+  }
+
+  function normalizePhone(p) {
+    let s = String(p || '').replace(/[^0-9+]/g, '');
+    if (s.startsWith('+')) { /* ok */ }
+    else if (s.startsWith('0')) s = '+62' + s.slice(1);
+    else if (s.startsWith('62')) s = '+' + s;
+    else if (s.startsWith('8')) s = '+62' + s;
+    return /^\+[1-9][0-9]{8,14}$/.test(s) ? s : null;
+  }
+
+  // ---------- konfigurasi & auth ----------
+  function getCfg() {
+    try { return JSON.parse(localStorage.getItem('sms_cfg') || 'null'); } catch { return null; }
+  }
+
+  async function boot() {
+    show('vSetup', false); show('vLogin', false); show('vApp', false);
+    $('btnLogout').classList.add('hidden'); $('who').textContent = '';
+    const cfg = getCfg();
+    if (!cfg) return show('vSetup', true);
+    sb = window.supabase.createClient(cfg.url, cfg.key);
+    const { data } = await sb.auth.getSession();
+    session = data.session;
+    if (!session) return show('vLogin', true);
+    await enterApp();
+  }
+
+  async function enterApp() {
+    // pastikan user terdaftar sebagai admin
+    const { data, error } = await sb.from('admins').select('user_id').eq('user_id', session.user.id).maybeSingle();
+    if (error || !data) {
+      await sb.auth.signOut();
+      show('vLogin', true);
+      note('loginMsg', 'Akun ini bukan admin. Tambahkan user_id ke tabel admins.');
+      return;
+    }
+    show('vLogin', false); show('vApp', true);
+    $('btnLogout').classList.remove('hidden');
+    $('who').textContent = session.user.email || '';
+    startRealtime();
+    render();
+  }
+
+  $('btnSaveCfg').onclick = () => {
+    const url = $('cfgUrl').value.trim().replace(/\/+$/, '');
+    const key = $('cfgKey').value.trim();
+    if (!/^https:\/\/.+\.supabase\.(co|in)$/.test(url) || key.length < 20) {
+      return note('setupMsg', 'URL atau key tidak valid.');
+    }
+    localStorage.setItem('sms_cfg', JSON.stringify({ url, key }));
+    boot();
+  };
+  $('btnResetCfg').onclick = () => { localStorage.removeItem('sms_cfg'); boot(); };
+
+  $('btnLogin').onclick = async () => {
+    note('loginMsg', '');
+    const { data, error } = await sb.auth.signInWithPassword({
+      email: $('email').value.trim(), password: $('password').value
+    });
+    if (error) return note('loginMsg', error.message);
+    session = data.session;
+    $('password').value = '';
+    enterApp();
+  };
+  $('btnLogout').onclick = async () => {
+    stopRealtime(); await sb.auth.signOut(); session = null; boot();
+  };
+
+  // ---------- realtime ----------
+  function startRealtime() {
+    stopRealtime();
+    rt = sb.channel('panel')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'outbox' }, refreshSoon)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'inbox' }, refreshSoon)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'devices' }, refreshSoon)
+      .subscribe();
+  }
+  function stopRealtime() { if (rt) { sb.removeChannel(rt); rt = null; } }
+  function refreshSoon() {
+    if (tab === 'send') return;            // jangan ganggu form yang sedang diisi
+    clearTimeout(timer); timer = setTimeout(render, 400);
+  }
+
+  // ---------- tab ----------
+  $('tabs').addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-tab]'); if (!b) return;
+    tab = b.dataset.tab;
+    document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('active', x === b));
+    render();
+  });
+
+  async function render() {
+    const c = $('content');
+    try {
+      const view = await ({ dash: vDash, send: vSend, outbox: vOutbox, inbox: vInbox, devices: vDevices }[tab])();
+      c.replaceChildren(view);
+    } catch (err) {
+      c.replaceChildren(h('div', { class: 'msg err' }, 'Gagal memuat: ' + (err.message || err)));
+    }
+  }
+
+  // ---------- Ringkasan ----------
+  async function vDash() {
+    const counts = await Promise.all(STATUSES.map(s =>
+      sb.from('outbox').select('id', { count: 'exact', head: true }).eq('status', s)));
+    const inboxN = await sb.from('inbox').select('id', { count: 'exact', head: true });
+    const dev = await sb.from('devices').select('*').order('created_at');
+    if (dev.error) throw dev.error;
+    const online = dev.data.filter(d => d.is_active && d.last_seen_at && Date.now() - new Date(d.last_seen_at) < 120000).length;
+
+    return h('div', {},
+      h('div', { class: 'grid' },
+        ...STATUSES.map((s, i) => h('div', { class: 'stat' }, h('b', { class: s }, counts[i].count ?? 0), h('span', {}, s))),
+        h('div', { class: 'stat' }, h('b', {}, inboxN.count ?? 0), h('span', {}, 'SMS masuk')),
+        h('div', { class: 'stat' }, h('b', {}, online + '/' + dev.data.length), h('span', {}, 'HP online'))
+      ),
+      online === 0 ? h('div', { class: 'msg err' }, 'Tidak ada HP gateway yang online. Pesan akan tetap antre sampai HP aktif.') : null
+    );
+  }
+
+  // ---------- Kirim ----------
+  async function vSend() {
+    const nums = h('textarea', { placeholder: '08123456789\n+628111222333\n(satu nomor per baris atau pisahkan dengan koma)' });
+    const body = h('textarea', { maxlength: '1000', placeholder: 'Isi pesan...' });
+    const when = h('input', { type: 'datetime-local' });
+    const count = h('small', {}, '0 karakter');
+    body.addEventListener('input', () => { count.textContent = body.value.length + ' karakter (160 = 1 SMS)'; });
+    const result = h('div', {});
+    const btn = h('button', { class: 'primary' }, 'Masukkan ke antrean');
+
+    btn.onclick = async () => {
+      result.replaceChildren();
+      const raw = nums.value.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
+      const valid = [...new Set(raw.map(normalizePhone).filter(Boolean))];
+      const bad = raw.filter(r => !normalizePhone(r));
+      if (!valid.length) return result.append(h('div', { class: 'msg err' }, 'Tidak ada nomor yang valid.'));
+      if (!body.value.trim()) return result.append(h('div', { class: 'msg err' }, 'Isi pesan kosong.'));
+      if (valid.length > 200) return result.append(h('div', { class: 'msg err' }, 'Maksimal 200 nomor sekali kirim.'));
+      if (valid.length > 20 && !confirm('Kirim ke ' + valid.length + ' nomor? Pastikan paket SMS cukup.')) return;
+
+      btn.disabled = true;
+      const sched = when.value ? new Date(when.value).toISOString() : new Date().toISOString();
+      const rows = valid.map(n => ({ to_number: n, body: body.value.trim(), scheduled_at: sched }));
+      const { error } = await sb.from('outbox').insert(rows);
+      btn.disabled = false;
+      if (error) return result.append(h('div', { class: 'msg err' }, error.message));
+      result.append(h('div', { class: 'msg ok' },
+        valid.length + ' pesan masuk antrean.' + (bad.length ? ' Dilewati (tidak valid): ' + bad.join(', ') : '')));
+      nums.value = ''; body.value = ''; count.textContent = '0 karakter';
+    };
+
+    return h('div', { class: 'card' },
+      h('label', {}, 'Nomor penerima'), nums,
+      h('label', {}, 'Pesan'), body, count,
+      h('label', {}, 'Jadwal (kosongkan untuk kirim sekarang)'), when,
+      h('div', { class: 'row', style: 'margin-top:14px' }, btn), result);
+  }
+
+  // ---------- Outbox ----------
+  async function vOutbox() {
+    const sel = h('select', { onchange: (e) => { outboxFilter = e.target.value; render(); } },
+      ...['all', ...STATUSES].map(s => h('option', { value: s, selected: s === outboxFilter ? '' : null }, s === 'all' ? 'Semua status' : s)));
+    let q = sb.from('outbox').select('*').order('created_at', { ascending: false }).limit(100);
+    if (outboxFilter !== 'all') q = q.eq('status', outboxFilter);
+    const { data, error } = await q;
+    if (error) throw error;
+
+    const act = async (id, patch) => {
+      const { error: e } = await sb.from('outbox').update(patch).eq('id', id);
+      if (e) alert(e.message); else render();
+    };
+
+    return h('div', { class: 'card' },
+      h('div', { class: 'row' }, sel, h('small', {}, data.length + ' terbaru')),
+      data.length ? data.map(m => h('div', { class: 'item' },
+        h('div', { class: 'row' },
+          h('b', {}, m.to_number), h('span', { class: 'badge ' + m.status }, m.status),
+          h('span', { class: 'meta' }, fmt(m.created_at))),
+        h('div', { class: 'body' }, m.body),
+        m.error ? h('div', { class: 'meta bad failed' }, 'Error: ' + m.error) : null,
+        h('div', { class: 'row' },
+          h('span', { class: 'meta' }, 'percobaan: ' + m.attempts + (m.sent_at ? ' · terkirim ' + fmt(m.sent_at) : '')),
+          m.status === 'failed' || m.status === 'cancelled'
+            ? h('button', { class: 'small', onclick: () => act(m.id, { status: 'pending', attempts: 0, error: null, scheduled_at: new Date().toISOString() }) }, 'Kirim ulang') : null,
+          m.status === 'pending'
+            ? h('button', { class: 'small', onclick: () => act(m.id, { status: 'cancelled' }) }, 'Batalkan') : null
+        )
+      )) : h('p', { class: 'meta' }, 'Belum ada pesan.'));
+  }
+
+  // ---------- Inbox ----------
+  async function vInbox() {
+    const { data, error } = await sb.from('inbox').select('*').order('received_at', { ascending: false }).limit(100);
+    if (error) throw error;
+    return h('div', { class: 'card' },
+      data.length ? data.map(m => h('div', { class: 'item' },
+        h('div', { class: 'row' }, h('b', {}, m.from_number), h('span', { class: 'meta' }, fmt(m.received_at))),
+        h('div', { class: 'body' }, m.body))) : h('p', { class: 'meta' }, 'Belum ada SMS masuk.'));
+  }
+
+  // ---------- Perangkat ----------
+  async function vDevices() {
+    const { data, error } = await sb.from('devices').select('*').order('created_at');
+    if (error) throw error;
+
+    const name = h('input', { placeholder: 'Nama, mis. HP Redmi' });
+    const num = h('input', { placeholder: 'Nomor SIM (opsional)' });
+    const uid = h('input', { placeholder: 'User ID akun Auth milik HP (UUID)' });
+    const out = h('div', {});
+    const add = h('button', { class: 'primary' }, 'Tambah perangkat');
+    add.onclick = async () => {
+      out.replaceChildren();
+      if (!name.value.trim()) return out.append(h('div', { class: 'msg err' }, 'Nama wajib diisi.'));
+      const { error: e } = await sb.from('devices').insert({
+        name: name.value.trim(), phone_number: num.value.trim() || null, user_id: uid.value.trim() || null
+      });
+      if (e) out.append(h('div', { class: 'msg err' }, e.message)); else render();
+    };
+
+    const toggle = async (d) => {
+      const { error: e } = await sb.from('devices').update({ is_active: !d.is_active }).eq('id', d.id);
+      if (e) alert(e.message); else render();
+    };
+
+    return h('div', {},
+      h('div', { class: 'card' },
+        data.length ? data.map(d => {
+          const on = d.is_active && d.last_seen_at && Date.now() - new Date(d.last_seen_at) < 120000;
+          return h('div', { class: 'item' },
+            h('div', { class: 'row' },
+              h('span', { class: 'dot' + (on ? ' on' : '') }), h('b', {}, d.name),
+              h('span', { class: 'badge ' + (d.is_active ? 'sent' : 'cancelled') }, d.is_active ? 'aktif' : 'nonaktif')),
+            h('div', { class: 'meta' }, (d.phone_number || 'nomor belum diisi') + ' · terakhir terlihat ' + fmt(d.last_seen_at)),
+            h('div', { class: 'row', style: 'margin-top:6px' },
+              h('button', { class: 'small', onclick: () => toggle(d) }, d.is_active ? 'Nonaktifkan' : 'Aktifkan')));
+        }) : h('p', { class: 'meta' }, 'Belum ada perangkat.')),
+      h('div', { class: 'card' },
+        h('b', {}, 'Tambah perangkat gateway'),
+        h('small', {}, ' — buat dulu user di Supabase > Authentication untuk HP, lalu salin User ID-nya.'),
+        h('label', {}, 'Nama'), name, h('label', {}, 'Nomor SIM'), num, h('label', {}, 'User ID'), uid,
+        h('div', { class: 'row', style: 'margin-top:14px' }, add), out));
+  }
+
+  boot();
+})();
+</script>
+</body>
+</html>

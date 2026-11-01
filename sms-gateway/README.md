@@ -1,0 +1,74 @@
+# SMS Gateway Mandiri
+
+SMS dikirim lewat HP Android + SIM milikmu sendiri. Supabase jadi antrean dan database, GitHub menyimpan kode dan hosting panel admin.
+
+## Struktur
+
+```
+sms-gateway/
+├── admin/                       Panel admin (satu file HTML, di-host di GitHub Pages)
+│   └── index.html
+├── supabase/
+│   ├── config.toml              Konfigurasi minimal untuk Supabase CLI
+│   ├── migrations/
+│   │   └── 20261101000000_init.sql   Tabel, RLS, fungsi RPC, realtime
+│   └── setup_admin.sql          Daftarkan admin + perangkat (isi UUID dulu)
+├── docs/
+│   ├── rancangan.md             Arsitektur, alur, tabel, keamanan
+│   └── android-contract.md      Kontrak API untuk aplikasi HP gateway
+├── scripts/
+│   ├── init-git.sh              git init + commit pertama
+│   └── db-push.sh               Kirim migrasi ke Supabase lewat CLI
+├── .github/workflows/
+│   └── deploy-admin.yml         Auto-deploy folder admin/ ke GitHub Pages
+└── .gitignore
+```
+
+## Mulai cepat di Codespace
+
+```bash
+unzip sms-gateway.zip
+cd sms-gateway
+bash scripts/init-git.sh
+```
+
+### 1. Database Supabase
+
+Pilih salah satu:
+
+- **Lewat CLI** (di terminal Codespace):
+  ```bash
+  bash scripts/db-push.sh
+  ```
+  Skrip akan meminta *project ref* (kode di URL project: `https://<ref>.supabase.co`) dan password database.
+- **Lewat dashboard**: buka Supabase > SQL Editor, tempel isi `supabase/migrations/20261101000000_init.sql`, lalu Run.
+
+### 2. Akun admin dan akun HP
+
+1. Supabase > Authentication > Users > **Add user** untuk admin (email + password), salin UUID-nya.
+2. Tambah satu user lagi untuk HP gateway (mis. `hp1@gateway.local`), salin UUID-nya.
+3. Buka `supabase/setup_admin.sql`, ganti UUID, lalu jalankan di SQL Editor.
+4. Matikan pendaftaran publik: Authentication > Sign In / Providers > nonaktifkan *Allow new users to sign up*.
+
+### 3. Panel admin di GitHub Pages
+
+1. Buat repo di GitHub, lalu dari Codespace:
+   ```bash
+   git remote add origin https://github.com/USERNAME/NAMA-REPO.git
+   git push -u origin main
+   ```
+   (Kalau Codespace sudah terhubung ke repo, cukup `git push`.)
+2. Di repo: Settings > Pages > Source: **GitHub Actions**.
+3. Workflow `deploy-admin.yml` jalan otomatis, lalu alamat panel muncul di Settings > Pages.
+4. Buka alamat itu di HP, isi **Project URL** dan **anon key** (Supabase > Project Settings > API), lalu login.
+
+> Jangan pernah memakai atau menyimpan `service_role` key di panel atau di repo.
+
+### 4. Aplikasi HP gateway
+
+Belum termasuk di paket ini. Kontrak API-nya ada di `docs/android-contract.md`.
+
+## Catatan
+
+- SMS tetap memakai pulsa/bonus SMS dari SIM di HP gateway. Pakai SIM khusus agar nomor utama aman jika diblokir operator.
+- Skrip dan migrasi belum pernah dijalankan ke project Supabase-mu. Kalau ada error, kirim pesan errornya agar bisa diperbaiki.

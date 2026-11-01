@@ -1,0 +1,2 @@
+# Konfigurasi minimal Supabase CLI (dipakai oleh `supabase link` dan `supabase db push`)
+project_id = "sms-gateway"
