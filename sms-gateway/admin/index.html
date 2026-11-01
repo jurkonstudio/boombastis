@@ -95,6 +95,7 @@
     <button data-tab="send">Kirim</button>
     <button data-tab="outbox">Outbox</button>
     <button data-tab="inbox">Inbox</button>
+    <button data-tab="auto">Balasan Otomatis</button>
     <button data-tab="devices">Perangkat</button>
   </nav>
   <main id="content"></main>
@@ -162,7 +163,9 @@
     if (error || !data) {
       await sb.auth.signOut();
       show('vLogin', true);
-      note('loginMsg', 'Akun ini bukan admin. Tambahkan user_id ke tabel admins.');
+      note('loginMsg', error
+        ? 'Gagal memeriksa status admin: ' + error.message + ' (apakah migrasi SQL sudah dijalankan?)'
+        : 'Akun ini bukan admin. Tambahkan user_id ke tabel admins.');
       return;
     }
     show('vLogin', false); show('vApp', true);
@@ -208,7 +211,7 @@
   }
   function stopRealtime() { if (rt) { sb.removeChannel(rt); rt = null; } }
   function refreshSoon() {
-    if (tab === 'send') return;            // jangan ganggu form yang sedang diisi
+    if (tab === 'send' || tab === 'auto') return;   // jangan ganggu form yang sedang diisi
     clearTimeout(timer); timer = setTimeout(render, 400);
   }
 
@@ -223,7 +226,7 @@
   async function render() {
     const c = $('content');
     try {
-      const view = await ({ dash: vDash, send: vSend, outbox: vOutbox, inbox: vInbox, devices: vDevices }[tab])();
+      const view = await ({ dash: vDash, send: vSend, outbox: vOutbox, inbox: vInbox, auto: vAuto, devices: vDevices }[tab])();
       c.replaceChildren(view);
     } catch (err) {
       c.replaceChildren(h('div', { class: 'msg err' }, 'Gagal memuat: ' + (err.message || err)));
@@ -306,6 +309,7 @@
       data.length ? data.map(m => h('div', { class: 'item' },
         h('div', { class: 'row' },
           h('b', {}, m.to_number), h('span', { class: 'badge ' + m.status }, m.status),
+          m.source === 'auto' ? h('span', { class: 'badge sending' }, 'otomatis') : null,
           h('span', { class: 'meta' }, fmt(m.created_at))),
         h('div', { class: 'body' }, m.body),
         m.error ? h('div', { class: 'meta bad failed' }, 'Error: ' + m.error) : null,
@@ -327,6 +331,97 @@
       data.length ? data.map(m => h('div', { class: 'item' },
         h('div', { class: 'row' }, h('b', {}, m.from_number), h('span', { class: 'meta' }, fmt(m.received_at))),
         h('div', { class: 'body' }, m.body))) : h('p', { class: 'meta' }, 'Belum ada SMS masuk.'));
+  }
+
+  // ---------- Balasan Otomatis ----------
+  async function vAuto() {
+    const st = await sb.from('auto_reply_settings').select('*').eq('id', 1).maybeSingle();
+    if (st.error) throw st.error;
+    const rl = await sb.from('auto_reply_rules').select('*').order('priority').order('created_at');
+    if (rl.error) throw rl.error;
+    const s = st.data || { enabled: true, cooldown_minutes: 60, daily_cap: 50 };
+
+    // --- pengaturan global ---
+    const en = h('input', { type: 'checkbox', style: 'width:auto' });
+    en.checked = !!s.enabled;
+    const cd = h('input', { type: 'number', min: '0', value: String(s.cooldown_minutes) });
+    const cap = h('input', { type: 'number', min: '1', value: String(s.daily_cap) });
+    const sOut = h('div', {});
+    const saveS = h('button', { class: 'primary' }, 'Simpan pengaturan');
+    saveS.onclick = async () => {
+      sOut.replaceChildren();
+      const { error } = await sb.from('auto_reply_settings').upsert({
+        id: 1, enabled: en.checked,
+        cooldown_minutes: Math.max(0, parseInt(cd.value, 10) || 0),
+        daily_cap: Math.max(1, parseInt(cap.value, 10) || 1),
+        updated_at: new Date().toISOString()
+      });
+      sOut.append(h('div', { class: 'msg ' + (error ? 'err' : 'ok') }, error ? error.message : 'Tersimpan.'));
+    };
+
+    // --- form aturan baru ---
+    const name = h('input', { placeholder: 'Nama aturan, mis. Jam buka' });
+    const mt = h('select', {}, ...[
+      ['any', 'Semua pesan masuk'], ['contains', 'Mengandung kata'],
+      ['equals', 'Sama persis dengan'], ['starts_with', 'Diawali dengan']
+    ].map(([v, t]) => h('option', { value: v }, t)));
+    const kw = h('input', { placeholder: 'Kata kunci (kosongkan jika "Semua pesan")' });
+    const reply = h('textarea', { maxlength: '1000', placeholder: 'Isi balasan otomatis...' });
+    const pri = h('input', { type: 'number', value: '100' });
+    const out = h('div', {});
+    const add = h('button', { class: 'primary' }, 'Tambah aturan');
+    add.onclick = async () => {
+      out.replaceChildren();
+      const err = (t) => out.append(h('div', { class: 'msg err' }, t));
+      if (!name.value.trim() || !reply.value.trim()) return err('Nama dan isi balasan wajib diisi.');
+      if (mt.value !== 'any' && !kw.value.trim()) return err('Kata kunci wajib diisi.');
+      const { error } = await sb.from('auto_reply_rules').insert({
+        name: name.value.trim(), match_type: mt.value,
+        keyword: mt.value === 'any' ? null : kw.value.trim(),
+        reply_body: reply.value.trim(), priority: parseInt(pri.value, 10) || 100
+      });
+      if (error) err(error.message); else render();
+    };
+
+    const patch = async (id, p) => {
+      const { error } = await sb.from('auto_reply_rules').update(p).eq('id', id);
+      if (error) alert(error.message); else render();
+    };
+    const del = async (r) => {
+      if (!confirm('Hapus aturan "' + r.name + '"?')) return;
+      const { error } = await sb.from('auto_reply_rules').delete().eq('id', r.id);
+      if (error) alert(error.message); else render();
+    };
+    const label = { any: 'semua pesan', contains: 'mengandung', equals: 'sama persis', starts_with: 'diawali' };
+
+    return h('div', {},
+      h('div', { class: 'card' },
+        h('div', { class: 'row' }, en, h('b', {}, 'Balasan otomatis aktif')),
+        h('small', {}, 'Setiap SMS yang masuk ke HP gateway dicocokkan dengan aturan di bawah, lalu dibalas otomatis lewat SIM yang sama. Nama pengirim dan kode singkat diabaikan.'),
+        h('label', {}, 'Jeda per pengirim (menit): satu nomor hanya dibalas sekali dalam jeda ini'), cd,
+        h('label', {}, 'Batas balasan otomatis per hari'), cap,
+        h('div', { class: 'row', style: 'margin-top:14px' }, saveS), sOut),
+      h('div', { class: 'card' },
+        h('b', {}, 'Aturan balasan'),
+        h('small', {}, ' — angka prioritas kecil dicek lebih dulu; aturan pertama yang cocok dipakai.'),
+        rl.data.length ? rl.data.map(r => h('div', { class: 'item' },
+          h('div', { class: 'row' },
+            h('b', {}, r.name),
+            h('span', { class: 'badge ' + (r.is_active ? 'sent' : 'cancelled') }, r.is_active ? 'aktif' : 'nonaktif'),
+            h('span', { class: 'meta' }, label[r.match_type] + (r.keyword ? ': ' + r.keyword : '') + ' · prioritas ' + r.priority)),
+          h('div', { class: 'body' }, r.reply_body),
+          h('div', { class: 'row' },
+            h('button', { class: 'small', onclick: () => patch(r.id, { is_active: !r.is_active }) }, r.is_active ? 'Nonaktifkan' : 'Aktifkan'),
+            h('button', { class: 'small', onclick: () => del(r) }, 'Hapus'))
+        )) : h('p', { class: 'meta' }, 'Belum ada aturan. Tanpa aturan, tidak ada balasan yang dikirim.')),
+      h('div', { class: 'card' },
+        h('b', {}, 'Tambah aturan'),
+        h('label', {}, 'Nama'), name,
+        h('label', {}, 'Cocokkan'), mt,
+        h('label', {}, 'Kata kunci'), kw,
+        h('label', {}, 'Isi balasan'), reply,
+        h('label', {}, 'Prioritas (angka kecil dicek dulu)'), pri,
+        h('div', { class: 'row', style: 'margin-top:14px' }, add), out));
   }
 
   // ---------- Perangkat ----------

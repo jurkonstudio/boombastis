@@ -11,7 +11,8 @@ sms-gateway/
 ├── supabase/
 │   ├── config.toml              Konfigurasi minimal untuk Supabase CLI
 │   ├── migrations/
-│   │   └── 20261101000000_init.sql   Tabel, RLS, fungsi RPC, realtime
+│   │   ├── 20261101000000_init.sql        Tabel, RLS, fungsi RPC, realtime
+│   │   └── 20261101010000_auto_reply.sql  Balasan otomatis untuk SMS masuk
 │   └── setup_admin.sql          Daftarkan admin + perangkat (isi UUID dulu)
 ├── docs/
 │   ├── rancangan.md             Arsitektur, alur, tabel, keamanan
@@ -41,7 +42,9 @@ Pilih salah satu:
   bash scripts/db-push.sh
   ```
   Skrip akan meminta *project ref* (kode di URL project: `https://<ref>.supabase.co`) dan password database.
-- **Lewat dashboard**: buka Supabase > SQL Editor, tempel isi `supabase/migrations/20261101000000_init.sql`, lalu Run.
+- **Lewat dashboard**: buka Supabase > SQL Editor, lalu jalankan **berurutan** (tempel isi file, Run, baru file berikutnya):
+  1. `supabase/migrations/20261101000000_init.sql`
+  2. `supabase/migrations/20261101010000_auto_reply.sql`
 
 ### 2. Akun admin dan akun HP
 
@@ -64,7 +67,19 @@ Pilih salah satu:
 
 > Jangan pernah memakai atau menyimpan `service_role` key di panel atau di repo.
 
-### 4. Aplikasi HP gateway
+### 4. Balasan otomatis
+
+SMS yang masuk ke nomor SIM di HP gateway (082243562960) dibalas otomatis. Atur di panel admin, tab **Balasan Otomatis**:
+
+- Aktif/nonaktif, jeda per pengirim (bawaan 60 menit), dan batas balasan per hari (bawaan 50).
+- Aturan: balas semua pesan, atau hanya yang mengandung / sama persis / diawali kata tertentu. Aturan bawaan: satu balasan umum untuk semua pesan.
+- Nama pengirim (mis. "BANK") dan kode singkat diabaikan, begitu juga nomor milik HP gateway sendiri.
+
+Uji tanpa HP: jalankan perintah tes di bagian 4 `supabase/setup_admin.sql`, lalu lihat tab **Outbox** (balasan otomatis diberi label "otomatis").
+
+> Setiap balasan memakai pulsa/bonus SMS dari SIM gateway. Jeda per pengirim dan batas harian mencegah balas-balasan tanpa henti dengan nomor lain yang juga otomatis.
+
+### 5. Aplikasi HP gateway
 
 Belum termasuk di paket ini. Kontrak API-nya ada di `docs/android-contract.md`.
 

@@ -28,6 +28,15 @@
 5. SMS balasan masuk → HP memanggil `receive_sms(from, body)` → tersimpan di `inbox`.
 6. Pesan yang macet di `sending` lebih dari 5 menit dipulihkan otomatis.
 
+## Balasan otomatis
+
+1. SMS masuk → HP memanggil `receive_sms` → baris baru di `inbox`.
+2. Trigger `inbox_auto_reply` memeriksa pengaturan, pengirim, jeda, dan batas harian.
+3. Aturan aktif pertama yang cocok (urut `priority`) dipakai → baris baru di `outbox` dengan `source = 'auto'`, ditujukan ke pengirim lewat HP yang sama.
+4. HP mengirimnya seperti SMS biasa (`claim_outbox` → kirim → `report_outbox`).
+
+Pengaman: pengirim bukan nomor valid (nama/kode singkat) diabaikan, nomor perangkat sendiri diabaikan, satu pengirim hanya dibalas sekali per jeda (`cooldown_minutes`), dan ada batas harian (`daily_cap`, hari berganti 00.00 WIB).
+
 ## Tabel
 
 | Tabel | Isi | Kolom penting |
@@ -36,6 +45,10 @@
 | `devices` | HP gateway | `name`, `phone_number`, `user_id` (akun Auth HP), `is_active`, `last_seen_at` |
 | `outbox` | antrean SMS keluar | `to_number`, `body`, `status`, `attempts`, `error`, `scheduled_at`, `sent_at` |
 | `inbox` | SMS masuk | `from_number`, `body`, `received_at` |
+| `auto_reply_settings` | pengaturan global (1 baris) | `enabled`, `cooldown_minutes`, `daily_cap` |
+| `auto_reply_rules` | aturan balasan | `match_type`, `keyword`, `reply_body`, `priority`, `is_active` |
+
+Tabel `outbox` punya kolom tambahan `source` (`manual`/`auto`) dan `inbox_id`.
 
 Status `outbox`: `pending` → `sending` → `sent` / `failed` / `cancelled`.
 
