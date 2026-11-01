@@ -1,22 +1,38 @@
 <!doctype html>
 <html lang="id"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SMS Gateway – Panel Pelanggan</title>
+<title>Boombastis · Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f5f6f8;--c:#fff;--t:#1a1d21;--m:#6b7280;--p:#2563eb;--ok:#16a34a;--er:#dc2626;--b:#e5e7eb}
-@media(prefers-color-scheme:dark){:root{--bg:#111318;--c:#1b1e25;--t:#eceef2;--m:#98a0ad;--b:#2a2e38}}
-*{box-sizing:border-box}body{margin:0;font:15px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--t);padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
-main{max-width:560px;margin:0 auto;padding:12px}
-.card{background:var(--c);border:1px solid var(--b);border-radius:12px;padding:14px;margin:0 0 12px}
-h1{font-size:18px;margin:0 0 8px}h2{font-size:16px;margin:0 0 8px}
-input,textarea,select{width:100%;padding:10px;border:1px solid var(--b);border-radius:8px;background:var(--bg);color:var(--t);font:inherit;margin:4px 0 10px}
-button{background:var(--p);color:#fff;border:0;border-radius:8px;padding:10px 14px;font:inherit;cursor:pointer}
-button.g{background:transparent;color:var(--p);border:1px solid var(--b)}button:disabled{opacity:.5}
-nav{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px}nav button{flex:none}nav button:not(.on){background:var(--c);color:var(--t);border:1px solid var(--b)}
-.row{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-top:1px solid var(--b)}.row:first-child{border:0}
-.m{color:var(--m);font-size:13px}.ok{color:var(--ok)}.er{color:var(--er)}.big{font-size:28px;font-weight:700}
-.bar{height:8px;background:var(--b);border-radius:4px;overflow:hidden}.bar i{display:block;height:100%;background:var(--p)}
-#msg{position:sticky;top:0;z-index:5}.al{padding:10px;border-radius:8px;margin-bottom:10px;background:var(--c);border:1px solid var(--b)}
+:root{--bg:#f4f6fa;--c:#fff;--t:#101828;--m:#5b6475;--p:#2457f5;--ok:#12804a;--er:#c62828;--wn:#a15c07;--b:#e3e7ee;--soft:#eef2ff}
+@media(prefers-color-scheme:dark){:root{--bg:#0d111a;--c:#151b27;--t:#e9edf5;--m:#9aa4b8;--p:#3d68f2;--ok:#4cc38a;--er:#ff8a8a;--wn:#f0b25e;--b:#252e40;--soft:#1a2340}}
+*{box-sizing:border-box}body{margin:0;font:16px/1.55 "Plus Jakarta Sans",system-ui,sans-serif;background:var(--bg);color:var(--t)}
+main{max-width:640px;margin:0 auto;padding:0 16px 96px}
+h1{font-size:24px;font-weight:800;line-height:1.2;margin:20px 0 12px}h2{font-size:17px;font-weight:800;margin:0 0 8px}p{margin:0 0 10px}
+.card{background:var(--c);border:1px solid var(--b);border-radius:16px;padding:16px;margin:0 0 14px}
+input,textarea,select{display:block;width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--b);border-radius:10px;background:var(--bg);color:var(--t);font:inherit;margin:6px 0 10px}
+input[type=checkbox]{display:inline-block;width:20px;height:20px;min-height:0;margin:2px 0 0;flex:none}
+button{font:inherit;font-weight:600;min-height:44px;padding:0 16px;border-radius:10px;border:1px solid var(--p);background:var(--p);color:#fff;cursor:pointer}
+button.g{background:transparent;color:var(--p);border-color:var(--b)}button.lnk{background:none;border:0;color:var(--m);min-height:40px;padding:0 10px}button.lnk.on{color:var(--p)}
+button.wide{width:100%}button:disabled{opacity:.5}:focus-visible{outline:3px solid color-mix(in srgb,var(--p) 55%,transparent);outline-offset:2px}
+.top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;margin:0 -16px;padding:calc(6px + env(safe-area-inset-top)) 16px 6px;background:var(--c);border-bottom:1px solid var(--b)}
+.top b{font-weight:800;font-size:18px}.tl{display:flex}
+.tabs{position:fixed;inset:auto 0 0;z-index:5;display:flex;background:var(--c);border-top:1px solid var(--b);padding:0 max(0px,calc((100vw - 640px)/2)) env(safe-area-inset-bottom)}
+.tabs button{flex:1;min-height:58px;padding:0;border:0;border-radius:0;background:none;color:var(--m);font-size:12.5px;box-shadow:inset 0 3px 0 transparent}.tabs .on{color:var(--p);box-shadow:inset 0 3px 0 var(--p)}
+#msg{position:fixed;top:calc(8px + env(safe-area-inset-top));left:12px;right:12px;max-width:616px;margin:auto;z-index:20}
+.al{padding:12px 14px;border-radius:12px;background:var(--c);border:1px solid var(--b);box-shadow:0 8px 24px -10px rgba(0,0,0,.35);font-weight:600}
+.row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--b)}.row:first-child{border:0}.row0{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.m{color:var(--m);font-size:14px}.ok{color:var(--ok)}.er{color:var(--er)}.big{font-size:34px;font-weight:800;line-height:1.1}.bx{min-width:0;overflow-wrap:anywhere}.rt{flex:none;text-align:right}
+.bar{height:10px;background:var(--b);border-radius:5px;overflow:hidden;margin:10px 0}.bar i{display:block;height:100%;background:var(--p)}
+.seg{display:flex;background:var(--soft);padding:4px;border-radius:12px;margin:0 0 14px}.seg button{flex:1;min-height:38px;border:0;background:none;color:var(--m)}.seg .on{background:var(--c);color:var(--t);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.lb{display:block;font-weight:600;font-size:14px;margin:0 0 6px}.chk{display:flex;gap:10px;margin:0 0 14px;font-size:14px;color:var(--m)}.auth{max-width:420px;margin:0 auto}
+.bd{padding:2px 10px;border-radius:99px;font-size:12.5px;font-weight:600;background:var(--soft);color:var(--m)}.bd.ok{background:color-mix(in srgb,var(--ok) 15%,transparent)}.bd.er{background:color-mix(in srgb,var(--er) 15%,transparent)}
+.st{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--b)}.st:first-of-type{border:0}.st i{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;border:1.5px solid var(--b);color:var(--m)}
+.st.done i{background:var(--ok);border-color:var(--ok);color:var(--bg)}.st.done b{color:var(--m)}.st.now i{background:var(--p);border-color:var(--p);color:#fff}.st p{margin:2px 0 10px;color:var(--m);font-size:14.5px}
+.code,.amt{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0;padding:12px 14px;background:var(--soft);border-radius:12px}.code span,.amt span{font-size:28px;font-weight:800;letter-spacing:.06em}.code span{letter-spacing:.18em}
+.ins{white-space:pre-line;padding:12px 14px;border:1px dashed var(--b);border-radius:12px}.warn{color:var(--wn);font-weight:600}.price{font-size:26px;font-weight:800;margin:0 0 6px}.pl{margin:8px 0 14px;padding-left:20px;color:var(--m)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style></head><body><main>
 <div id="msg"></div><div id="root"></div></main>
 <script src="../config.js"></script>
@@ -35,30 +51,38 @@ const rp = n => 'Rp' + Number(n).toLocaleString('id-ID');
 const wk = d => d ? new Date(d).toLocaleString('id-ID',{dateStyle:'short',timeStyle:'short'}) : '-';
 function h(tag, a = {}, ...kids){const e=document.createElement(tag);for(const k in a){if(k==='class')e.className=a[k];else if(k.startsWith('on'))e.addEventListener(k.slice(2),a[k]);else e[k]=a[k];}
   kids.flat().forEach(c=>e.append(c instanceof Node?c:document.createTextNode(c==null?'':c)));return e;}
-function say(t, bad){const m=$('#msg');m.replaceChildren(h('div',{class:'al '+(bad?'er':'ok')},t));if(!bad)setTimeout(()=>m.replaceChildren(),4000);}
+const TR=[[/invalid login/i,'Email atau password salah.'],[/already (been )?registered/i,'Email sudah terdaftar. Coba masuk.'],[/not confirmed/i,'Email belum dikonfirmasi. Cek kotak masuk atau folder spam.'],[/rate limit|too many/i,'Terlalu banyak percobaan. Tunggu beberapa menit lalu coba lagi.'],[/failed to fetch|network/i,'Tidak ada koneksi internet.']];
+const tr=m=>(TR.find(([r])=>r.test(m))||[0,m])[1];
+function say(t,bad){const m=$('#msg');m.replaceChildren(h('div',{class:'al '+(bad?'er':'ok'),role:bad?'alert':'status'},bad?tr(String(t)):t));clearTimeout(say.t);if(!bad)say.t=setTimeout(()=>m.replaceChildren(),4000);}
+const cfg=async()=>Object.fromEntries(((await sb.from('site_settings').select('key,value')).data||[]).map(x=>[x.key,x.value]));
+const cp=t=>navigator.clipboard.writeText(t).then(()=>say('Disalin.')).catch(()=>say('Salin manual: '+t));
+const seg=(o,cur,fn)=>h('div',{class:'seg'},...o.map(([k,l])=>h('button',{class:k===cur?'on':'',onclick:()=>fn(k)},l)));
+const goTab=k=>{tab=k;shell();scrollTo(0,0);};
 async function run(btn, fn){if(btn)btn.disabled=true;try{await fn();}catch(e){say(e.message||String(e),true);}finally{if(btn)btn.disabled=false;}}
 let user=null, acc=null, tab='home';
 
 function authView(){
-  let mode='in';
-  const f=h('div',{class:'card'}); root.replaceChildren(h('h1',{},'SMS Gateway'),f);
+  let mode='in';const wrap=h('div',{class:'auth'});
+  root.replaceChildren(h('header',{class:'top'},h('b',{},'Boombastis')),wrap);
   const draw=()=>{
-    const nm=h('input',{placeholder:'Nama'}),wa=h('input',{placeholder:'Nomor WhatsApp, mis. 0812…',type:'tel'}),
-      em=h('input',{placeholder:'Email',type:'email'}),pw=h('input',{placeholder:'Password (min. 8 karakter)',type:'password'}),
-      tc=h('input',{type:'checkbox',style:'width:auto;margin-right:8px'});
-    const go=h('button',{onclick:()=>run(go,async()=>{
-      if(mode==='in'){const{error}=await sb.auth.signInWithPassword({email:em.value.trim(),password:pw.value});if(error)throw error;return start();}
-      if(!tc.checked)throw new Error('Centang persetujuan syarat layanan.');
+    const up=mode==='up',fld=(l,a)=>{const i=h('input',a);return[h('label',{class:'lb'},l,i),i];};
+    const[nl,nm]=fld('Nama',{autocomplete:'name'}),[wl,wa]=fld('Nomor WhatsApp',{type:'tel',autocomplete:'tel',placeholder:'081234567890'}),
+      [el,em]=fld('Email',{type:'email',autocomplete:'email'}),[pl,pw]=fld(up?'Password (minimal 8 karakter)':'Password',{type:'password',autocomplete:up?'new-password':'current-password'});
+    const tc=h('input',{type:'checkbox'});
+    const go=h('button',{class:'wide',onclick:()=>run(go,async()=>{
+      if(!em.value.trim()||!pw.value)throw new Error('Isi email dan password.');
+      if(!up){const{error}=await sb.auth.signInWithPassword({email:em.value.trim(),password:pw.value});if(error)throw error;return start();}
+      if(!nm.value.trim())throw new Error('Isi namamu.');
       if(pw.value.length<8)throw new Error('Password minimal 8 karakter.');
+      if(!tc.checked)throw new Error('Centang persetujuan aturan pemakaian.');
       const{data,error}=await sb.auth.signUp({email:em.value.trim(),password:pw.value,options:{data:{full_name:nm.value.trim(),phone:wa.value.trim(),accepted_terms:'true'}}});
-      if(error)throw error;
-      if(data.session)return start();
-      say('Pendaftaran berhasil. Cek email untuk konfirmasi, lalu masuk.');mode='in';draw();
-    })},mode==='in'?'Masuk':'Daftar');
-    f.replaceChildren(
-      h('nav',{},h('button',{class:mode==='in'?'on':'',onclick:()=>{mode='in';draw();}},'Masuk'),h('button',{class:mode==='up'?'on':'',onclick:()=>{mode='up';draw();}},'Daftar')),
-      ...(mode==='up'?[nm,wa]:[]),em,pw,
-      ...(mode==='up'?[h('label',{class:'m'},tc,'Saya setuju dengan syarat layanan dan tidak memakai SMS untuk spam/penipuan.'),h('p')]:[]),go);
+      if(error)throw error;if(data.session)return start();
+      wrap.replaceChildren(h('div',{class:'card'},h('h2',{},'Cek email-mu'),h('p',{},'Kami mengirim tautan konfirmasi ke '+em.value.trim()+'. Buka tautannya (cek folder spam bila belum ada), lalu masuk di sini.'),h('button',{class:'wide',onclick:()=>{mode='in';draw();}},'Ke halaman masuk')));
+    })},up?'Buat akun':'Masuk');
+    pw.addEventListener('keydown',e=>{if(e.key==='Enter')go.click();});
+    wrap.replaceChildren(h('h1',{},up?'Buat akun':'Masuk'),h('p',{class:'m'},up?'Daftar dulu, pilih paket setelah masuk.':'Kirim SMS lewat HP dan SIM milikmu sendiri.'),
+      seg([['in','Masuk'],['up','Daftar']],mode,k=>{mode=k;draw();}),
+      h('div',{class:'card'},...(up?[nl,wl]:[]),el,pl,...(up?[h('label',{class:'chk'},tc,h('span',{},'Saya setuju: layanan ini tidak dipakai untuk spam, penipuan, atau pesan tanpa izin penerima. Akun yang melanggar bisa ditangguhkan.'))]:[]),go));
   };draw();
 }
 
@@ -71,49 +95,57 @@ async function start(){
   acc=data;shell();
 }
 function shell(){
-  const nav=h('nav',{},...[['home','Beranda'],['send','Kirim'],['msgs','Pesan'],['auto','Balasan'],['dev','Perangkat'],['plan','Paket'],...(acc.is_admin?[['admin','Admin']]:[])].map(([k,l])=>
-    h('button',{class:tab===k?'on':'',onclick:()=>{tab=k;shell();}},l)));
-  const body=h('div');
-  root.replaceChildren(h('div',{class:'row',style:'border:0'},h('h1',{},'Halo, '+(acc.profile?.full_name||acc.profile?.email||'')),
-    h('button',{class:'g',onclick:async()=>{await sb.auth.signOut();authView();}},'Keluar')),nav,body);
-  if(acc.profile?.is_suspended)body.append(h('div',{class:'al er'},'Akunmu ditangguhkan. Hubungi admin.'));
+  const T=[['home','Beranda'],['send','Kirim'],['msgs','Pesan'],['auto','Balasan'],['dev','Perangkat']],body=h('div');
+  root.replaceChildren(h('header',{class:'top'},h('b',{},'Boombastis'),h('div',{class:'tl'},
+    h('button',{class:'lnk'+(tab==='plan'?' on':''),onclick:()=>goTab('plan')},'Paket'),
+    ...(acc.is_admin?[h('button',{class:'lnk'+(tab==='admin'?' on':''),onclick:()=>goTab('admin')},'Admin')]:[]),
+    h('button',{class:'lnk',onclick:async()=>{await sb.auth.signOut();authView();}},'Keluar'))),body,
+    h('nav',{class:'tabs'},...T.map(([k,l])=>h('button',{class:tab===k?'on':'',onclick:()=>goTab(k)},l))));
+  if(acc.profile?.is_suspended)body.append(h('div',{class:'card er'},'Akunmu ditangguhkan. Hubungi admin.'));
   Promise.resolve(({home,send,msgs,auto,dev,plan,admin})[tab](body)).catch(e=>say(e.message,true));
 }
 async function refresh(){const{data}=await sb.rpc('my_account');if(data)acc=data;}
 
-function home(b){
-  const s=acc.subscription;
-  if(!s&&!acc.is_admin)return b.append(h('div',{class:'card'},h('h2',{},'Belum ada langganan'),h('p',{class:'m'},'Pilih paket untuk mulai mengirim SMS.'),h('button',{onclick:()=>{tab='plan';shell();}},'Lihat paket')));
-  if(!s)return b.append(h('div',{class:'card'},'Akun admin: tidak dikenai kuota.'));
-  const left=s.sms_quota-s.sms_used,pct=Math.min(100,s.sms_used/s.sms_quota*100);
-  b.append(h('div',{class:'card'},h('div',{class:'m'},'Paket '+s.plan_name),h('div',{class:'big'},left+' SMS'),h('div',{class:'m'},'tersisa dari '+s.sms_quota),
-    h('div',{class:'bar'},h('i',{style:'width:'+pct+'%'})),
+async function home(b){
+  const s=acc.subscription,nm=(acc.profile?.full_name||'').split(' ')[0];
+  const[{data:dv},{count:n}]=await Promise.all([sb.from('devices').select('last_seen_at').eq('owner_id',user.id),sb.from('outbox').select('id',{count:'exact',head:true}).eq('owner_id',user.id)]);
+  b.append(h('h1',{},'Halo'+(nm?', '+nm:'')));
+  const d=[!!(s||acc.is_admin),(dv||[]).some(x=>x.last_seen_at),n>0],cur=d.indexOf(false);
+  if(cur>-1){const S=[['Pilih paket','Pilih jumlah SMS yang kamu butuhkan, lalu transfer.','Lihat paket','plan'],['Pasang aplikasi di HP Android','HP dan SIM-mu yang akan mengirim SMS. Unduh aplikasi, lalu masukkan kode pairing.','Siapkan HP','dev'],['Kirim SMS pertama','Coba kirim ke nomormu sendiri.','Tulis pesan','send']];
+    b.append(h('section',{class:'card'},h('h2',{},'Mulai dari sini'),...S.map(([t,x,l,k],i)=>h('div',{class:'st'+(d[i]?' done':i===cur?' now':'')},h('i',{},d[i]?'✓':i+1),
+      h('div',{},h('b',{},t),i===cur?[h('p',{},x),h('button',{onclick:()=>goTab(k)},l)]:'')))));}
+  if(!s)return;
+  const left=s.sms_quota-s.sms_used,pct=Math.min(100,s.sms_used/s.sms_quota*100),low=left<=Math.max(5,s.sms_quota*.1)||new Date(s.expires_at)-Date.now()<3*864e5;
+  b.append(h('section',{class:'card'},h('div',{class:'m'},'Paket '+s.plan_name),h('div',{class:'big'},left+' SMS'),h('div',{class:'m'},'tersisa dari '+s.sms_quota),h('div',{class:'bar'},h('i',{style:'width:'+pct+'%'})),
     h('p',{class:s.active?'m':'er'},(s.active?'Aktif sampai ':'Berakhir pada ')+wk(s.expires_at)),
-    h('div',{class:'m'},'Perangkat: '+acc.devices+' / '+s.max_devices+' · Batas harian: '+s.daily_limit)));
+    low?h('p',{class:'warn'},'Kuota atau masa aktif hampir habis. ',h('button',{class:'g',onclick:()=>goTab('plan')},'Perpanjang')):'',
+    h('div',{class:'m'},'Perangkat: '+acc.devices+' dari '+s.max_devices+' · Batas harian: '+s.daily_limit+' SMS')));
 }
 
 function send(b){
-  const to=h('input',{placeholder:'Nomor tujuan, mis. 0812…',type:'tel'}),tx=h('textarea',{rows:4,maxLength:1000,placeholder:'Isi pesan'}),
-    cnt=h('div',{class:'m'},'0/1000');tx.oninput=()=>cnt.textContent=tx.value.length+'/1000';
-  const go=h('button',{onclick:()=>run(go,async()=>{
-    if(!to.value.trim()||!tx.value.trim())throw new Error('Nomor dan isi pesan wajib diisi.');
-    const{error}=await sb.from('outbox').insert({to_number:to.value.trim(),body:tx.value.trim(),owner_id:user.id});
-    if(error)throw error;
-    say('Pesan masuk antrean.');to.value='';tx.value='';cnt.textContent='0/1000';await refresh();
-  })},'Kirim');
-  b.append(h('div',{class:'card'},h('h2',{},'Kirim SMS'),to,tx,cnt,h('p'),go,
-    h('p',{class:'m'},'Dikirim lewat HP gateway-mu. Pesan yang gagal mengembalikan kuota.')));
+  const live=acc.is_admin||acc.subscription?.active;b.append(h('h1',{},'Kirim SMS'));
+  if(!live)b.append(h('div',{class:'card'},h('h2',{},'Paket belum aktif'),h('p',{class:'m'},'Kamu perlu paket aktif untuk mengirim SMS.'),h('button',{onclick:()=>goTab('plan')},'Lihat paket')));
+  const to=h('input',{type:'tel',placeholder:'081234567890',autocomplete:'off'}),tx=h('textarea',{rows:5,maxLength:1000}),cnt=h('div',{class:'m'},'0/1000');tx.oninput=()=>cnt.textContent=tx.value.length+'/1000';
+  const go=h('button',{class:'wide',disabled:!live,onclick:()=>run(go,async()=>{
+    if(!to.value.trim()||!tx.value.trim())throw new Error('Isi nomor tujuan dan pesan.');
+    const{error}=await sb.from('outbox').insert({to_number:to.value.trim(),body:tx.value.trim(),owner_id:user.id});if(error)throw error;
+    say('Pesan masuk antrean. HP akan mengirimnya sebentar lagi.');to.value=tx.value='';cnt.textContent='0/1000';await refresh();
+  })},'Kirim SMS');
+  b.append(h('div',{class:'card'},h('label',{class:'lb'},'Nomor tujuan',to),h('label',{class:'lb'},'Isi pesan',tx),cnt,h('p'),go,h('p',{class:'m'},'Dikirim lewat HP gateway-mu. Pesan yang gagal mengembalikan kuota.')));
 }
 
 function msgs(b){
-  let w='outbox';const box=h('div',{class:'card'});
+  let w='outbox';const box=h('div',{class:'card'}),bar=h('div');b.append(h('h1',{},'Pesan'),bar,box);
+  const ST={pending:['Menunggu',''],sending:['Mengirim',''],sent:['Terkirim','ok'],failed:['Gagal','er'],cancelled:['Dibatalkan','']};
   const draw=async()=>{
+    bar.replaceChildren(seg([['outbox','Keluar'],['inbox','Masuk']],w,k=>{w=k;draw();}));
     const out=w==='outbox',{data,error}=await sb.from(w).select('*').order(out?'created_at':'received_at',{ascending:false}).limit(50);
     if(error)return say(error.message,true);
-    box.replaceChildren(...(data.length?data.map(r=>h('div',{class:'row'},h('div',{},h('b',{},out?r.to_number:r.from_number),h('div',{class:'m'},r.body)),
-      h('div',{class:'m',style:'text-align:right;flex:none'},out?h('span',{class:r.status==='sent'?'ok':r.status==='failed'?'er':''},r.status):'',h('div',{},wk(out?r.created_at:r.received_at))))):[h('p',{class:'m'},'Belum ada pesan.')]));
-  };
-  b.append(h('nav',{},h('button',{onclick:()=>{w='outbox';draw();}},'Terkirim (Outbox)'),h('button',{class:'g',onclick:()=>{w='inbox';draw();}},'Masuk (Inbox)')),box);draw();
+    box.replaceChildren(...(data.length?data.map(r=>{const s=ST[r.status]||[r.status,''];
+      return h('div',{class:'row'},h('div',{class:'bx'},h('b',{},out?r.to_number:r.from_number),h('div',{},r.body),out&&r.status==='failed'&&r.error?h('div',{class:'m er'},r.error):''),
+        h('div',{class:'rt'},out?h('span',{class:'bd '+s[1]},s[0]):'',h('div',{class:'m'},wk(out?r.created_at:r.received_at))));
+    }):[h('p',{class:'m'},out?'Belum ada SMS keluar. Kirim yang pertama dari menu Kirim.':'Belum ada SMS masuk. SMS yang diterima HP gateway muncul di sini.')]));
+  };draw();
 }
 
 async function auto(b){
@@ -178,39 +210,43 @@ async function admin(b){
 }
 
 function dev(b){
-  const box=h('div',{class:'card'});
+  const how=h('div',{class:'card'}),box=h('div');
+  const nm=h('input',{placeholder:'Contoh: HP Toko'}),
+    add=h('button',{class:'wide',onclick:()=>run(add,async()=>{const{error}=await sb.rpc('create_device',{p_name:nm.value.trim()||'HP gateway'});if(error)throw error;nm.value='';say('Perangkat dibuat. Masukkan kodenya di aplikasi HP.');await refresh();draw();})},'Tambah perangkat');
+  b.append(h('h1',{},'Perangkat'),how,box,h('div',{class:'card'},h('h2',{},'Tambah HP baru'),h('label',{class:'lb'},'Nama perangkat',nm),add));
   const draw=async()=>{
-    const{data,error}=await sb.from('devices').select('*').eq('owner_id',user.id).order('created_at');
+    const[{data,error},S]=await Promise.all([sb.from('devices').select('*').eq('owner_id',user.id).order('created_at'),cfg()]);
     if(error)return say(error.message,true);
-    box.replaceChildren(h('h2',{},'Perangkat'),...(data.length?data.map(d=>{
-      const valid=d.pair_code&&d.pair_expires_at&&new Date(d.pair_expires_at)>new Date();
-      return h('div',{class:'row'},h('div',{},h('b',{},d.name),h('div',{class:'m'},'Terakhir terlihat: '+wk(d.last_seen_at)),
-        valid?h('div',{},'Kode pairing: ',h('b',{},d.pair_code)):''),
-        h('button',{class:'g',onclick:e=>run(e.target,async()=>{const{error}=await sb.rpc('new_pair_code',{p_device_id:d.id});if(error)throw error;draw();})},'Kode baru'));
-    }):[h('p',{class:'m'},'Belum ada perangkat.')]));
-  };
-  const nm=h('input',{placeholder:'Nama perangkat, mis. HP Toko'}),
-    add=h('button',{onclick:()=>run(add,async()=>{const{error}=await sb.rpc('create_device',{p_name:nm.value});if(error)throw error;nm.value='';say('Perangkat dibuat. Masukkan kode di aplikasi HP (berlaku 15 menit).');await refresh();draw();})},'Tambah perangkat');
-  b.append(box,h('div',{class:'card'},nm,add));draw();
+    const on=d=>d.last_seen_at&&Date.now()-new Date(d.last_seen_at)<3*6e4,ok=/^https:\/\//.test(S.apk_url||'');
+    how.replaceChildren(h('h2',{},'Cara memasang'),h('ol',{class:'pl'},h('li',{},'Unduh dan pasang aplikasi di HP Android.'),h('li',{},'Buka aplikasi, izinkan SMS dan pengecualian baterai.'),h('li',{},'Masukkan kode pairing dari perangkat di bawah (berlaku 15 menit).')),
+      ok?h('a',{href:S.apk_url,rel:'noopener'},h('button',{class:'wide'},'Unduh aplikasi'+(S.apk_version?' (v'+S.apk_version+')':''))):h('p',{class:'warn'},'Link aplikasi belum tersedia.'+(S.support_contact?' Hubungi '+S.support_contact+'.':'')));
+    box.replaceChildren(...(data.length?data.map(d=>{const v=d.pair_code&&d.pair_expires_at&&new Date(d.pair_expires_at)>new Date();
+      return h('div',{class:'card'},h('div',{class:'row0'},h('b',{},d.name),h('span',{class:'bd '+(on(d)?'ok':'')},on(d)?'Online':d.last_seen_at?'Offline':'Belum terhubung')),
+        d.last_seen_at?h('div',{class:'m'},'Terakhir terlihat '+wk(d.last_seen_at)):'',
+        v?h('div',{class:'code'},h('span',{},d.pair_code),h('button',{class:'g',onclick:()=>cp(d.pair_code)},'Salin')):'',
+        h('button',{class:'g wide',onclick:e=>run(e.target,async()=>{const{error}=await sb.rpc('new_pair_code',{p_device_id:d.id});if(error)throw error;draw();})},v?'Buat kode baru':'Buat kode pairing'));
+    }):[h('p',{class:'m'},'Belum ada perangkat. Tambahkan HP pertamamu di bawah.')]));
+  };draw();
 }
 
 function plan(b){
-  const pl=h('div'),pay=h('div',{class:'card'});b.append(pl,pay);
-  (async()=>{
-    const[{data:ps},{data:pm},{data:st}]=await Promise.all([
-      sb.from('plans').select('*').eq('is_active',true).order('sort_order'),
-      sb.from('payments').select('*').eq('owner_id',user.id).order('created_at',{ascending:false}).limit(10),
-      sb.from('site_settings').select('*').eq('key','payment_instructions')]);
-    const ins=st?.[0]?.value||'';
-    pl.replaceChildren(...(ps||[]).map(p=>h('div',{class:'card'},h('h2',{},p.name+' – '+rp(p.price_idr)),h('div',{class:'m'},p.description),
-      h('p',{},p.sms_quota+' SMS · '+p.duration_days+' hari · '+p.max_devices+' perangkat · maks. '+p.daily_limit+'/hari'),
-      h('button',{onclick:e=>run(e.target,async()=>{const{data,error}=await sb.rpc('create_order',{p_plan_id:p.id});if(error)throw error;
-        alert('Transfer PERSIS '+rp(data.amount_idr)+' (termasuk kode unik '+data.unique_code+').\n\n'+ins);plan2();})},'Pesan paket'))));
-    pay.replaceChildren(h('h2',{},'Pesanan'),...(pm?.length?pm.map(x=>h('div',{class:'row'},h('div',{},h('b',{},x.plan_name),h('div',{class:'m'},wk(x.created_at))),
-      h('div',{style:'text-align:right'},rp(x.amount_idr),h('div',{class:x.status==='paid'?'ok':x.status==='rejected'?'er':'m'},x.status==='pending'?'menunggu konfirmasi':x.status)))):[h('p',{class:'m'},'Belum ada pesanan.')]),
-      h('p',{class:'m'},ins));
-  })().catch(e=>say(e.message,true));
-  const plan2=()=>{tab='plan';shell();};
+  const top=h('div'),pl=h('div'),hist=h('div',{class:'card'});b.append(h('h1',{},'Paket'),top,pl,hist);
+  const draw=async()=>{
+    const[{data:ps},{data:pm},S]=await Promise.all([sb.from('plans').select('*').eq('is_active',true).order('sort_order'),
+      sb.from('payments').select('*').eq('owner_id',user.id).order('created_at',{ascending:false}).limit(10),cfg()]);
+    const pend=(pm||[]).find(x=>x.status==='pending');
+    top.replaceChildren(...(pend?[h('section',{class:'card'},h('h2',{},'Selesaikan pembayaran'),h('p',{class:'m'},pend.plan_name+' · transfer sesuai jumlah ini:'),
+      h('div',{class:'amt'},h('span',{},rp(pend.amount_idr)),h('button',{class:'g',onclick:()=>cp(String(pend.amount_idr))},'Salin')),
+      h('p',{class:'ins'},S.payment_instructions||'Hubungi admin untuk nomor rekening.'),
+      h('p',{class:'m'},'Nominal sudah termasuk kode unik agar transfermu mudah dikenali. Paket aktif setelah admin memastikan transfer masuk.'+(S.support_contact?' Bantuan: '+S.support_contact:'')))]:[]));
+    pl.replaceChildren(...(ps||[]).map(p=>h('section',{class:'card'},h('h2',{},p.name),h('div',{class:'price'},rp(p.price_idr)),h('p',{class:'m'},p.description||''),
+      h('ul',{class:'pl'},h('li',{},p.sms_quota+' SMS'),h('li',{},'Aktif '+p.duration_days+' hari'),h('li',{},p.max_devices+' perangkat · maks. '+p.daily_limit+' SMS per hari')),
+      h('button',{class:'wide',onclick:e=>run(e.target,async()=>{const{error}=await sb.rpc('create_order',{p_plan_id:p.id});if(error)throw error;say('Pesanan dibuat. Ikuti petunjuk transfer di atas.');await draw();scrollTo(0,0);})},'Pesan paket'))));
+    const L={pending:['Menunggu konfirmasi','m'],paid:['Lunas','ok'],rejected:['Ditolak','er']};
+    hist.replaceChildren(h('h2',{},'Riwayat pesanan'),...(pm?.length?pm.map(x=>h('div',{class:'row'},h('div',{},h('b',{},x.plan_name),h('div',{class:'m'},wk(x.created_at))),
+      h('div',{class:'rt'},rp(x.amount_idr),h('div',{class:'m '+(L[x.status]||['',''])[1]},(L[x.status]||[x.status])[0])))):[h('p',{class:'m'},'Belum ada pesanan.')]));
+  };
+  draw().catch(e=>say(e.message,true));
 }
 sb.auth.onAuthStateChange(ev=>{if(ev==='SIGNED_OUT')authView();});
 start();
