@@ -18,6 +18,59 @@ TODAY = date.today().isoformat()
 e = html.escape
 
 
+# Tautan bagian halaman TANPA tanda "#": /harga/, /en/harga/, dst.
+# Klik di halaman = gulir mulus + ganti alamat (history.pushState). Buka langsung /harga/ = halaman kecil
+# (stub) yang mengalihkan ke beranda bahasa itu dengan ?k=harga, lalu alamat dibersihkan lagi dan halaman menggulir.
+SLUGS = {"fitur": "fitur", "cara-kerja": "cara-kerja", "keamanan": "keamanan", "faq": "faq", "harga": "harga", "konten": "main"}
+
+
+def home(code):
+    return "/" if code == "id" else f"/{code}/"
+
+
+def sec(code, slug):
+    return f"{home(code)}{slug}/"
+
+
+ROUTER_START, ROUTER_END = "<!--go-->", "<!--/go-->"
+ROUTER_JS = ROUTER_START + """<script>
+(()=>{
+const S={fitur:'fitur','cara-kerja':'cara-kerja',keamanan:'keamanan',faq:'faq',harga:'harga',konten:'main'},has=k=>Object.prototype.hasOwnProperty.call(S,k);
+const c=document.querySelector('link[rel=canonical]'),B=c?new URL(c.href).pathname:'/';
+const calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function go(k,smooth){
+  const b=smooth&&!calm?'smooth':'instant',el=k&&document.getElementById(S[k]);
+  if(!el){scrollTo({top:0,behavior:b});return}
+  el.scrollIntoView({behavior:b,block:'start'});
+  if(S[k]==='main'){el.setAttribute('tabindex','-1');el.focus({preventScroll:true})}
+}
+function slugOf(p){if(p.indexOf(B)!==0)return null;const k=p.slice(B.length).split('/')[0];return has(k)?k:null}
+document.addEventListener('click',e=>{
+  const a=e.target.closest&&e.target.closest('a[data-go]');
+  if(!a||e.defaultPrevented||e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+  e.preventDefault();
+  const k=has(a.dataset.go)?a.dataset.go:null;
+  history.pushState(null,'',k?B+k+'/':B);
+  go(k,true);
+});
+addEventListener('popstate',()=>go(slugOf(location.pathname),true));
+const q=new URLSearchParams(location.search).get('k');
+if(q&&has(q)){history.replaceState(null,'',B+q+'/');requestAnimationFrame(()=>go(q,false))}
+})();
+</script>""" + ROUTER_END
+
+
+def stub(code, slug):
+    h = home(code)
+    return (f'<!doctype html><html lang="{HREFLANG[code]}"><head><meta charset="utf-8">'
+            f'<meta name="viewport" content="width=device-width,initial-scale=1">'
+            f'<meta name="robots" content="noindex,follow"><link rel="canonical" href="{url(code)}">'
+            f'<title>Boombastis</title>'
+            f'<script>location.replace("{h}?k={slug}")</script>'
+            f'<noscript><meta http-equiv="refresh" content="0;url={h}"></noscript></head>'
+            f'<body><a href="{h}">Boombastis</a></body></html>\n')
+
+
 def url(code):
     return BASE + "/" if code == "id" else f"{BASE}/{code}/"
 
@@ -79,7 +132,7 @@ def jsonld(code, t):
             {"@type": "SoftwareApplication", "name": "Boombastis SMS Gateway",
              "applicationCategory": "BusinessApplication", "operatingSystem": "Android, Web",
              "inLanguage": HREFLANG[code], "description": t["desc"], "url": u,
-             "offers": [{"@type": "Offer", "name": n, "price": p, "priceCurrency": "IDR", "url": u + "#harga"}
+             "offers": [{"@type": "Offer", "name": n, "price": p, "priceCurrency": "IDR", "url": u}
                         for n, p in plans]},
             {"@type": "FAQPage", "inLanguage": HREFLANG[code],
              "mainEntity": [{"@type": "Question", "name": q,
@@ -150,18 +203,18 @@ def page(code, t, css):
 </head>
 <body>
 
-<a href="#main" class="skip">{e(t['skip'])}</a>
+<a href="{sec(code, 'konten')}" class="skip" data-go="konten">{e(t['skip'])}</a>
 <header class="nav">
   <div class="wrap">
-    <a href="{url(code)}" class="logo" aria-label="Boombastis">
+    <a href="{home(code)}" class="logo" aria-label="Boombastis" data-go="top">
       <i><svg viewBox="0 0 24 24"><path d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-5l-5 4v-4H7a3 3 0 0 1-3-3z"/></svg></i>
       Boombastis
     </a>
     <nav class="nav-links">
-      <a href="#fitur">{e(nav[0])}</a>
-      <a href="#cara-kerja">{e(nav[1])}</a>
-      <a href="#harga">{e(nav[2])}</a>
-      <a href="#faq">{e(nav[3])}</a>
+      <a href="{sec(code, 'fitur')}" data-go="fitur">{e(nav[0])}</a>
+      <a href="{sec(code, 'cara-kerja')}" data-go="cara-kerja">{e(nav[1])}</a>
+      <a href="{sec(code, 'harga')}" data-go="harga">{e(nav[2])}</a>
+      <a href="{sec(code, 'faq')}" data-go="faq">{e(nav[3])}</a>
       {lang_menu(code)}
       <a href="/app/" class="btn primary sm">{e(t['login'])}</a>
     </nav>
@@ -177,7 +230,7 @@ def page(code, t, css):
       <p class="lead">{e(t['lead'])}</p>
       <div class="cta">
         <a class="btn primary" href="/app/">{e(t['cta'][0])}</a>
-        <a class="btn ghost" href="#harga">{e(t['cta'][1])}</a>
+        <a class="btn ghost" href="{sec(code, 'harga')}" data-go="harga">{e(t['cta'][1])}</a>
       </div>
       <div class="trust">{trust}</div>
     </div>
@@ -257,6 +310,7 @@ def page(code, t, css):
   document.getElementById('yr').textContent=new Date().getFullYear();
 }})();
 </script>
+{ROUTER_JS}
 </body>
 </html>
 """
@@ -276,9 +330,11 @@ def patch_root(src):
                       '<link rel="canonical" href="https://boombastis.my.id/">\n' + hreflang_links(), 1)
     src = src.replace('<meta property="og:locale" content="id_ID">',
                       '<meta property="og:locale" content="id_ID">' + alt, 1)
-    src = src.replace('<a href="app/" class="btn primary sm">', lang_menu("id") + '\n      <a href="app/" class="btn primary sm">', 1)
+    src = src.replace('<a href="/app/" class="btn primary sm">', lang_menu("id") + '\n      <a href="/app/" class="btn primary sm">', 1)
     src = src.replace("</style>", EXTRA_CSS + "</style>", 1)
     src = src.replace("</footer>", "  " + lang_row() + "\n</footer>", 1)
+    src = re.sub(re.escape(ROUTER_START) + r".*?" + re.escape(ROUTER_END) + r"\s*", "", src, flags=re.S)
+    src = src.replace("</body>", ROUTER_JS + "\n</body>", 1)
     return src
 
 
@@ -314,6 +370,14 @@ def main():
         with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
             f.write(page(code, T[code], css_full))
         print("ok", code)
+
+    for code in ORDER:
+        for slug in SLUGS:
+            d = os.path.join(ROOT, "" if code == "id" else code, slug)
+            os.makedirs(d, exist_ok=True)
+            with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
+                f.write(stub(code, slug))
+    print("halaman bagian (tanpa #) dibuat:", len(ORDER) * len(SLUGS))
 
     with open(idx_path, "w", encoding="utf-8") as f:
         f.write(patch_root(src))
