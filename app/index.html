@@ -131,7 +131,7 @@ const IC={home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1
 const ico=k=>{const s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('viewBox','0 0 24 24');s.setAttribute('aria-hidden','true');s.innerHTML=IC[k];return s;};
 const logo=(c)=>{const s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('viewBox','0 0 24 24');s.setAttribute('aria-hidden','true');s.innerHTML='<path d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-5l-5 4v-4H7a3 3 0 0 1-3-3z"/>';return s;};
 const brand=()=>h('span',{class:'brand'},h('i',{},logo()),h('b',{},'Boombastis'));
-const MORE=['more','auto','api','plan','admin'],TT={auto:'Balasan otomatis',api:'API & integrasi',plan:'Paket & pembayaran',admin:'Admin'};
+const MORE=['more','auto','api','plan','help','admin'],TT={auto:'Balasan otomatis',api:'API & integrasi',plan:'Paket & pembayaran',help:'Panduan penggunaan',admin:'Admin'};
 let timer=null;
 function shell(){
   clearInterval(timer);
@@ -141,12 +141,12 @@ function shell(){
   root.replaceChildren(h('header',{class:'top'},sub?h('button',{class:'lnk',onclick:()=>goTab('more')},'‹ Lainnya'):brand(),sub?h('b',{},TT[tab]):''),body,
     h('nav',{class:'tabs'},...T.map(([k,l])=>h('button',{class:cur===k?'on':'',onclick:()=>goTab(k)},ico(k),l))));
   if(acc.profile?.is_suspended)body.append(h('div',{class:'card er'},'Akunmu ditangguhkan. Hubungi admin.'));
-  Promise.resolve(({home,send,msgs,auto,dev,plan,admin,more,api})[tab](body)).catch(e=>say(e.message,true)).finally(()=>body.querySelectorAll('.sk').forEach(e=>e.remove()));
+  Promise.resolve(({home,send,msgs,auto,dev,plan,admin,more,api,help})[tab](body)).catch(e=>say(e.message,true)).finally(()=>body.querySelectorAll('.sk').forEach(e=>e.remove()));
 }
 function more(b){
   const row=(t,s,k)=>h('button',{class:'mi',onclick:()=>goTab(k)},h('span',{},t,h('small',{},s)),'›');
   b.append(h('h1',{},'Lainnya'),row('Balasan otomatis','Balas SMS masuk berdasarkan kata kunci','auto'),row('API & integrasi','Kirim SMS dari website atau aplikasimu','api'),
-    row('Paket & pembayaran',acc.subscription?'Paket '+acc.subscription.plan_name:'Pilih atau perpanjang paket','plan'),
+    row('Paket & pembayaran',acc.subscription?'Paket '+acc.subscription.plan_name:'Pilih atau perpanjang paket','plan'),row('Panduan penggunaan','Langkah demi langkah, template, dan solusi masalah','help'),
     ...(acc.is_admin?[row('Admin','Pembayaran, pelanggan, pengaturan situs','admin')]:[]),
     h('p',{class:'m'},user.email||''),h('button',{class:'g wide',onclick:async()=>{await sb.auth.signOut();authView();}},'Keluar'));
 }
@@ -271,7 +271,7 @@ async function admin(b){
   const si=h('input',{type:'search',placeholder:'Cari nama, email, atau nomor',oninput:()=>{q=si.value.toLowerCase();lst();}});
   const view=()=>{
     const pn=D.pm.length,stat=(n,l,hot)=>h('div',{class:'stat'+(hot?' hot':'')},h('b',{},n),h('span',{},l));
-    bar.replaceChildren(seg([['pay','Pembayaran'+(pn?' ('+pn+')':'')],['usr','Pelanggan'],['set','Situs']],w,k=>{w=k;view();}));
+    bar.replaceChildren(seg([['pay','Pembayaran'+(pn?' ('+pn+')':'')],['usr','Pelanggan'],['tpl','Template'],['set','Situs']],w,k=>{w=k;view();}));
     const st=h('div',{class:'grid'},stat(pn,'Menunggu',pn>0),stat(D.ov.filter(act).length,'Aktif'),stat(D.ov.reduce((a,u)=>a+(u.sent_30d||0),0),'Terkirim 30 hari'));
     if(w==='pay')return box.replaceChildren(st,h('div',{class:'card'},h('h2',{},'Pembayaran menunggu'),...(pn?D.pm.map(x=>{const u=D.who[x.owner_id]||{},l=wa(u.phone);
       return h('div',{class:'row'},h('div',{class:'bx'},h('b',{},u.full_name||u.email||x.owner_id),h('div',{class:'m'},x.plan_name+' · '+wk(x.created_at)),l?h('a',{href:l,target:'_blank',rel:'noopener'},'WhatsApp '+u.phone):''),
@@ -279,6 +279,22 @@ async function admin(b){
           h('button',{onclick:e=>run(e.target,async()=>{if(!confirm('Konfirmasi '+rp(x.amount_idr)+' sudah masuk rekening?'))return;const{error}=await sb.rpc('admin_confirm_payment',{p_id:x.id});if(error)throw error;say('Langganan diaktifkan.');load();})},'Konfirmasi'),
           h('button',{class:'g',onclick:e=>run(e.target,async()=>{const n=prompt('Alasan penolakan (opsional):');if(n===null)return;const{error}=await sb.rpc('admin_reject_payment',{p_id:x.id,p_note:n||null});if(error)throw error;load();})},'Tolak'))));}):[h('p',{class:'m'},'Tidak ada pesanan menunggu.')])));
     if(w==='usr'){lst();return box.replaceChildren(st,h('div',{class:'card'},h('h2',{},'Pelanggan ('+D.ov.length+')'),si,lc));}
+    if(w==='tpl'){
+      const cats=Object.entries(CATL).filter(([k])=>k!=='saya'),ti=h('input',{placeholder:'Judul (maks. 60 huruf)',maxLength:60}),tc=h('select',{},...cats.map(([k,l])=>h('option',{value:k},l))),
+        tb=h('textarea',{rows:4,maxLength:1000,placeholder:'Isi pesan. Pakai {nama}, {toko}, dst. untuk bagian yang diisi pengguna.'}),to=h('input',{type:'number',value:100});
+      let eid=null;const fh=h('h2',{},'Template baru'),sv=h('button',{class:'wide',onclick:()=>run(sv,async()=>{
+          const row={title:ti.value.trim(),body:tb.value.trim(),category:tc.value,sort_order:+to.value||100};
+          if(!row.title||!row.body)throw new Error('Isi judul dan isi pesan.');
+          const{error}=eid?await sb.from('message_templates').update(row).eq('id',eid):await sb.from('message_templates').insert({...row,owner_id:null});
+          if(error)throw error;TPL=null;say(eid?'Template diperbarui.':'Template umum ditambah.');load();})},'Simpan template'),
+        cn=h('button',{class:'g wide',style:'margin-top:8px;display:none',onclick:()=>{eid=null;ti.value=tb.value='';to.value=100;fh.textContent='Template baru';cn.style.display='none';}},'Batal ubah');
+      return box.replaceChildren(h('div',{class:'card'},h('h2',{},'Template umum ('+D.tp.length+')'),h('p',{class:'m'},'Tampil untuk semua pelanggan di menu Kirim > Pakai template. Angka urutan terkecil tampil lebih dulu.'),
+        ...(D.tp.length?D.tp.map(t=>h('div',{class:'row'},h('div',{class:'bx'},h('b',{},t.title),h('div',{class:'m'},(CATL[t.category]||t.category)+' · urutan '+t.sort_order),h('div',{},t.body)),
+          h('div',{style:'flex:none;display:flex;flex-direction:column;gap:6px'},
+            h('button',{class:'g',onclick:()=>{eid=t.id;ti.value=t.title;tb.value=t.body;to.value=t.sort_order;tc.value=CATL[t.category]&&t.category!=='saya'?t.category:'umum';fh.textContent='Ubah template';cn.style.display='';ti.scrollIntoView({behavior:'smooth',block:'center'});}},'Ubah'),
+            h('button',{class:'g',onclick:e=>run(e.target,async()=>{if(!confirm('Hapus template umum \"'+t.title+'\"?'))return;const{error}=await sb.from('message_templates').delete().eq('id',t.id);if(error)throw error;TPL=null;load();})},'Hapus')))):[h('p',{class:'m'},'Belum ada template umum.')])),
+        h('div',{class:'card'},fh,h('label',{class:'lb'},'Judul',ti),h('label',{class:'lb'},'Kategori',tc),h('label',{class:'lb'},'Isi pesan',tb),h('label',{class:'lb'},'Urutan',to),sv,cn));
+    }
     const keys=[['payment_instructions','Instruksi pembayaran (rekening, nama pemilik)'],['apk_url','Link unduh APK (https://...)'],['apk_version','Versi APK'],['support_contact','Kontak admin (WhatsApp/email)']];
     const ins=keys.map(([k])=>k==='payment_instructions'?h('textarea',{rows:4,value:D.set[k]||''}):h('input',{value:D.set[k]||''}));
     const sv=h('button',{class:'wide',onclick:()=>run(sv,async()=>{const{error}=await sb.from('site_settings').upsert(keys.map(([k],i)=>({key:k,value:ins[i].value.trim(),updated_at:new Date().toISOString()})));if(error)throw error;say('Pengaturan situs disimpan.');})},'Simpan');
@@ -286,11 +302,31 @@ async function admin(b){
       h('div',{class:'card'},h('h2',{},'Harga paket'),h('p',{class:'m'},'Ubah lewat SQL Editor Supabase, lalu muat ulang halaman:'),h('pre',{class:'cd'},"update plans set price_idr = 149000\nwhere name = 'Pro';")));
   };
   const load=async()=>{
-    const[{data:ov,error:e1},{data:pm},{data:ss},{data:ps}]=await Promise.all([sb.rpc('admin_overview'),sb.from('payments').select('*').eq('status','pending').order('created_at'),sb.from('site_settings').select('*'),sb.from('plans').select('id,name').order('sort_order')]);
+    const[{data:ov,error:e1},{data:pm},{data:ss},{data:ps},{data:tp}]=await Promise.all([sb.rpc('admin_overview'),sb.from('payments').select('*').eq('status','pending').order('created_at'),sb.from('site_settings').select('*'),sb.from('plans').select('id,name').order('sort_order'),sb.from('message_templates').select('*').is('owner_id',null).order('sort_order').order('created_at')]);
     if(e1)return say(e1.message,true);
-    D={ov,pm:pm||[],ps:ps||[],set:Object.fromEntries((ss||[]).map(x=>[x.key,x.value])),who:Object.fromEntries(ov.map(u=>[u.user_id,u]))};view();
+    D={ov,pm:pm||[],ps:ps||[],tp:tp||[],set:Object.fromEntries((ss||[]).map(x=>[x.key,x.value])),who:Object.fromEntries(ov.map(u=>[u.user_id,u]))};view();
   };
   await load();
+}
+
+function help(b){
+  const sec=(t,open,...k)=>{const d=h('details',{class:'card'},h('summary',{},t),...k);d.open=!!open;return d;},
+    ol=(...i)=>h('ol',{class:'pl'},...i.map(x=>h('li',{},x))),ul=(...i)=>h('ul',{class:'pl'},...i.map(x=>h('li',{},x))),p=x=>h('p',{},x),m=x=>h('p',{class:'m'},x),
+    go=(t,k)=>h('button',{class:'g',onclick:()=>goTab(k)},t);
+  b.append(h('h1',{},'Panduan penggunaan'),m('Ketuk judul untuk membuka. Semua langkah bisa dikerjakan dari HP.'),
+    sec('Mulai dari nol (4 langkah)',true,ol('Pilih paket di menu Lainnya > Paket & pembayaran, lalu transfer sesuai instruksi. Admin mengonfirmasi, paket aktif.','Pasang aplikasi gateway di HP Android yang berisi SIM-mu (menu Perangkat).','Masukkan kode pairing dari menu Perangkat ke aplikasi. Status berubah jadi Online.','Kirim SMS pertama ke nomormu sendiri lewat menu Kirim.'),go('Ke menu Perangkat','dev')),
+    sec('Kirim SMS',false,ol('Buka menu Kirim.','Isi nomor tujuan, contoh 081234567890.','Tulis pesan (maks. 1000 karakter). Satu SMS = 160 karakter; lebih dari itu dihitung beberapa bagian.','Ketuk Kirim SMS. Pesan masuk antrean dan dikirim HP beberapa saat kemudian.','Pantau statusnya di menu Pesan > Keluar.'),m('Pesan yang gagal mengembalikan kuota.')),
+    sec('Memakai template pesan',false,p('Template adalah contoh pesan siap pakai. Ada dua jenis:'),ul('Template umum: disediakan admin, bisa dipakai semua pengguna.','Milik saya: template yang kamu simpan sendiri, hanya terlihat olehmu (maks. 50).'),
+      p('Cara memakai:'),ol('Menu Kirim > ketuk Pakai template.','Pilih kategori di bagian atas (Pesanan, Tagihan, Pengingat, dst.), lalu ketuk Pakai pada template yang cocok.','Isi kolom yang muncul, misalnya nama dan nomor pesanan. Isi pesan terisi otomatis.','Cek hasilnya di kolom Isi pesan, boleh diubah, lalu kirim.'),
+      p('Bagian bertanda kurung kurawal, seperti {nama} atau {toko}, adalah kolom isian. Pesan tidak bisa dikirim selama masih ada kurung kurawal yang belum diisi.'),
+      p('Menyimpan template sendiri: tulis pesan di menu Kirim, ketuk Simpan sebagai template, beri nama. Untuk bagian yang berubah-ubah, tulis dalam kurung kurawal, contoh: Halo {nama}, pesananmu {no_pesanan} sudah dikirim. Hapus template milikmu lewat tombol Hapus di daftar.'),
+      go('Coba di menu Kirim','send')),
+    sec('Balasan otomatis',false,ol('Buka Lainnya > Balasan otomatis, centang Aktif.','Atur jeda per pengirim dan batas balasan per hari.','Tambah aturan: pilih kapan membalas (semua pesan, mengandung kata, sama persis, atau diawali kata), tulis kata kunci dan isi balasan.','Aturan dengan angka prioritas terkecil dicek lebih dulu.'),m('Setiap balasan memakai kuota SMS.'),go('Ke Balasan otomatis','auto')),
+    sec('Perangkat dan kode pairing',false,ul('Satu perangkat = satu HP dengan SIM. Jumlah perangkat mengikuti paketmu.','Kode pairing berlaku 15 menit. Kalau kedaluwarsa, ketuk Buat kode baru.','Di HP: izinkan akses SMS dan matikan penghemat baterai untuk aplikasi gateway, supaya tetap Online.','Status Online berarti HP terlihat dalam 3 menit terakhir.')),
+    sec('Kirim SMS dari website atau aplikasimu',false,p('Pakai menu Lainnya > API & integrasi untuk mendapatkan kunci dan contoh kode.'),go('Ke API & integrasi','api')),
+    sec('Masalah yang sering terjadi',false,ul('Pesan menunggu terus: cek menu Perangkat, pastikan HP Online dan ada sinyal serta pulsa/bonus SMS.','Tombol Kirim nonaktif: paket belum aktif atau sudah habis. Cek menu Paket.','Pesan gagal: lihat keterangan merah di menu Pesan > Keluar. Biasanya nomor tujuan salah atau pulsa SIM habis.','Tidak bisa masuk: periksa email dan password, dan konfirmasi email lewat tautan yang dikirim saat daftar.','Template tidak bisa disimpan: hubungi admin, fitur ini perlu diaktifkan di database.')),
+    ...(acc.is_admin?[sec('Untuk admin: kelola template umum',false,ol('Buka Lainnya > Admin > tab Template.','Isi judul, kategori, isi pesan, dan urutan, lalu Simpan template.','Ketuk Ubah atau Hapus pada template yang sudah ada.'),m('Perubahan langsung terlihat oleh semua pengguna saat membuka daftar template berikutnya.'),go('Ke Admin','admin'))]:[]),
+    h('p',{class:'m'},'Butuh bantuan lain? Hubungi admin lewat kontak di halaman utama.'));
 }
 
 function dev(b){

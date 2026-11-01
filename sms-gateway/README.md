@@ -94,4 +94,5 @@ Kode aplikasi ada di `android/` (build APK lewat workflow GitHub Actions). Kontr
 
 - `index.html` = landing page (harga dan tombol unduh APK dibaca dari tabel `plans` dan `site_settings`).
 - `app/index.html` = panel pelanggan. Akun admin otomatis mendapat tab **Admin** (pembayaran menunggu, daftar pelanggan, beri paket, tangguhkan, pengaturan situs/APK).
+- Panduan pengguna: `docs/panduan-pengguna.md` (juga ada di aplikasi: Lainnya > Panduan penggunaan). Template umum dikelola admin di tab **Template**.
 - `config.js` = Project URL + anon key publik untuk keduanya. Isi `key` sebelum deploy.
