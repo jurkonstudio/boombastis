@@ -3,6 +3,14 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+// URL dan anon key dibaca dari config.js di root repo (nilai publik yang sama dengan situs).
+val cfgJs = rootProject.file("../../config.js")
+fun cfg(key: String): String {
+    if (!cfgJs.exists()) return ""
+    val v = Regex(key + """\s*:\s*'([^']*)'""").find(cfgJs.readText())?.groupValues?.get(1) ?: ""
+    return if (v.startsWith("ISI-")) "" else v
+}
+
 android {
     namespace = "id.jurkon.smsgateway"
     compileSdk = 34
@@ -11,8 +19,14 @@ android {
         applicationId = "id.jurkon.smsgateway"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
+        buildConfigField("String", "SB_URL", "\"" + cfg("url") + "\"")
+        buildConfigField("String", "SB_ANON", "\"" + cfg("key") + "\"")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     compileOptions {

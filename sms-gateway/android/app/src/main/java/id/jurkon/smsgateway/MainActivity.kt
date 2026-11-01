@@ -32,6 +32,8 @@ class MainActivity : Activity() {
     private lateinit var etAnon: EditText
     private lateinit var etEmail: EditText
     private lateinit var etPass: EditText
+    private lateinit var etCode: EditText
+    private lateinit var legacyBox: LinearLayout
     private lateinit var spSim: Spinner
     private lateinit var tvStatus: TextView
     private var simIds: List<Int> = listOf(-1)
@@ -71,13 +73,25 @@ class MainActivity : Activity() {
         etAnon.setText(Store.get(this, "anon"))
         etEmail.setText(Store.get(this, "email"))
         if (Store.get(this, "pass").isNotEmpty()) etPass.hint = "Password tersimpan (kosongkan jika tidak diganti)"
-        col.addView(etUrl); col.addView(etAnon); col.addView(etEmail); col.addView(etPass)
+        etCode = field("Kode pairing dari panel (8 karakter)", InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS)
+        col.addView(TextView(this).apply { text = "Pasangkan HP ini"; textSize = 16f })
+        col.addView(etCode)
+        col.addView(btn("Pasangkan & Mulai") { pairAndStart() })
+
+        legacyBox = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        legacyBox.addView(etUrl); legacyBox.addView(etAnon); legacyBox.addView(etEmail); legacyBox.addView(etPass)
+        legacyBox.addView(btn("Simpan & Mulai (email)") { saveAndStart() })
+        legacyBox.visibility =
+            if (Store.get(this, "email").isNotEmpty() && Store.get(this, "mode") != "pair") View.VISIBLE else View.GONE
+        col.addView(btn("Mode email & password (lama)") {
+            legacyBox.visibility = if (legacyBox.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+        })
+        col.addView(legacyBox)
 
         col.addView(TextView(this).apply { text = "SIM untuk mengirim"; setPadding(0, dp(8), 0, 0) })
         spSim = Spinner(this)
         col.addView(spSim)
 
-        col.addView(btn("Simpan & Mulai") { saveAndStart() })
         col.addView(btn("Berhenti") { stopGateway() })
 
         tvStatus = TextView(this).apply { setPadding(0, dp(12), 0, dp(12)); textSize = 15f }
@@ -159,6 +173,7 @@ class MainActivity : Activity() {
         if (!u.startsWith("https://")) {
             Toast.makeText(this, "URL harus diawali https://", Toast.LENGTH_SHORT).show(); return
         }
+        Store.put(this, "mode", "")
         Store.put(this, "url", u); Store.put(this, "anon", a)
         Store.put(this, "email", e); Store.put(this, "pass", pw)
         Store.put(this, "access", ""); Store.put(this, "refresh", ""); Store.put(this, "exp", "0")
@@ -172,6 +187,41 @@ class MainActivity : Activity() {
         startForegroundService(Intent(this, GatewayService::class.java))
     }
 
+    private fun pairAndStart() {
+        val code = etCode.text.toString().trim()
+        if (code.length < 6) {
+            Toast.makeText(this, "Masukkan kode pairing dari panel", Toast.LENGTH_SHORT).show(); return
+        }
+        if (!hasPerm(Manifest.permission.SEND_SMS) || !hasPerm(Manifest.permission.RECEIVE_SMS)) {
+            Toast.makeText(this, "Izinkan SMS dulu, lalu tekan Pasangkan & Mulai lagi", Toast.LENGTH_LONG).show()
+            requestPerms(); return
+        }
+        Status.message = "Memasangkan..."
+        val app = applicationContext
+        Thread {
+            try {
+                val name = Api(app).pair(code)
+                runOnUiThread {
+                    etCode.setText("")
+                    Store.setEnabled(this, true)
+                    Status.message = "Terpasang" + if (name.isNotEmpty()) ": $name" else ""
+                    startForegroundService(Intent(this, GatewayService::class.java))
+                    Toast.makeText(this, "HP berhasil dipasangkan", Toast.LENGTH_LONG).show()
+                }
+            } catch (e: ApiException) {
+                runOnUiThread {
+                    Status.message = "Gagal memasangkan: ${e.message}"
+                    Toast.makeText(this, e.message ?: "Gagal memasangkan", Toast.LENGTH_LONG).show()
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    Status.message = "Jaringan bermasalah, coba lagi"
+                    Toast.makeText(this, "Jaringan bermasalah", Toast.LENGTH_LONG).show()
+                }
+            }
+        }.start()
+    }
+
     private fun stopGateway() {
         Store.setEnabled(this, false)
         stopService(Intent(this, GatewayService::class.java))
@@ -181,7 +231,9 @@ class MainActivity : Activity() {
     private fun render() {
         val hb = if (Status.lastHeartbeat == 0L) "-"
         else SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date(Status.lastHeartbeat))
+        val dn = Store.get(this, "device_name")
         tvStatus.text = "Status: ${Status.message}\n" +
+            (if (Store.get(this, "mode") == "pair" && dn.isNotEmpty()) "Perangkat: $dn\n" else "") +
             "Terkirim sesi ini: ${Status.sent}\n" +
             "Diterima sesi ini: ${Status.received}\n" +
             "Heartbeat terakhir: $hb"
