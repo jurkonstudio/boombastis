@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel Boombastis</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232563eb'/%3E%3Cpath d='M16 22a6 6 0 0 1 6-6h20a6 6 0 0 1 6 6v14a6 6 0 0 1-6 6H30l-9 7v-7h-1a6 6 0 0 1-4-6z' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#f5f6f8; --card:#fff; --text:#1c1f26; --muted:#6b7280; --line:#e5e7eb;
+    --brand:#2563eb; --brand2:#7c3aed; --ok:#16a34a; --warn:#d97706; --bad:#dc2626;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0f1115; --card:#181b22; --text:#e8eaf0; --muted:#8b93a3; --line:#2a2f3a; --brand:#60a5fa; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+  header{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:10px}
+  header h1{font-size:16px;margin:0;flex:1}
+  main{max-width:900px;margin:0 auto;padding:16px}
+  nav{display:flex;gap:6px;overflow-x:auto;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--line)}
+  nav button{white-space:nowrap}
+  button,input,select,textarea{font:inherit;color:inherit}
+  button{border:1px solid var(--line);background:var(--card);padding:8px 12px;border-radius:8px;cursor:pointer}
+  button.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+  button.active{border-color:var(--brand);color:var(--brand);font-weight:600}
+  button.small{padding:4px 8px;font-size:13px}
+  button:disabled{opacity:.5;cursor:default}
+  input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+  textarea{min-height:110px;resize:vertical}
+  label{display:block;margin:12px 0 4px;font-size:13px;color:var(--muted)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+  .stat b{display:block;font-size:24px}
+  .stat span{color:var(--muted);font-size:13px}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .item{border-top:1px solid var(--line);padding:10px 0}
+  .item:first-child{border-top:0}
+  .meta{color:var(--muted);font-size:12.5px}
+  .body{margin:4px 0;white-space:pre-wrap;word-break:break-word}
+  .badge{display:inline-block;padding:1px 8px;border-radius:99px;font-size:12px;border:1px solid currentColor}
+  .pending{color:var(--warn)} .sending{color:var(--brand)} .sent{color:var(--ok)}
+  .failed{color:var(--bad)} .cancelled{color:var(--muted)}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--muted)}
+  .dot.on{background:var(--ok)}
+  .msg{padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+  .msg.err{background:#dc262615;color:var(--bad)} .msg.ok{background:#16a34a15;color:var(--ok)}
+  .hidden{display:none}
+  .center{max-width:420px;margin:8vh auto}
+  small{color:var(--muted)}
+  /* ---- tampilan modern: header, masuk, setup ---- */
+  header{backdrop-filter:blur(8px)}
+  .brand{display:flex;align-items:center;gap:10px;flex:1;font-weight:800;font-size:16px;letter-spacing:-.01em;color:inherit;text-decoration:none}
+  .brand i{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand),var(--brand2))}
+  .brand svg{width:17px;height:17px;fill:#fff}
+  button{transition:background .15s,border-color .15s,transform .15s,box-shadow .15s}
+  button:hover:not(:disabled){border-color:var(--brand)}
+  button.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));border:0;font-weight:600;box-shadow:0 8px 20px -10px rgba(79,70,229,.8)}
+  button.primary:hover:not(:disabled){transform:translateY(-1px)}
+  input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in srgb,var(--brand) 45%,transparent);border-color:var(--brand)}
+  .card{box-shadow:0 8px 24px -16px rgba(15,23,42,.25)}
+  nav{padding:8px 16px}
+  nav button{border-color:transparent;background:transparent;border-radius:99px;color:var(--muted)}
+  nav button.active{background:color-mix(in srgb,var(--brand) 12%,transparent);color:var(--brand);border-color:transparent}
+  body.auth{min-height:100vh;background:radial-gradient(520px 340px at 90% 0,rgba(124,58,237,.18),transparent 70%),radial-gradient(520px 340px at 0 100%,rgba(37,99,235,.16),transparent 70%),var(--bg)}
+  .center .card{padding:28px;border-radius:18px;box-shadow:0 24px 50px -24px rgba(15,23,42,.35)}
+  .center h2{font-size:22px;letter-spacing:-.02em}
+  .center .lead{color:var(--muted);margin:6px 0 4px;font-size:14.5px}
+  .back{display:block;text-align:center;margin-top:14px;font-size:13.5px;color:var(--muted);text-decoration:none}
+  .back:hover{color:var(--brand)}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="../" title="Ke beranda"><i><svg viewBox="0 0 24 24"><path d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-5l-5 4v-4H7a3 3 0 0 1-3-3z"/></svg></i>Boombastis <span class="meta" style="font-weight:500">Panel</span></a>
+  <span id="who" class="meta"></span>
+  <button id="btnLogout" class="small hidden">Keluar</button>
+</header>
+
+<!-- SETUP: URL & anon key Supabase -->
+<main id="vSetup" class="center hidden">
+  <div class="card">
+    <h2 style="margin-top:0">Hubungkan ke Supabase</h2>
+    <small>Ada di Supabase &gt; Project Settings &gt; API. Pakai <b>anon / publishable key</b>, jangan pernah service_role.</small>
+    <div class="row" style="margin-top:10px"><button id="btnPaste" class="small">📋 Tempel dari clipboard</button></div>
+    <small>Salin URL atau key dari Supabase, ketuk tombol di atas, kolom terisi otomatis.</small>
+    <label>Project URL</label>
+    <input id="cfgUrl" value="https://pxcicgzvmbxjlbsbwetp.supabase.co" placeholder="https://xxxx.supabase.co" autocomplete="off">
+    <label>Anon (publishable) key</label>
+    <input id="cfgKey" placeholder="sb_publishable_... atau eyJ..." autocomplete="off">
+    <div class="row" style="margin-top:14px"><button id="btnSaveCfg" class="primary">Simpan</button></div>
+    <div id="setupMsg"></div>
+  </div>
+</main>
+
+<!-- LOGIN -->
+<main id="vLogin" class="center hidden">
+  <div class="card">
+    <h2 style="margin-top:0">Masuk ke panel</h2>
+    <p class="lead">Gunakan akun admin yang terdaftar.</p>
+    <label>Email</label>
+    <input id="email" type="email" autocomplete="username">
+    <label>Password</label>
+    <input id="password" type="password" autocomplete="current-password">
+    <div class="row" style="margin-top:14px">
+      <button id="btnLogin" class="primary">Masuk</button>
+      <button id="btnResetCfg" class="small">Ubah koneksi</button>
+    </div>
+    <div id="loginMsg"></div>
+  </div>
+  <a class="back" href="../">← Kembali ke beranda</a>
+</main>
+
+<!-- APP -->
+<div id="vApp" class="hidden">
+  <nav id="tabs">
+    <button data-tab="dash" class="active">Ringkasan</button>
+    <button data-tab="send">Kirim</button>
+    <button data-tab="outbox">Outbox</button>
+    <button data-tab="inbox">Inbox</button>
+    <button data-tab="auto">Balasan Otomatis</button>
+    <button data-tab="devices">Perangkat</button>
+  </nav>
+  <main id="content"></main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  'use strict';
+
+  const $ = (id) => document.getElementById(id);
+  const STATUSES = ['pending', 'sending', 'sent', 'failed', 'cancelled'];
+  let sb = null, session = null, tab = 'dash', outboxFilter = 'all', rt = null, timer = null;
+
+  // ---------- util DOM aman (semua teks lewat textContent, anti-XSS) ----------
+  function h(tag, attrs, ...kids) {
+    const el = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) {
+      if (k === 'class') el.className = v;
+      else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+      else if (v !== false && v != null) el.setAttribute(k, v);
+    }
+    for (const kid of kids.flat()) {
+      if (kid == null || kid === false) continue;
+      el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+    }
+    return el;
+  }
+  const fmt = (d) => d ? new Date(d).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }) : '-';
+  const show = (id, on) => { $(id).classList.toggle('hidden', !on); document.body.classList.toggle('auth', !$('vSetup').classList.contains('hidden') || !$('vLogin').classList.contains('hidden')); };
+  function note(id, text, ok) {
+    const box = $(id); box.replaceChildren();
+    if (text) box.append(h('div', { class: 'msg ' + (ok ? 'ok' : 'err') }, text));
+  }
+
+  function normalizePhone(p) {
+    let s = String(p || '').replace(/[^0-9+]/g, '');
+    if (s.startsWith('+')) { /* ok */ }
+    else if (s.startsWith('0')) s = '+62' + s.slice(1);
+    else if (s.startsWith('62')) s = '+' + s;
+    else if (s.startsWith('8')) s = '+62' + s;
+    return /^\+[1-9][0-9]{8,14}$/.test(s) ? s : null;
+  }
+
+  // ---------- konfigurasi & auth ----------
+  function getCfg() {
+    try { return JSON.parse(localStorage.getItem('sms_cfg') || 'null'); } catch { return null; }
+  }
+
+  async function boot() {
+    show('vSetup', false); show('vLogin', false); show('vApp', false);
+    $('btnLogout').classList.add('hidden'); $('who').textContent = '';
+    const cfg = getCfg();
+    if (!cfg) return show('vSetup', true);
+    sb = window.supabase.createClient(cfg.url, cfg.key);
+    const { data } = await sb.auth.getSession();
+    session = data.session;
+    if (!session) return show('vLogin', true);
+    await enterApp();
+  }
+
+  async function enterApp() {
+    // pastikan user terdaftar sebagai admin
+    const { data, error } = await sb.from('admins').select('user_id').eq('user_id', session.user.id).maybeSingle();
+    if (error || !data) {
+      await sb.auth.signOut();
+      show('vLogin', true);
+      note('loginMsg', error
+        ? 'Gagal memeriksa status admin: ' + error.message + ' (apakah migrasi SQL sudah dijalankan?)'
+        : 'Akun ini bukan admin. Tambahkan user_id ke tabel admins.');
+      return;
+    }
+    show('vLogin', false); show('vApp', true);
+    $('btnLogout').classList.remove('hidden');
+    $('who').textContent = session.user.email || '';
+    startRealtime();
+    render();
+  }
+
+  function fillFromText(t) {
+    t = String(t || '');
+    const u = t.match(/https:\/\/[a-z0-9-]+\.supabase\.(?:co|in)/i);
+    const k = t.match(/sb_publishable_[A-Za-z0-9_-]+|eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/);
+    if (u) $('cfgUrl').value = u[0];
+    if (k) $('cfgKey').value = k[0];
+    return !!(u || k);
+  }
+  $('btnPaste').onclick = async () => {
+    try {
+      const ok = fillFromText(await navigator.clipboard.readText());
+      note('setupMsg', ok ? 'Terisi dari clipboard. Ketuk Simpan.' : 'Clipboard tidak berisi URL atau key Supabase.', ok);
+    } catch { note('setupMsg', 'Izin clipboard ditolak. Tempel manual di kolom.'); }
+  };
+  ['cfgUrl', 'cfgKey'].forEach((id) => $(id).addEventListener('paste', (e) => {
+    const t = (e.clipboardData || window.clipboardData).getData('text');
+    if (fillFromText(t)) e.preventDefault();
+  }));
+
+  $('btnSaveCfg').onclick = async () => {
+    const url = $('cfgUrl').value.trim().replace(/\/+$/, '');
+    const key = $('cfgKey').value.trim();
+    if (!/^https:\/\/.+\.supabase\.(co|in)$/.test(url) || key.length < 20) {
+      return note('setupMsg', 'URL atau key tidak valid.');
+    }
+    note('setupMsg', 'Memeriksa koneksi...', true);
+    try {
+      const r = await fetch(url + '/auth/v1/settings', { headers: { apikey: key } });
+      if (!r.ok) return note('setupMsg', 'Server menolak (' + r.status + '). Cek URL dan key.');
+    } catch { return note('setupMsg', 'Tidak bisa terhubung. Cek URL dan internet.'); }
+    localStorage.setItem('sms_cfg', JSON.stringify({ url, key }));
+    boot();
+  };
+  $('btnResetCfg').onclick = () => { localStorage.removeItem('sms_cfg'); boot(); };
+
+  $('btnLogin').onclick = async () => {
+    note('loginMsg', '');
+    const { data, error } = await sb.auth.signInWithPassword({
+      email: $('email').value.trim(), password: $('password').value
+    });
+    if (error) return note('loginMsg', error.message);
+    session = data.session;
+    $('password').value = '';
+    enterApp();
+  };
+  $('btnLogout').onclick = async () => {
+    stopRealtime(); await sb.auth.signOut(); session = null; boot();
+  };
+
+  // ---------- realtime ----------
+  function startRealtime() {
+    stopRealtime();
+    rt = sb.channel('panel')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'outbox' }, refreshSoon)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'inbox' }, refreshSoon)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'devices' }, refreshSoon)
+      .subscribe();
+  }
+  function stopRealtime() { if (rt) { sb.removeChannel(rt); rt = null; } }
+  function refreshSoon() {
+    if (tab === 'send' || tab === 'auto') return;   // jangan ganggu form yang sedang diisi
+    clearTimeout(timer); timer = setTimeout(render, 400);
+  }
+
+  // ---------- tab ----------
+  $('tabs').addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-tab]'); if (!b) return;
+    tab = b.dataset.tab;
+    document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('active', x === b));
+    render();
+  });
+
+  async function render() {
+    const c = $('content');
+    try {
+      const view = await ({ dash: vDash, send: vSend, outbox: vOutbox, inbox: vInbox, auto: vAuto, devices: vDevices }[tab])();
+      c.replaceChildren(view);
+    } catch (err) {
+      c.replaceChildren(h('div', { class: 'msg err' }, 'Gagal memuat: ' + (err.message || err)));
+    }
+  }
+
+  // ---------- Ringkasan ----------
+  async function vDash() {
+    const counts = await Promise.all(STATUSES.map(s =>
+      sb.from('outbox').select('id', { count: 'exact', head: true }).eq('status', s)));
+    const inboxN = await sb.from('inbox').select('id', { count: 'exact', head: true });
+    const dev = await sb.from('devices').select('*').order('created_at');
+    if (dev.error) throw dev.error;
+    const online = dev.data.filter(d => d.is_active && d.last_seen_at && Date.now() - new Date(d.last_seen_at) < 120000).length;
+
+    return h('div', {},
+      h('div', { class: 'grid' },
+        ...STATUSES.map((s, i) => h('div', { class: 'stat' }, h('b', { class: s }, counts[i].count ?? 0), h('span', {}, s))),
+        h('div', { class: 'stat' }, h('b', {}, inboxN.count ?? 0), h('span', {}, 'SMS masuk')),
+        h('div', { class: 'stat' }, h('b', {}, online + '/' + dev.data.length), h('span', {}, 'HP online'))
+      ),
+      online === 0 ? h('div', { class: 'msg err' }, 'Tidak ada HP gateway yang online. Pesan akan tetap antre sampai HP aktif.') : null
+    );
+  }
+
+  // ---------- Kirim ----------
+  async function vSend() {
+    const nums = h('textarea', { placeholder: '08123456789\n+628111222333\n(satu nomor per baris atau pisahkan dengan koma)' });
+    const body = h('textarea', { maxlength: '1000', placeholder: 'Isi pesan...' });
+    const when = h('input', { type: 'datetime-local' });
+    const count = h('small', {}, '0 karakter');
+    body.addEventListener('input', () => { count.textContent = body.value.length + ' karakter (160 = 1 SMS)'; });
+    const result = h('div', {});
+    const btn = h('button', { class: 'primary' }, 'Masukkan ke antrean');
+
+    btn.onclick = async () => {
+      result.replaceChildren();
+      const raw = nums.value.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
+      const valid = [...new Set(raw.map(normalizePhone).filter(Boolean))];
+      const bad = raw.filter(r => !normalizePhone(r));
+      if (!valid.length) return result.append(h('div', { class: 'msg err' }, 'Tidak ada nomor yang valid.'));
+      if (!body.value.trim()) return result.append(h('div', { class: 'msg err' }, 'Isi pesan kosong.'));
+      if (valid.length > 200) return result.append(h('div', { class: 'msg err' }, 'Maksimal 200 nomor sekali kirim.'));
+      if (valid.length > 20 && !confirm('Kirim ke ' + valid.length + ' nomor? Pastikan paket SMS cukup.')) return;
+
+      btn.disabled = true;
+      const sched = when.value ? new Date(when.value).toISOString() : new Date().toISOString();
+      const rows = valid.map(n => ({ to_number: n, body: body.value.trim(), scheduled_at: sched }));
+      const { error } = await sb.from('outbox').insert(rows);
+      btn.disabled = false;
+      if (error) return result.append(h('div', { class: 'msg err' }, error.message));
+      result.append(h('div', { class: 'msg ok' },
+        valid.length + ' pesan masuk antrean.' + (bad.length ? ' Dilewati (tidak valid): ' + bad.join(', ') : '')));
+      nums.value = ''; body.value = ''; count.textContent = '0 karakter';
+    };
+
+    return h('div', { class: 'card' },
+      h('label', {}, 'Nomor penerima'), nums,
+      h('label', {}, 'Pesan'), body, count,
+      h('label', {}, 'Jadwal (kosongkan untuk kirim sekarang)'), when,
+      h('div', { class: 'row', style: 'margin-top:14px' }, btn), result);
+  }
+
+  // ---------- Outbox ----------
+  async function vOutbox() {
+    const sel = h('select', { onchange: (e) => { outboxFilter = e.target.value; render(); } },
+      ...['all', ...STATUSES].map(s => h('option', { value: s, selected: s === outboxFilter ? '' : null }, s === 'all' ? 'Semua status' : s)));
+    let q = sb.from('outbox').select('*').order('created_at', { ascending: false }).limit(100);
+    if (outboxFilter !== 'all') q = q.eq('status', outboxFilter);
+    const { data, error } = await q;
+    if (error) throw error;
+
+    const act = async (id, patch) => {
+      const { error: e } = await sb.from('outbox').update(patch).eq('id', id);
+      if (e) alert(e.message); else render();
+    };
+
+    return h('div', { class: 'card' },
+      h('div', { class: 'row' }, sel, h('small', {}, data.length + ' terbaru')),
+      data.length ? data.map(m => h('div', { class: 'item' },
+        h('div', { class: 'row' },
+          h('b', {}, m.to_number), h('span', { class: 'badge ' + m.status }, m.status),
+          m.source === 'auto' ? h('span', { class: 'badge sending' }, 'otomatis') : null,
+          h('span', { class: 'meta' }, fmt(m.created_at))),
+        h('div', { class: 'body' }, m.body),
+        m.error ? h('div', { class: 'meta bad failed' }, 'Error: ' + m.error) : null,
+        h('div', { class: 'row' },
+          h('span', { class: 'meta' }, 'percobaan: ' + m.attempts + (m.sent_at ? ' · terkirim ' + fmt(m.sent_at) : '')),
+          m.status === 'failed' || m.status === 'cancelled'
+            ? h('button', { class: 'small', onclick: () => act(m.id, { status: 'pending', attempts: 0, error: null, scheduled_at: new Date().toISOString() }) }, 'Kirim ulang') : null,
+          m.status === 'pending'
+            ? h('button', { class: 'small', onclick: () => act(m.id, { status: 'cancelled' }) }, 'Batalkan') : null
+        )
+      )) : h('p', { class: 'meta' }, 'Belum ada pesan.'));
+  }
+
+  // ---------- Inbox ----------
+  async function vInbox() {
+    const { data, error } = await sb.from('inbox').select('*').order('received_at', { ascending: false }).limit(100);
+    if (error) throw error;
+    return h('div', { class: 'card' },
+      data.length ? data.map(m => h('div', { class: 'item' },
+        h('div', { class: 'row' }, h('b', {}, m.from_number), h('span', { class: 'meta' }, fmt(m.received_at))),
+        h('div', { class: 'body' }, m.body))) : h('p', { class: 'meta' }, 'Belum ada SMS masuk.'));
+  }
+
+  // ---------- Balasan Otomatis ----------
+  async function vAuto() {
+    const st = await sb.from('auto_reply_settings').select('*').eq('id', 1).maybeSingle();
+    if (st.error) throw st.error;
+    const rl = await sb.from('auto_reply_rules').select('*').order('priority').order('created_at');
+    if (rl.error) throw rl.error;
+    const s = st.data || { enabled: true, cooldown_minutes: 60, daily_cap: 50 };
+
+    // --- pengaturan global ---
+    const en = h('input', { type: 'checkbox', style: 'width:auto' });
+    en.checked = !!s.enabled;
+    const cd = h('input', { type: 'number', min: '0', value: String(s.cooldown_minutes) });
+    const cap = h('input', { type: 'number', min: '1', value: String(s.daily_cap) });
+    const sOut = h('div', {});
+    const saveS = h('button', { class: 'primary' }, 'Simpan pengaturan');
+    saveS.onclick = async () => {
+      sOut.replaceChildren();
+      const { error } = await sb.from('auto_reply_settings').upsert({
+        id: 1, enabled: en.checked,
+        cooldown_minutes: Math.max(0, parseInt(cd.value, 10) || 0),
+        daily_cap: Math.max(1, parseInt(cap.value, 10) || 1),
+        updated_at: new Date().toISOString()
+      });
+      sOut.append(h('div', { class: 'msg ' + (error ? 'err' : 'ok') }, error ? error.message : 'Tersimpan.'));
+    };
+
+    // --- form aturan baru ---
+    const name = h('input', { placeholder: 'Nama aturan, mis. Jam buka' });
+    const mt = h('select', {}, ...[
+      ['any', 'Semua pesan masuk'], ['contains', 'Mengandung kata'],
+      ['equals', 'Sama persis dengan'], ['starts_with', 'Diawali dengan']
+    ].map(([v, t]) => h('option', { value: v }, t)));
+    const kw = h('input', { placeholder: 'Kata kunci (kosongkan jika "Semua pesan")' });
+    const reply = h('textarea', { maxlength: '1000', placeholder: 'Isi balasan otomatis...' });
+    const pri = h('input', { type: 'number', value: '100' });
+    const out = h('div', {});
+    const add = h('button', { class: 'primary' }, 'Tambah aturan');
+    add.onclick = async () => {
+      out.replaceChildren();
+      const err = (t) => out.append(h('div', { class: 'msg err' }, t));
+      if (!name.value.trim() || !reply.value.trim()) return err('Nama dan isi balasan wajib diisi.');
+      if (mt.value !== 'any' && !kw.value.trim()) return err('Kata kunci wajib diisi.');
+      const { error } = await sb.from('auto_reply_rules').insert({
+        name: name.value.trim(), match_type: mt.value,
+        keyword: mt.value === 'any' ? null : kw.value.trim(),
+        reply_body: reply.value.trim(), priority: parseInt(pri.value, 10) || 100
+      });
+      if (error) err(error.message); else render();
+    };
+
+    const patch = async (id, p) => {
+      const { error } = await sb.from('auto_reply_rules').update(p).eq('id', id);
+      if (error) alert(error.message); else render();
+    };
+    const del = async (r) => {
+      if (!confirm('Hapus aturan "' + r.name + '"?')) return;
+      const { error } = await sb.from('auto_reply_rules').delete().eq('id', r.id);
+      if (error) alert(error.message); else render();
+    };
+    const label = { any: 'semua pesan', contains: 'mengandung', equals: 'sama persis', starts_with: 'diawali' };
+
+    return h('div', {},
+      h('div', { class: 'card' },
+        h('div', { class: 'row' }, en, h('b', {}, 'Balasan otomatis aktif')),
+        h('small', {}, 'Setiap SMS yang masuk ke HP gateway dicocokkan dengan aturan di bawah, lalu dibalas otomatis lewat SIM yang sama. Nama pengirim dan kode singkat diabaikan.'),
+        h('label', {}, 'Jeda per pengirim (menit): satu nomor hanya dibalas sekali dalam jeda ini'), cd,
+        h('label', {}, 'Batas balasan otomatis per hari'), cap,
+        h('div', { class: 'row', style: 'margin-top:14px' }, saveS), sOut),
+      h('div', { class: 'card' },
+        h('b', {}, 'Aturan balasan'),
+        h('small', {}, ' — angka prioritas kecil dicek lebih dulu; aturan pertama yang cocok dipakai.'),
+        rl.data.length ? rl.data.map(r => h('div', { class: 'item' },
+          h('div', { class: 'row' },
+            h('b', {}, r.name),
+            h('span', { class: 'badge ' + (r.is_active ? 'sent' : 'cancelled') }, r.is_active ? 'aktif' : 'nonaktif'),
+            h('span', { class: 'meta' }, label[r.match_type] + (r.keyword ? ': ' + r.keyword : '') + ' · prioritas ' + r.priority)),
+          h('div', { class: 'body' }, r.reply_body),
+          h('div', { class: 'row' },
+            h('button', { class: 'small', onclick: () => patch(r.id, { is_active: !r.is_active }) }, r.is_active ? 'Nonaktifkan' : 'Aktifkan'),
+            h('button', { class: 'small', onclick: () => del(r) }, 'Hapus'))
+        )) : h('p', { class: 'meta' }, 'Belum ada aturan. Tanpa aturan, tidak ada balasan yang dikirim.')),
+      h('div', { class: 'card' },
+        h('b', {}, 'Tambah aturan'),
+        h('label', {}, 'Nama'), name,
+        h('label', {}, 'Cocokkan'), mt,
+        h('label', {}, 'Kata kunci'), kw,
+        h('label', {}, 'Isi balasan'), reply,
+        h('label', {}, 'Prioritas (angka kecil dicek dulu)'), pri,
+        h('div', { class: 'row', style: 'margin-top:14px' }, add), out));
+  }
+
+  // ---------- Perangkat ----------
+  async function vDevices() {
+    const { data, error } = await sb.from('devices').select('*').order('created_at');
+    if (error) throw error;
+
+    const name = h('input', { placeholder: 'Nama, mis. HP Redmi' });
+    const num = h('input', { placeholder: 'Nomor SIM (opsional)' });
+    const uid = h('input', { placeholder: 'User ID akun Auth milik HP (UUID)' });
+    const out = h('div', {});
+    const add = h('button', { class: 'primary' }, 'Tambah perangkat');
+    add.onclick = async () => {
+      out.replaceChildren();
+      if (!name.value.trim()) return out.append(h('div', { class: 'msg err' }, 'Nama wajib diisi.'));
+      const { error: e } = await sb.from('devices').insert({
+        name: name.value.trim(), phone_number: num.value.trim() || null, user_id: uid.value.trim() || null
+      });
+      if (e) out.append(h('div', { class: 'msg err' }, e.message)); else render();
+    };
+
+    const toggle = async (d) => {
+      const { error: e } = await sb.from('devices').update({ is_active: !d.is_active }).eq('id', d.id);
+      if (e) alert(e.message); else render();
+    };
+
+    return h('div', {},
+      h('div', { class: 'card' },
+        data.length ? data.map(d => {
+          const on = d.is_active && d.last_seen_at && Date.now() - new Date(d.last_seen_at) < 120000;
+          return h('div', { class: 'item' },
+            h('div', { class: 'row' },
+              h('span', { class: 'dot' + (on ? ' on' : '') }), h('b', {}, d.name),
+              h('span', { class: 'badge ' + (d.is_active ? 'sent' : 'cancelled') }, d.is_active ? 'aktif' : 'nonaktif')),
+            h('div', { class: 'meta' }, (d.phone_number || 'nomor belum diisi') + ' · terakhir terlihat ' + fmt(d.last_seen_at)),
+            h('div', { class: 'row', style: 'margin-top:6px' },
+              h('button', { class: 'small', onclick: () => toggle(d) }, d.is_active ? 'Nonaktifkan' : 'Aktifkan')));
+        }) : h('p', { class: 'meta' }, 'Belum ada perangkat.')),
+      h('div', { class: 'card' },
+        h('b', {}, 'Tambah perangkat gateway'),
+        h('small', {}, ' — buat dulu user di Supabase > Authentication untuk HP, lalu salin User ID-nya.'),
+        h('label', {}, 'Nama'), name, h('label', {}, 'Nomor SIM'), num, h('label', {}, 'User ID'), uid,
+        h('div', { class: 'row', style: 'margin-top:14px' }, add), out));
+  }
+
+  boot();
+})();
+</script>
+</body>
+</html>
