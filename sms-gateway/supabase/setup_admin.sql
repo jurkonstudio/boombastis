@@ -13,7 +13,7 @@ on conflict do nothing;
 
 -- 2) HP gateway (boleh juga ditambah lewat tab "Perangkat" di panel)
 insert into public.devices (name, phone_number, user_id)
-values ('HP Gateway 1', null, 'GANTI-DENGAN-UUID-USER-HP');
+values ('HP Gateway 1', null, '082243562960');
 
 -- 3) Tes: masukkan satu pesan ke antrean (ganti nomor tujuan)
 -- insert into public.outbox (to_number, body)
