@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kebijakan Privasi · Boombastis</title><meta name="description" content="Cara Boombastis mengumpulkan dan melindungi data akun dan pesan.">
+<link rel="canonical" href="https://boombastis.my.id/privacy.html"><meta name="robots" content="index,follow">
+<style>body{margin:0;font:16px/1.7 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#fff;color:#0f172a}@media(prefers-color-scheme:dark){body{background:#0b1020;color:#e8ecf7}a{color:#9db8ff}}main{max-width:720px;margin:0 auto;padding:32px 20px 64px}h1{font-size:30px;line-height:1.2}h2{font-size:19px;margin:28px 0 6px}p,li{margin:0 0 10px}a{color:#2457f5}.m{opacity:.7;font-size:14px}</style></head><body><main>
+<p><a href="./">← Boombastis</a></p><h1>Kebijakan Privasi</h1><p class="m">Terakhir diperbarui: 1 November 2026</p>
+
+<p>Halaman ini menjelaskan data apa yang kami simpan dan bagaimana data itu dilindungi.</p>
+<h2>Data yang kami simpan</h2><ul><li>Akun: nama, email, nomor WhatsApp, dan password (disimpan terenkripsi oleh Supabase Auth).</li><li>Pesan: isi, nomor tujuan atau pengirim, dan status SMS yang lewat HP gateway-mu.</li><li>Perangkat dan API key: nama perangkat, waktu terakhir online, dan hash API key (key asli tidak disimpan).</li><li>Pembayaran: paket, nominal, dan status pesanan.</li></ul>
+<h2>Siapa yang dapat melihat</h2><p>Setiap akun hanya dapat membaca datanya sendiri. Admin tidak dapat membaca isi SMS; admin hanya melihat ringkasan seperti paket, kuota terpakai, dan jumlah SMS terkirim, serta data kontak untuk keperluan pembayaran dan bantuan.</p>
+<h2>Penyimpanan</h2><p>Data disimpan di Supabase. Kami tidak menjual data kepada pihak ketiga.</p>
+<h2>Hak kamu</h2><p>Kamu dapat meminta penghapusan akun dan datamu lewat kontak di bawah.</p>
+<h2>Cookie dan penyimpanan lokal</h2><p>Panel memakai penyimpanan browser untuk menjaga sesi login. Kami tidak memasang pelacak iklan.</p>
+<p class="m">Kontak untuk pertanyaan dan laporan: <span id="sup">lihat kontak di halaman utama</span>.</p>
+</main>
+<script src="config.js"></script>
+<script>(async()=>{try{const C=window.CFG;const r=await fetch(C.url+'/rest/v1/site_settings?select=value&key=eq.support_contact',{headers:{apikey:C.key}});const d=await r.json();if(d[0]&&d[0].value)document.getElementById('sup').textContent=d[0].value;}catch(e){}})();</script>
+</body></html>

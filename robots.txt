@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /app/
+Disallow: /panel/
+Disallow: /sms-gateway/
+
+Sitemap: https://boombastis.my.id/sitemap.xml

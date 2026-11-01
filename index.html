@@ -3,9 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Boombastis · SMS Gateway Mandiri</title>
-<meta name="description" content="Layanan SMS gateway: kirim dan terima SMS dari browser lewat HP Android dan SIM milikmu. Balasan otomatis, kuota per paket.">
+<title>Boombastis – SMS Gateway Indonesia dari HP dan SIM Sendiri</title>
+<meta name="description" content="Kirim dan terima SMS dari browser atau API lewat HP Android dan SIM milikmu. Balasan otomatis, antrean aman saat offline, paket mulai Rp29.000.">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<link rel="canonical" href="https://boombastis.my.id/">
 <meta name="theme-color" content="#0b1020">
+<meta property="og:type" content="website"><meta property="og:locale" content="id_ID"><meta property="og:site_name" content="Boombastis">
+<meta property="og:title" content="Boombastis – SMS Gateway Indonesia dari HP dan SIM Sendiri"><meta property="og:description" content="Kirim dan terima SMS dari browser atau API lewat HP Android dan SIM milikmu. Balasan otomatis, antrean aman saat offline, paket mulai Rp29.000.">
+<meta property="og:url" content="https://boombastis.my.id/"><meta property="og:image" content="https://boombastis.my.id/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Boombastis, SMS gateway dari HP dan SIM sendiri">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Boombastis – SMS Gateway Indonesia dari HP dan SIM Sendiri"><meta name="twitter:description" content="Kirim dan terima SMS dari browser atau API lewat HP Android dan SIM milikmu. Balasan otomatis, antrean aman saat offline, paket mulai Rp29.000."><meta name="twitter:image" content="https://boombastis.my.id/og.png">
+<link rel="apple-touch-icon" href="icon-512.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://boombastis.my.id/#org", "name": "Boombastis", "url": "https://boombastis.my.id/", "logo": "https://boombastis.my.id/icon-512.png"}, {"@type": "WebSite", "@id": "https://boombastis.my.id/#web", "url": "https://boombastis.my.id/", "name": "Boombastis", "inLanguage": "id-ID", "publisher": {"@id": "https://boombastis.my.id/#org"}}, {"@type": "SoftwareApplication", "name": "Boombastis SMS Gateway", "applicationCategory": "BusinessApplication", "operatingSystem": "Android, Web", "inLanguage": "id-ID", "description": "Kirim dan terima SMS dari browser atau API lewat HP Android dan SIM milikmu. Balasan otomatis, antrean aman saat offline, paket mulai Rp29.000.", "url": "https://boombastis.my.id/", "offers": [{"@type": "Offer", "name": "Starter", "price": "29000", "priceCurrency": "IDR", "url": "https://boombastis.my.id/#harga"}, {"@type": "Offer", "name": "Bisnis", "price": "79000", "priceCurrency": "IDR", "url": "https://boombastis.my.id/#harga"}, {"@type": "Offer", "name": "Pro", "price": "149000", "priceCurrency": "IDR", "url": "https://boombastis.my.id/#harga"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Apa itu Boombastis?", "acceptedAnswer": {"@type": "Answer", "text": "Boombastis adalah layanan SMS gateway. Kamu memasang aplikasi Android di HP sendiri, lalu mengirim dan menerima SMS dari browser atau lewat API. SMS keluar dari SIM di HP-mu."}}, {"@type": "Question", "name": "Apakah SMS memakai pulsa?", "acceptedAnswer": {"@type": "Answer", "text": "Ya. SMS dikirim lewat SIM di HP gateway-mu, jadi memakai pulsa atau bonus SMS SIM tersebut. Biaya paket Boombastis adalah untuk panel, kuota, antrean, dan pemantauan perangkat."}}, {"@type": "Question", "name": "Perlu HP seperti apa?", "acceptedAnswer": {"@type": "Answer", "text": "HP Android dengan SIM aktif dan koneksi internet. Aplikasinya diunduh langsung dalam bentuk APK dari halaman ini, bukan dari Google Play."}}, {"@type": "Question", "name": "Bagaimana cara membayar?", "acceptedAnswer": {"@type": "Answer", "text": "Pilih paket, lalu transfer sesuai nominal persis termasuk kode unik. Paket aktif setelah admin memastikan transfer masuk."}}, {"@type": "Question", "name": "Bisakah mengirim SMS dari website atau aplikasiku sendiri?", "acceptedAnswer": {"@type": "Answer", "text": "Bisa. Buat API key di panel, lalu kirim permintaan HTTPS dari server-mu. SMS tetap dikirim lewat HP gateway dan memakai kuota paket."}}, {"@type": "Question", "name": "Apakah boleh dipakai untuk pesan promosi massal?", "acceptedAnswer": {"@type": "Answer", "text": "Layanan tidak boleh dipakai untuk spam, penipuan, atau pesan tanpa izin penerima. Operator seluler juga bisa memblokir SIM yang mengirim pesan massal, jadi patuhi batas harian paket."}}, {"@type": "Question", "name": "Apakah admin bisa membaca isi SMS-ku?", "acceptedAnswer": {"@type": "Answer", "text": "Tidak. Data tiap akun terpisah dan hanya bisa dibaca pemiliknya. Admin hanya melihat ringkasan seperti jumlah SMS terkirim."}}]}]}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232563eb'/%3E%3Cpath d='M16 22a6 6 0 0 1 6-6h20a6 6 0 0 1 6 6v14a6 6 0 0 1-6 6H30l-9 7v-7h-1a6 6 0 0 1-4-6z' fill='%23fff'/%3E%3C/svg%3E">
 <style>
   :root{
@@ -138,12 +146,16 @@
     section{padding:64px 0}
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+  .note{margin:22px 0 0;color:var(--muted);font-size:14.5px;text-align:center}.faq{max-width:760px}.faq details{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:0 18px;margin:0 0 10px}.faq summary{cursor:pointer;padding:16px 0;font-weight:700;list-style:none}.faq summary::-webkit-details-marker{display:none}.faq summary::after{content:"+";float:right;color:var(--muted)}.faq details[open] summary::after{content:"–"}.faq details p{margin:0 0 16px;color:var(--muted)}
+  a:focus-visible,summary:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+  .skip{position:absolute;left:-999px;top:8px;z-index:20;background:#fff;color:#000;padding:8px 12px;border-radius:8px}.skip:focus{left:8px}
   .plan .price{font-size:30px;font-weight:800;margin:8px 0}.plan ul{padding-left:18px;color:var(--muted);margin:10px 0 16px}
 </style>
 <script src="config.js"></script>
 </head>
 <body>
 
+<a href="#main" class="skip">Lewati ke konten</a>
 <header class="nav">
   <div class="wrap">
     <a href="#" class="logo" aria-label="Boombastis">
@@ -154,13 +166,14 @@
       <a href="#fitur">Fitur</a>
       <a href="#cara-kerja">Cara kerja</a>
       <a href="#keamanan">Keamanan</a>
+      <a href="#faq">FAQ</a>
       <a href="#harga">Harga</a>
       <a href="app/" class="btn primary sm">Masuk / Daftar</a>
     </nav>
   </div>
 </header>
 
-<main>
+<main id="main">
 <div class="hero">
   <div class="wrap">
     <div>
@@ -233,14 +246,15 @@
   </div>
 </section>
 
-<section id="harga" class="alt">
+<section id="harga">
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">Harga</span>
       <h2>Pilih paket sesuai kebutuhan</h2>
       <p>Bayar lewat transfer. Paket aktif setelah pembayaran dikonfirmasi admin.</p>
     </div>
-    <div class="grid3" id="plans"><p style="color:var(--muted)">Memuat paket…</p></div>
+    <div class="grid3" id="plans"><div class="card plan"><h3>Starter</h3><div class="price">Rp29.000</div><p>1 HP gateway, cocok untuk usaha kecil</p><ul><li>500 SMS</li><li>30 hari aktif</li><li>1 HP gateway</li><li>Maks. 100 SMS/hari</li></ul><a class="btn primary" href="app/">Pilih paket</a></div><div class="card plan"><h3>Bisnis</h3><div class="price">Rp79.000</div><p>2 HP gateway, kuota lebih besar</p><ul><li>2.000 SMS</li><li>30 hari aktif</li><li>2 HP gateway</li><li>Maks. 400 SMS/hari</li></ul><a class="btn primary" href="app/">Pilih paket</a></div><div class="card plan"><h3>Pro</h3><div class="price">Rp149.000</div><p>5 HP gateway untuk volume tinggi</p><ul><li>5.000 SMS</li><li>30 hari aktif</li><li>5 HP gateway</li><li>Maks. 1.000 SMS/hari</li></ul><a class="btn primary" href="app/">Pilih paket</a></div></div>
+    <p class="note">Harga paket untuk layanan panel, kuota, dan pemantauan perangkat. SMS tetap memakai pulsa atau bonus SMS SIM di HP gateway-mu.</p>
     <div class="cta" style="margin-top:28px;text-align:center">
       <a id="apk" class="btn primary" href="app/" aria-disabled="true">Aplikasi Android segera tersedia</a>
       <p id="apkv" style="color:var(--muted);font-size:14px;margin:10px 0 0"></p>
@@ -249,7 +263,7 @@
   </div>
 </section>
 
-<section id="keamanan">
+<section id="keamanan" class="alt">
   <div class="wrap split">
     <div>
       <span class="eyebrow">Keamanan</span>
@@ -277,6 +291,13 @@
   </div>
 </section>
 
+<section id="faq">
+  <div class="wrap faq">
+    <div class="sec-head"><span class="eyebrow">FAQ</span><h2>Pertanyaan yang sering diajukan</h2></div>
+    <details><summary>Apa itu Boombastis?</summary><p>Boombastis adalah layanan SMS gateway. Kamu memasang aplikasi Android di HP sendiri, lalu mengirim dan menerima SMS dari browser atau lewat API. SMS keluar dari SIM di HP-mu.</p></details><details><summary>Apakah SMS memakai pulsa?</summary><p>Ya. SMS dikirim lewat SIM di HP gateway-mu, jadi memakai pulsa atau bonus SMS SIM tersebut. Biaya paket Boombastis adalah untuk panel, kuota, antrean, dan pemantauan perangkat.</p></details><details><summary>Perlu HP seperti apa?</summary><p>HP Android dengan SIM aktif dan koneksi internet. Aplikasinya diunduh langsung dalam bentuk APK dari halaman ini, bukan dari Google Play.</p></details><details><summary>Bagaimana cara membayar?</summary><p>Pilih paket, lalu transfer sesuai nominal persis termasuk kode unik. Paket aktif setelah admin memastikan transfer masuk.</p></details><details><summary>Bisakah mengirim SMS dari website atau aplikasiku sendiri?</summary><p>Bisa. Buat API key di panel, lalu kirim permintaan HTTPS dari server-mu. SMS tetap dikirim lewat HP gateway dan memakai kuota paket.</p></details><details><summary>Apakah boleh dipakai untuk pesan promosi massal?</summary><p>Layanan tidak boleh dipakai untuk spam, penipuan, atau pesan tanpa izin penerima. Operator seluler juga bisa memblokir SIM yang mengirim pesan massal, jadi patuhi batas harian paket.</p></details><details><summary>Apakah admin bisa membaca isi SMS-ku?</summary><p>Tidak. Data tiap akun terpisah dan hanya bisa dibaca pemiliknya. Admin hanya melihat ringkasan seperti jumlah SMS terkirim.</p></details>
+  </div>
+</section>
+
 <section class="final">
   <div class="wrap">
     <h2>Siap mengelola SMS-mu?</h2>
@@ -289,7 +310,7 @@
 <footer>
   <div class="wrap">
     <span>© <span id="yr">2026</span> Boombastis · SMS Gateway Mandiri</span>
-    <span><a href="app/">Masuk</a> · <a href="https://github.com/jurkonstudio/boombastis" rel="noopener">GitHub</a></span>
+    <span><a href="app/">Masuk</a> · <a href="terms.html">Syarat Layanan</a> · <a href="privacy.html">Kebijakan Privasi</a></span>
   </div>
 </footer>
 <script>
@@ -304,12 +325,12 @@
     const S=Object.fromEntries(ss.map(x=>[x.key,x.value]));
     box.replaceChildren(...ps.map(p=>{
       const c=el('div','card plan');c.append(el('h3',null,p.name),el('div','price','Rp'+p.price_idr.toLocaleString('id-ID')),el('p',null,p.description||''));
-      const u=el('ul');[p.sms_quota.toLocaleString('id-ID')+' SMS',p.duration_days+' hari aktif',p.max_devices+' HP gateway','Maks. '+p.daily_limit+' SMS/hari'].forEach(t=>u.append(el('li',null,t)));
+      const u=el('ul');[p.sms_quota.toLocaleString('id-ID')+' SMS',p.duration_days+' hari aktif',p.max_devices+' HP gateway','Maks. '+p.daily_limit.toLocaleString('id-ID')+' SMS/hari'].forEach(t=>u.append(el('li',null,t)));
       const a=el('a','btn primary','Pilih paket');a.href='app/';c.append(u,a);return c;}));
     if(S.apk_url&&/^https:\/\//.test(S.apk_url)){const a=document.getElementById('apk');a.href=S.apk_url;a.textContent='Unduh aplikasi Android';a.removeAttribute('aria-disabled');}
     if(S.apk_version)document.getElementById('apkv').textContent='Versi '+S.apk_version;
     if(S.support_contact)document.getElementById('sup').textContent='Bantuan: '+S.support_contact;
-  }catch(e){box.replaceChildren(el('p',null,'Paket belum bisa dimuat. Buka Masuk / Daftar untuk melihat paket.'));}
+  }catch(e){/* tetap memakai daftar paket statis di HTML */}
 })();
 </script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear()</script>
