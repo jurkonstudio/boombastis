@@ -1,9 +1,8 @@
-name: Deploy panel admin SMS
+name: Deploy situs
 
 on:
   push:
     branches: [main]
-    paths: ['sms-gateway/admin/**', '.github/workflows/deploy-sms-admin.yml']
   workflow_dispatch:
 
 permissions:
@@ -23,9 +22,13 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - name: Siapkan folder situs
+        run: |
+          mkdir _site
+          cp -r index.html config.js app panel CNAME .nojekyll _site/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: sms-gateway/admin
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
