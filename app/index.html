@@ -39,6 +39,26 @@ button.wide{width:100%}button:disabled{opacity:.5}:focus-visible{outline:3px sol
 .mi{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;background:var(--c);color:var(--t);border:1px solid var(--b);border-radius:14px;min-height:60px;margin:0 0 10px;padding:12px 16px}.mi small{display:block;color:var(--m);font-weight:400}
 .sk{height:84px;border-radius:16px;background:linear-gradient(90deg,var(--b),var(--soft),var(--b));background-size:200% 100%;animation:sk 1.3s infinite;margin:0 0 14px}@keyframes sk{to{background-position:-200% 0}}
 pre.cd{background:var(--bg);border:1px solid var(--b);border-radius:10px;padding:12px;overflow-x:auto;font-size:12.5px;line-height:1.5;margin:8px 0 10px}.bk{margin:12px 0 0}.top b+b{font-size:16px}
+/* ===== tampilan lebih tegas: kontras tinggi, tombol besar, warna jelas ===== */
+:root{--bg:#eceff6;--m:#475467;--b:#ccd3e0;--p:#1f4fe0;--soft:#e1e9ff}
+@media(prefers-color-scheme:dark){:root{--bg:#090d15;--m:#b6bfd0;--b:#34415c;--p:#4b78ff;--soft:#1c2a50}}
+body{font-size:17px}h1{font-size:28px;letter-spacing:-.02em}h2{font-size:19px}
+.top{background:var(--p);color:#fff;border-bottom:0;padding-top:calc(10px + env(safe-area-inset-top));padding-bottom:10px}.top b{color:#fff;font-size:19px}.top button.lnk{color:#e3eaff;font-weight:700}
+.card,.stat{border:1.5px solid var(--b);border-radius:18px;box-shadow:0 10px 22px -16px rgba(16,24,40,.35)}.card{padding:18px}
+input,textarea,select{min-height:52px;border:2px solid var(--b);border-radius:12px;font-size:17px;background:var(--c)}
+input:focus,textarea:focus,select:focus{border-color:var(--p);outline:0;box-shadow:0 0 0 4px color-mix(in srgb,var(--p) 25%,transparent)}
+button{min-height:52px;border-radius:12px;font-weight:700;font-size:16px;box-shadow:0 8px 16px -10px var(--p)}
+button.g{background:var(--c);color:var(--p);border:2px solid var(--p);box-shadow:none}button.lnk{box-shadow:none;border:0;background:none}
+.tabs{border-top:2px solid var(--b)}.tabs button{min-height:64px;font-size:12.5px;font-weight:700;box-shadow:inset 0 4px 0 transparent}.tabs .on{background:var(--soft);box-shadow:inset 0 4px 0 var(--p)}.tabs svg{width:26px;height:26px;stroke-width:2.1}
+.bar{height:14px;border-radius:7px}.bar i{background:linear-gradient(90deg,var(--p),#7aa2ff)}
+.bd{font-weight:700;font-size:13px;padding:4px 12px}.bd.ok{background:color-mix(in srgb,var(--ok) 22%,transparent);color:var(--ok)}.bd.er{background:color-mix(in srgb,var(--er) 22%,transparent);color:var(--er)}
+.seg{padding:5px;border-radius:14px}.seg button{min-height:44px;box-shadow:none}.seg .on{background:var(--p);color:#fff}
+.row{padding:14px 0}.st.now{background:var(--soft);border-radius:14px;padding:14px;margin:4px -4px}.st i{width:34px;height:34px;border-width:2px}
+.code,.amt{background:var(--soft);border:2px dashed var(--p)}.code span{font-size:34px;font-family:ui-monospace,Menlo,monospace}
+.hero{background:linear-gradient(135deg,#1f4fe0,#6a3df0);color:#fff;border:0;box-shadow:0 18px 32px -16px rgba(36,87,245,.9)}.hero .m{color:#dbe4ff}.hero .big{font-size:46px}.hero .bar{background:rgba(255,255,255,.3)}.hero .bar i{background:#fff}.hero .warn{color:#ffe08a}.hero button.g{background:#fff;border-color:#fff}
+.act{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 14px}.act button{display:flex;flex-direction:column;align-items:center;gap:8px;min-height:96px;padding:12px 6px;background:var(--c);color:var(--t);border:1.5px solid var(--b);box-shadow:none}
+.act i{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--p);color:#fff}.act svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.mi{border:1.5px solid var(--b);font-weight:700}
 @media(prefers-reduced-motion:reduce){.sk{animation:none}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style></head><body><main>
@@ -136,16 +156,17 @@ async function home(b){
       h('div',{},h('b',{},t),i===cur?[h('p',{},x),h('button',{onclick:()=>goTab(k)},l)]:'')))));}
   if(!s)return;
   const left=s.sms_quota-s.sms_used,pct=Math.min(100,s.sms_used/s.sms_quota*100),low=left<=Math.max(5,s.sms_quota*.1)||new Date(s.expires_at)-Date.now()<3*864e5;
-  b.append(h('section',{class:'card'},h('div',{class:'m'},'Paket '+s.plan_name),h('div',{class:'big'},left+' SMS'),h('div',{class:'m'},'tersisa dari '+s.sms_quota),h('div',{class:'bar'},h('i',{style:'width:'+pct+'%'})),
+  b.append(h('section',{class:'card hero'},h('div',{class:'m'},'Paket '+s.plan_name),h('div',{class:'big'},left+' SMS'),h('div',{class:'m'},'tersisa dari '+s.sms_quota),h('div',{class:'bar'},h('i',{style:'width:'+pct+'%'})),
     h('p',{class:s.active?'m':'er'},(s.active?'Aktif sampai ':'Berakhir pada ')+wk(s.expires_at)),
     low?h('p',{class:'warn'},'Kuota atau masa aktif hampir habis. ',h('button',{class:'g',onclick:()=>goTab('plan')},'Perpanjang')):'',
     h('div',{class:'m'},'Perangkat: '+acc.devices+' dari '+s.max_devices+' · Batas harian: '+s.daily_limit+' SMS')));
+  b.append(h('div',{class:'act'},...[['send','Kirim SMS'],['msgs','Pesan'],['dev','Perangkat']].map(([k,l])=>h('button',{onclick:()=>goTab(k)},h('i',{},ico(k)),l))));
 }
 
 function send(b){
   const live=acc.is_admin||acc.subscription?.active;b.append(h('h1',{},'Kirim SMS'));
   if(!live)b.append(h('div',{class:'card'},h('h2',{},'Paket belum aktif'),h('p',{class:'m'},'Kamu perlu paket aktif untuk mengirim SMS.'),h('button',{onclick:()=>goTab('plan')},'Lihat paket')));
-  const to=h('input',{type:'tel',placeholder:'081234567890',autocomplete:'off'}),tx=h('textarea',{rows:5,maxLength:1000}),cnt=h('div',{class:'m'},'0/1000');tx.oninput=()=>cnt.textContent=tx.value.length+'/1000';
+  const to=h('input',{type:'tel',placeholder:'081234567890',autocomplete:'off'}),tx=h('textarea',{rows:5,maxLength:1000}),cnt=h('div',{class:'m'},'0/1000');tx.oninput=()=>{const n=tx.value.length;cnt.textContent=n+'/1000 karakter · '+(n?Math.ceil(n/(n<=160?160:153)):0)+' bagian SMS';};
   const go=h('button',{class:'wide',disabled:!live,onclick:()=>run(go,async()=>{
     if(!to.value.trim()||!tx.value.trim())throw new Error('Isi nomor tujuan dan pesan.');
     const{error}=await sb.from('outbox').insert({to_number:to.value.trim(),body:tx.value.trim(),owner_id:user.id});if(error)throw error;
@@ -162,7 +183,7 @@ function msgs(b){
     const out=w==='outbox',{data,error}=await sb.from(w).select('*').order(out?'created_at':'received_at',{ascending:false}).limit(50);
     if(error)return say(error.message,true);
     box.replaceChildren(...(data.length?data.map(r=>{const s=ST[r.status]||[r.status,''];
-      return h('div',{class:'row'},h('div',{class:'bx'},h('b',{},out?r.to_number:r.from_number),h('div',{},r.body),out&&r.status==='failed'&&r.error?h('div',{class:'m er'},r.error):''),
+      return h('div',{class:'row'},h('div',{class:'bx'},h('b',{},(out?'↑ ':'↓ ')+(out?r.to_number:r.from_number)),h('div',{},r.body),out&&r.status==='failed'&&r.error?h('div',{class:'m er'},r.error):''),
         h('div',{class:'rt'},out?h('span',{class:'bd '+s[1]},s[0]):'',h('div',{class:'m'},wk(out?r.created_at:r.received_at))));
     }):[h('p',{class:'m'},out?'Belum ada SMS keluar. Kirim yang pertama dari menu Kirim.':'Belum ada SMS masuk. SMS yang diterima HP gateway muncul di sini.')]));
   };draw();timer=setInterval(()=>{if(!document.hidden)draw();},8000);

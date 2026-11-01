@@ -149,6 +149,18 @@
   .note{margin:22px 0 0;color:var(--muted);font-size:14.5px;text-align:center}.faq{max-width:760px}.faq details{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:0 18px;margin:0 0 10px}.faq summary{cursor:pointer;padding:16px 0;font-weight:700;list-style:none}.faq summary::-webkit-details-marker{display:none}.faq summary::after{content:"+";float:right;color:var(--muted)}.faq details[open] summary::after{content:"–"}.faq details p{margin:0 0 16px;color:var(--muted)}
   a:focus-visible,summary:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
   .skip{position:absolute;left:-999px;top:8px;z-index:20;background:#fff;color:#000;padding:8px 12px;border-radius:8px}.skip:focus{left:8px}
+
+  /* ===== lebih tegas ===== */
+  :root{--muted:#475467;--line:#ccd3e0}@media (prefers-color-scheme: dark){:root{--muted:#b6bfd0;--line:#33405a}}
+  body{font-size:17px}.nav-links{color:#dbe4ff}
+  .hero h1{font-size:clamp(36px,6.4vw,64px)}.hero p.lead{font-size:19px;color:#d3dcf5}
+  .btn{padding:15px 24px;font-size:16.5px;font-weight:700;border-radius:14px}.btn.sm{padding:10px 16px;font-size:15px}.btn.ghost{border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.12)}
+  .card{border:1.5px solid var(--line);box-shadow:0 14px 28px -18px rgba(15,23,42,.45)}.card h3{font-size:20px}.card p,.step p{font-size:16px}
+  .plan{border-width:2px}.plan .price{font-size:38px}.plan .btn{width:100%;justify-content:center}.plan ul{font-size:16px}
+  .sec-head h2{font-size:clamp(28px,4.4vw,44px)}.sec-head p{font-size:18px}.eyebrow{font-size:14px}
+  .faq summary{font-size:17px;padding:18px 0}.checks li{font-size:17px}
+  .sticky{display:none}
+  @media (max-width:880px){.sticky{display:flex;position:fixed;left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:30;justify-content:center;box-shadow:0 14px 30px -8px rgba(36,87,245,.8)}footer{padding-bottom:84px}}
   .plan .price{font-size:30px;font-weight:800;margin:8px 0}.plan ul{padding-left:18px;color:var(--muted);margin:10px 0 16px}
 </style>
 <script src="config.js"></script>
@@ -307,6 +319,7 @@
 </section>
 </main>
 
+<a class="btn primary sticky" href="app/">Daftar &amp; mulai sekarang →</a>
 <footer>
   <div class="wrap">
     <span>© <span id="yr">2026</span> Boombastis · SMS Gateway Mandiri</span>
