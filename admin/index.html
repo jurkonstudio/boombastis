@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin · Boombastis</title>
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#2457f5">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6fa;--c:#fff;--t:#101828;--m:#5b6475;--p:#2457f5;--ok:#12804a;--er:#c62828;--wn:#a15c07;--b:#e3e7ee;--soft:#eef2ff}
+@media(prefers-color-scheme:dark){:root{--bg:#0d111a;--c:#151b27;--t:#e9edf5;--m:#9aa4b8;--p:#3d68f2;--ok:#4cc38a;--er:#ff8a8a;--wn:#f0b25e;--b:#252e40;--soft:#1a2340}}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 "Plus Jakarta Sans",system-ui,sans-serif;background:var(--bg);color:var(--t)}
+main{max-width:720px;margin:0 auto;padding:0 16px 96px}h1{font-size:24px;font-weight:800;margin:20px 0 12px}h2{font-size:17px;font-weight:800;margin:0 0 10px}p{margin:0 0 10px}a{color:var(--p)}
+.card{background:var(--c);border:1px solid var(--b);border-radius:16px;padding:16px;margin:0 0 14px}
+input,textarea,select{display:block;width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--b);border-radius:10px;background:var(--bg);color:var(--t);font:inherit;margin:6px 0 10px}
+input[type=checkbox]{display:inline-block;width:20px;height:20px;min-height:0;margin:0 8px 0 0;vertical-align:middle}
+button{font:inherit;font-weight:600;min-height:44px;padding:0 16px;border-radius:10px;border:1px solid var(--p);background:var(--p);color:#fff;cursor:pointer}
+button.g{background:transparent;color:var(--p);border-color:var(--b)}button.lnk{background:none;border:0;color:var(--m);min-height:40px;padding:0 8px}button.wide{width:100%}button:disabled{opacity:.5}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--p) 55%,transparent);outline-offset:2px}
+.top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;margin:0 -16px;padding:calc(6px + env(safe-area-inset-top)) 16px 6px;background:var(--c);border-bottom:1px solid var(--b)}.top b{font-weight:800;font-size:18px}
+.tabs{position:fixed;inset:auto 0 0;z-index:5;display:flex;background:var(--c);border-top:1px solid var(--b);padding:0 max(0px,calc((100vw - 720px)/2)) env(safe-area-inset-bottom)}
+.tabs button{flex:1;min-height:58px;padding:0;border:0;border-radius:0;background:none;color:var(--m);font-size:12.5px;box-shadow:inset 0 3px 0 transparent;position:relative}.tabs .on{color:var(--p);box-shadow:inset 0 3px 0 var(--p)}
+.bg{position:absolute;top:6px;left:calc(50% + 8px);min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--er);color:#fff;font-size:11px;line-height:18px}
+#msg{position:fixed;top:calc(8px + env(safe-area-inset-top));left:12px;right:12px;max-width:696px;margin:auto;z-index:20}.al{padding:12px 14px;border-radius:12px;background:var(--c);border:1px solid var(--b);box-shadow:0 8px 24px -10px rgba(0,0,0,.35);font-weight:600}
+.row{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-top:1px solid var(--b)}.row:first-of-type{border:0}.bx{min-width:0;overflow-wrap:anywhere}.rt{flex:none;text-align:right}
+.m{color:var(--m);font-size:14px}.ok{color:var(--ok)}.er{color:var(--er)}.warn{color:var(--wn);font-weight:600}.big{font-size:32px;font-weight:800;line-height:1.1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}.stat{background:var(--c);border:1px solid var(--b);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;font-weight:800}.stat span{font-size:12.5px;color:var(--m)}.stat.hot{border-color:var(--wn)}
+.seg{display:flex;background:var(--soft);padding:4px;border-radius:12px;margin:0 0 14px}.seg button{flex:1;min-height:38px;border:0;background:none;color:var(--m)}.seg .on{background:var(--c);color:var(--t);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.bd{padding:2px 10px;border-radius:99px;font-size:12.5px;font-weight:600;background:var(--soft);color:var(--m)}.bd.ok{background:color-mix(in srgb,var(--ok) 15%,transparent)}.bd.er{background:color-mix(in srgb,var(--er) 15%,transparent)}
+.ch{display:flex;align-items:flex-end;gap:8px;height:110px;margin-top:8px}.ch div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:11px;color:var(--m)}.ch i{display:block;width:100%;background:var(--p);border-radius:6px 6px 0 0;min-height:3px;margin-bottom:4px}
+.lb{display:block;font-weight:600;font-size:14px}.f2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.auth{max-width:420px;margin:0 auto}
+</style></head><body><main><div id="msg"></div><div id="root"></div></main>
+<script src="../config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const C=window.CFG||{};
+if(!window.supabase||!C.key){document.getElementById('root').textContent='Gagal memuat. Cek internet dan config.js.';throw new Error('cfg');}
+const sb=window.supabase.createClient(C.url,C.key),$=s=>document.querySelector(s),root=$('#root');
+const rp=n=>'Rp'+Number(n||0).toLocaleString('id-ID'),num=n=>Number(n||0).toLocaleString('id-ID'),tg=d=>d?new Date(d).toLocaleString('id-ID',{dateStyle:'short',timeStyle:'short'}):'-';
+function h(tag,a={},...kids){const e=document.createElement(tag);for(const k in a){if(k==='class')e.className=a[k];else if(k.startsWith('on'))e.addEventListener(k.slice(2),a[k]);else e[k]=a[k];}
+  kids.flat().forEach(c=>e.append(c instanceof Node?c:document.createTextNode(c==null?'':c)));return e;}
+function say(t,bad){const m=$('#msg');m.replaceChildren(h('div',{class:'al '+(bad?'er':'ok'),role:bad?'alert':'status'},/invalid login/i.test(t)?'Email atau password salah.':t));clearTimeout(say.t);say.t=setTimeout(()=>m.replaceChildren(),bad?8000:4000);}
+async function run(btn,fn){if(btn)btn.disabled=true;try{await fn();}catch(e){say(e.message||String(e),true);}finally{if(btn)btn.disabled=false;}}
+const wa=(p,t)=>{let d=(p||'').replace(/\D/g,'');if(d.startsWith('0'))d='62'+d.slice(1);return d?'https://wa.me/'+d+(t?'?text='+encodeURIComponent(t):''):null;};
+const seg=(o,cur,fn)=>h('div',{class:'seg'},...o.map(([k,l])=>h('button',{class:k===cur?'on':'',onclick:()=>fn(k)},l)));
+const stat=(n,l,hot)=>h('div',{class:'stat'+(hot?' hot':'')},h('b',{},n),h('span',{},l));
+let D=null,tab='home',timer=null;
+
+function login(msg){
+  const em=h('input',{type:'email',autocomplete:'email'}),pw=h('input',{type:'password',autocomplete:'current-password'});
+  const go=h('button',{class:'wide',onclick:()=>run(go,async()=>{const{error}=await sb.auth.signInWithPassword({email:em.value.trim(),password:pw.value});if(error)throw error;await boot();})},'Masuk');
+  pw.addEventListener('keydown',e=>{if(e.key==='Enter')go.click();});
+  root.replaceChildren(h('div',{class:'auth'},h('h1',{},'Admin Boombastis'),msg?h('p',{class:'er'},msg):'',h('div',{class:'card'},h('label',{class:'lb'},'Email',em),h('label',{class:'lb'},'Password',pw),go),h('p',{class:'m'},'Halaman ini hanya untuk pemilik layanan.')));
+}
+async function boot(){
+  const{data:{session}}=await sb.auth.getSession();if(!session)return login();
+  const{data,error}=await sb.rpc('my_account');if(error)return login(error.message);
+  if(!data.is_admin){await sb.auth.signOut();return login('Akun ini bukan admin.');}
+  await load();shell();clearInterval(timer);timer=setInterval(async()=>{if(!document.hidden&&(tab==='home'||tab==='pay')){try{await load();shell();}catch(e){}}},30000);
+}
+async function load(){
+  const[a,b,c,d]=await Promise.all([sb.rpc('admin_overview'),sb.from('payments').select('*').order('created_at',{ascending:false}).limit(500),sb.from('plans').select('*').order('sort_order'),sb.from('site_settings').select('*')]);
+  const e=a.error||b.error||c.error||d.error;if(e)throw e;
+  D={ov:a.data,pay:b.data,plans:c.data,set:Object.fromEntries(d.data.map(x=>[x.key,x.value])),who:Object.fromEntries(a.data.map(u=>[u.user_id,u]))};
+}
+const reload=async()=>{await load();shell();};
+function shell(){
+  const pn=D.pay.filter(p=>p.status==='pending').length,T=[['home','Ringkasan'],['pay','Bayar'],['usr','Pelanggan'],['plan','Paket']],body=h('div');
+  root.replaceChildren(h('header',{class:'top'},h('b',{},'Admin'),h('button',{class:'lnk',onclick:e=>run(e.target,async()=>{await reload();say('Data diperbarui.');})},'Muat ulang')),body,
+    h('nav',{class:'tabs'},...T.map(([k,l])=>h('button',{class:tab===k?'on':'',onclick:()=>{tab=k;shell();scrollTo(0,0);}},l,k==='pay'&&pn?h('span',{class:'bg'},pn):''))));
+  ({home,pay,usr,plan})[tab](body);
+}
+function S(){
+  const now=new Date(),ms=new Date(now.getFullYear(),now.getMonth(),1),paid=D.pay.filter(p=>p.status==='paid'),sum=a=>a.reduce((s,p)=>s+p.amount_idr,0),pd=p=>new Date(p.paid_at||p.created_at);
+  const months=[...Array(6)].map((_,i)=>{const d=new Date(now.getFullYear(),now.getMonth()-5+i,1),e=new Date(d.getFullYear(),d.getMonth()+1,1);return{l:d.toLocaleString('id-ID',{month:'short'}),v:sum(paid.filter(p=>pd(p)>=d&&pd(p)<e))};});
+  const on=u=>u.last_seen_at&&now-new Date(u.last_seen_at)<3*6e4,act=D.ov.filter(u=>u.plan_name&&new Date(u.expires_at)>now);
+  return{now,month:sum(paid.filter(p=>pd(p)>=ms)),total:sum(paid),nPaid:paid.length,months,act,on,pend:D.pay.filter(p=>p.status==='pending'),sent:D.ov.reduce((s,u)=>s+Number(u.sent_30d||0),0)};
+}
+function home(b){
+  const s=S(),dv=D.ov.filter(u=>u.device_count>0),mx=Math.max(1,...s.months.map(m=>m.v));
+  const warn=s.act.map(u=>{const d=(new Date(u.expires_at)-s.now)/864e5,r=[];if(d<=3)r.push('berakhir '+(d<1?'hari ini':Math.ceil(d)+' hari lagi'));if(u.sms_quota&&u.sms_used/u.sms_quota>=.9)r.push('kuota hampir habis');if(u.device_count>0&&!s.on(u)&&s.now-new Date(u.last_seen_at||0)>10*6e4)r.push('HP offline');return[u,r];}).filter(x=>x[1].length);
+  b.append(h('h1',{},'Ringkasan'),h('section',{class:'card'},h('div',{class:'m'},'Pendapatan bulan ini'),h('div',{class:'big'},rp(s.month)),h('div',{class:'m'},'Total '+rp(s.total)+' · '+s.nPaid+' pesanan lunas'),
+    h('div',{class:'ch'},...s.months.map(m=>h('div',{},h('i',{style:'height:'+Math.round(m.v/mx*80)+'px'}),m.l)))),
+    h('div',{class:'grid'},stat(s.pend.length,'Menunggu konfirmasi',s.pend.length>0),stat(s.act.length+'/'+D.ov.length,'Pelanggan aktif'),stat(num(s.sent),'SMS terkirim 30 hari'),stat(dv.filter(s.on).length+'/'+dv.length,'Pelanggan dengan HP online')),
+    h('section',{class:'card'},h('h2',{},'Perlu perhatian'),...(warn.length?warn.map(([u,r])=>{const l=wa(u.phone,'Halo '+(u.full_name||'')+', ');return h('div',{class:'row'},h('div',{class:'bx'},h('b',{},u.full_name||u.email),h('div',{class:'warn'},r.join(' · '))),l?h('a',{class:'rt',href:l,target:'_blank',rel:'noopener'},'WhatsApp'):'');}):[h('p',{class:'m'},'Semua aman.')])),
+    h('section',{class:'card'},h('h2',{},'Status HP gateway'),...(dv.length?dv.sort((x,y)=>new Date(y.last_seen_at||0)-new Date(x.last_seen_at||0)).map(u=>h('div',{class:'row'},h('div',{class:'bx'},h('b',{},u.full_name||u.email),h('div',{class:'m'},u.device_count+' HP · terakhir '+tg(u.last_seen_at))),h('span',{class:'bd '+(s.on(u)?'ok':'')+' rt'},s.on(u)?'Online':'Offline'))):[h('p',{class:'m'},'Belum ada HP terdaftar.')])));
+}
+function pay(b){
+  let w='p';const box=h('div'),bar=h('div');b.append(h('h1',{},'Pembayaran'),bar,box);
+  const draw=()=>{
+    bar.replaceChildren(seg([['p','Menunggu'],['h','Riwayat']],w,k=>{w=k;draw();}));
+    if(w==='p'){const L=D.pay.filter(p=>p.status==='pending').reverse();return box.replaceChildren(...(L.length?L.map(x=>{const u=D.who[x.owner_id]||{},l=wa(u.phone,'Halo '+(u.full_name||'')+', kami menerima pesanan '+x.plan_name+' sebesar '+rp(x.amount_idr)+'. ');
+      return h('div',{class:'card'},h('div',{class:'row',style:'border:0;padding:0'},h('div',{class:'bx'},h('b',{},u.full_name||u.email||'Pelanggan'),h('div',{class:'m'},x.plan_name+' · '+tg(x.created_at))),h('div',{class:'big rt',style:'font-size:22px'},rp(x.amount_idr))),
+        h('div',{class:'acts'},h('button',{onclick:e=>run(e.target,async()=>{if(!confirm('Pastikan '+rp(x.amount_idr)+' (nominal persis) sudah masuk rekening. Aktifkan paket?'))return;const{error}=await sb.rpc('admin_confirm_payment',{p_id:x.id});if(error)throw error;say('Langganan diaktifkan.');await reload();})},'Konfirmasi'),
+          h('button',{class:'g',onclick:e=>run(e.target,async()=>{const n=prompt('Alasan penolakan (opsional):');if(n===null)return;const{error}=await sb.rpc('admin_reject_payment',{p_id:x.id,p_note:n||null});if(error)throw error;await reload();})},'Tolak'),
+          l?h('a',{href:l,target:'_blank',rel:'noopener'},h('button',{class:'g'},'WhatsApp')):''));}):[h('div',{class:'card'},h('p',{class:'m'},'Tidak ada pesanan menunggu.'))]));}
+    const L=D.pay.filter(p=>p.status!=='pending').slice(0,40);
+    box.replaceChildren(h('div',{class:'card'},...(L.length?L.map(x=>{const u=D.who[x.owner_id]||{},l=x.status==='paid'?wa(u.phone,'Halo '+(u.full_name||'')+', pembayaran '+rp(x.amount_idr)+' untuk paket '+x.plan_name+' sudah kami terima dan paketmu aktif. Terima kasih!'):null;
+      return h('div',{class:'row'},h('div',{class:'bx'},h('b',{},u.full_name||u.email||'Pelanggan'),h('div',{class:'m'},x.plan_name+' · '+tg(x.paid_at||x.created_at)),l?h('a',{href:l,target:'_blank',rel:'noopener'},'Kabari lewat WhatsApp'):''),h('div',{class:'rt'},h('b',{},rp(x.amount_idr)),h('div',{},h('span',{class:'bd '+(x.status==='paid'?'ok':'er')},x.status==='paid'?'Lunas':'Ditolak'))));}):[h('p',{class:'m'},'Belum ada riwayat.')])));
+  };draw();
+}
+function usr(b){
+  let q='',f='all';const lc=h('div'),fb=h('div'),si=h('input',{type:'search',placeholder:'Cari nama, email, atau nomor',oninput:()=>{q=si.value.toLowerCase();lst();}}),now=new Date();
+  const row=u=>{const sel=h('select',{},...D.plans.map(p=>h('option',{value:p.id},p.name+' · '+rp(p.price_idr))));const l=wa(u.phone);
+    return h('div',{class:'card'},h('b',{},u.full_name||u.email),h('div',{class:'m'},u.email),l?h('a',{href:l,target:'_blank',rel:'noopener'},u.phone):'',
+      h('div',{class:'m'},u.plan_name?u.plan_name+' · '+u.sms_used+'/'+u.sms_quota+' SMS · s/d '+tg(u.expires_at):'Belum berlangganan'),h('div',{class:'m'},u.device_count+' HP · terakhir online '+tg(u.last_seen_at)+' · '+u.sent_30d+' terkirim/30 hari'),u.is_suspended?h('div',{class:'er'},'Ditangguhkan'):'',
+      h('details',{},h('summary',{class:'m'},'Tindakan'),sel,h('div',{class:'acts'},
+        h('button',{onclick:e=>run(e.target,async()=>{if(!confirm('Beri paket tanpa pembayaran?'))return;const{error}=await sb.rpc('admin_grant_plan',{p_user:u.user_id,p_plan_id:sel.value});if(error)throw error;say('Paket diberikan.');await reload();})},'Beri paket'),
+        h('button',{class:'g',onclick:e=>run(e.target,async()=>{if(!u.is_suspended&&!confirm('Tangguhkan akun ini?'))return;const{error}=await sb.rpc('admin_set_suspended',{p_user:u.user_id,p_suspended:!u.is_suspended});if(error)throw error;await reload();})},u.is_suspended?'Aktifkan akun':'Tangguhkan'))));};
+  const lst=()=>{fb.replaceChildren(seg([['all','Semua'],['act','Aktif'],['end','Berakhir'],['sus','Ditangguhkan']],f,k=>{f=k;lst();}));
+    const F={all:()=>1,act:u=>u.plan_name&&new Date(u.expires_at)>now,end:u=>!u.plan_name||new Date(u.expires_at)<=now,sus:u=>u.is_suspended}[f];
+    const L=D.ov.filter(u=>F(u)&&[u.full_name,u.email,u.phone].join(' ').toLowerCase().includes(q));lc.replaceChildren(...(L.length?L.map(row):[h('p',{class:'m'},'Tidak ada pelanggan yang cocok.')]));};
+  b.append(h('h1',{},'Pelanggan ('+D.ov.length+')'),si,fb,lc);lst();
+}
+function plan(b){
+  b.append(h('h1',{},'Paket & harga'));
+  const F=[['price_idr','Harga (Rp)'],['sms_quota','Kuota SMS'],['duration_days','Masa aktif (hari)'],['max_devices','Maks. HP'],['daily_limit','Batas harian'],['sort_order','Urutan']];
+  D.plans.forEach(p=>{const nm=h('input',{value:p.name}),ds=h('input',{value:p.description||''}),ac=h('input',{type:'checkbox',checked:p.is_active}),ins=F.map(([k])=>h('input',{type:'number',min:0,value:p[k]}));
+    const sv=h('button',{class:'wide',onclick:()=>run(sv,async()=>{const u={name:nm.value.trim(),description:ds.value.trim(),is_active:ac.checked};F.forEach(([k],i)=>u[k]=Math.round(+ins[i].value));const{error}=await sb.from('plans').update(u).eq('id',p.id);if(error)throw error;say('Paket '+u.name+' disimpan.');await reload();})},'Simpan paket');
+    b.append(h('section',{class:'card'},h('label',{class:'lb'},'Nama',nm),h('label',{class:'lb'},'Deskripsi',ds),h('div',{class:'f2'},...F.map(([k,l],i)=>h('label',{class:'lb'},l,ins[i]))),h('label',{class:'lb'},ac,'Tampil dan bisa dipesan'),h('p'),sv));});
+  b.append(h('button',{class:'g wide',style:'margin-bottom:14px',onclick:e=>run(e.target,async()=>{const{error}=await sb.from('plans').insert({name:'Paket baru',description:'',price_idr:50000,sms_quota:1000,duration_days:30,max_devices:1,daily_limit:200,is_active:false,sort_order:90});if(error)throw error;say('Paket baru dibuat (belum tampil).');await reload();})},'+ Tambah paket'));
+  const K=[['payment_instructions','Instruksi pembayaran (rekening, nama pemilik)'],['apk_url','Link unduh APK (https://...)'],['apk_version','Versi APK'],['support_contact','Kontak admin (WhatsApp/email)']],
+    ins=K.map(([k])=>k==='payment_instructions'?h('textarea',{rows:4,value:D.set[k]||''}):h('input',{value:D.set[k]||''}));
+  const sv=h('button',{class:'wide',onclick:()=>run(sv,async()=>{const{error}=await sb.from('site_settings').upsert(K.map(([k],i)=>({key:k,value:ins[i].value.trim(),updated_at:new Date().toISOString()})));if(error)throw error;say('Pengaturan situs disimpan.');await reload();})},'Simpan pengaturan situs');
+  b.append(h('section',{class:'card'},h('h2',{},'Pengaturan situs'),...K.map(([k,l],i)=>h('label',{class:'lb'},l,ins[i])),sv),
+    h('button',{class:'g wide',onclick:async()=>{clearInterval(timer);await sb.auth.signOut();login();}},'Keluar'));
+}
+sb.auth.onAuthStateChange(ev=>{if(ev==='SIGNED_OUT')login();});
+boot().catch(e=>login(e.message));
+</script></body></html>
