@@ -8,7 +8,7 @@
 
 -- 1) Admin panel
 insert into public.admins (user_id)
-values ('GANTI-DENGAN-UUID-USER-ADMIN')
+values ('04c1e011-7d00-4b17-a32f-580dff2f9c45')
 on conflict do nothing;
 
 -- 2) HP gateway (boleh juga ditambah lewat tab "Perangkat" di panel)
