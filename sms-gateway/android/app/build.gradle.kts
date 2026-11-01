@@ -25,6 +25,29 @@ android {
         buildConfigField("String", "SB_ANON", "\"" + cfg("key") + "\"")
     }
 
+    // Tanda tangan release: dibaca dari env (diisi oleh GitHub Actions dari Secrets).
+    // Tanpa env ini, build lokal tetap jalan seperti biasa (debug).
+    val ksFile = System.getenv("KEYSTORE_FILE")
+    if (ksFile != null && file(ksFile).exists()) {
+        signingConfigs {
+            create("release") {
+                storeFile = file(ksFile)
+                storePassword = System.getenv("KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
+            }
+        }
+        buildTypes {
+            getByName("release") {
+                signingConfig = signingConfigs.getByName("release")
+            }
+        }
+    }
+
+    lint {
+        checkReleaseBuilds = false
+    }
+
     buildFeatures {
         buildConfig = true
     }

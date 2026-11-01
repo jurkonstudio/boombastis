@@ -22,21 +22,39 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
 
-      - name: Build debug APK
-        working-directory: sms-gateway/android
-        run: gradle assembleDebug --no-daemon --stacktrace
+      - name: Siapkan keystore dari Secrets
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "::error::Secret KEYSTORE_BASE64 belum diisi. Lihat langkah membuat keystore."
+            exit 1
+          fi
+          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
 
-      - name: Siapkan APK
-        run: cp sms-gateway/android/app/build/outputs/apk/debug/app-debug.apk sms-gateway-debug.apk
+      - name: Build release APK (signed)
+        working-directory: sms-gateway/android
+        env:
+          KEYSTORE_FILE: ${{ runner.temp }}/release.jks
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: gradle assembleRelease --no-daemon --stacktrace
+
+      - name: Verifikasi tanda tangan
+        run: |
+          APK=sms-gateway/android/app/build/outputs/apk/release/app-release.apk
+          "$ANDROID_HOME"/build-tools/*/apksigner verify --print-certs "$APK" | head -5
+          # Nama file dipertahankan agar link lama (apk_url) tetap jalan.
+          cp "$APK" sms-gateway-debug.apk
 
       - uses: actions/upload-artifact@v4
         with:
-          name: sms-gateway-debug-apk
+          name: sms-gateway-apk
           path: sms-gateway-debug.apk
 
       - name: Rilis APK (unduh langsung dari HP)
@@ -46,5 +64,5 @@ jobs:
           gh release delete apk-latest --cleanup-tag -y || true
           gh release create apk-latest sms-gateway-debug.apk \
             --title "SMS Gateway APK (build ${{ github.run_number }})" \
-            --notes "APK debug otomatis dari commit ${{ github.sha }}." \
+            --notes "APK release (signed) dari commit ${{ github.sha }}." \
             --prerelease
