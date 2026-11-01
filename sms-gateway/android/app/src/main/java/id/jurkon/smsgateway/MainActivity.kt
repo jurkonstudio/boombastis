@@ -7,16 +7,24 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.os.Handler
 import android.os.Looper
+import android.os.PowerManager
 import android.provider.Settings
 import android.telephony.SubscriptionManager
+import android.text.InputFilter
 import android.text.InputType
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.Spinner
@@ -35,36 +43,183 @@ class MainActivity : Activity() {
     private lateinit var etCode: EditText
     private lateinit var legacyBox: LinearLayout
     private lateinit var spSim: Spinner
-    private lateinit var tvStatus: TextView
+    private lateinit var dot: View
+    private lateinit var tvState: TextView
+    private lateinit var tvDetail: TextView
+    private lateinit var tvSent: TextView
+    private lateinit var tvRecv: TextView
+    private lateinit var tvBeat: TextView
+    private lateinit var btnPerm: Button
+    private lateinit var btnBat: Button
     private var simIds: List<Int> = listOf(-1)
 
     private val tick = object : Runnable {
         override fun run() { render(); handler.postDelayed(this, 2000) }
     }
 
+    private val BRAND = Color.parseColor("#2457F5")
+    private val INK = Color.parseColor("#101828")
+    private val MUTED = Color.parseColor("#5B6475")
+    private val LINE = Color.parseColor("#E3E7EE")
+    private val BG = Color.parseColor("#F4F6FA")
+    private val OK = Color.parseColor("#12804A")
+    private val ERR = Color.parseColor("#C62828")
+    private val WARN = Color.parseColor("#A15C07")
+
     private fun dp(v: Int) = (v * resources.displayMetrics.density).toInt()
+
+    private fun box(fill: Int, r: Int, stroke: Int = 0) = GradientDrawable().apply {
+        setColor(fill); cornerRadius = dp(r).toFloat()
+        if (stroke != 0) setStroke(dp(1), stroke)
+    }
+
+    private fun oval(c: Int) = GradientDrawable().apply { setShape(GradientDrawable.OVAL); setColor(c) }
+
+    private fun lp(top: Int = 0) = LinearLayout.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+    ).apply { topMargin = dp(top) }
+
+    private fun LinearLayout.put(v: View, top: Int = 0) = addView(v, lp(top))
+
+    private fun label(t: String, sp: Float = 15f, color: Int = INK, bold: Boolean = false) = TextView(this).apply {
+        text = t; textSize = sp; setTextColor(color)
+        if (bold) typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
+    }
 
     private fun field(hint: String, type: Int) = EditText(this).apply {
         this.hint = hint
         inputType = type
         setSingleLine()
+        textSize = 16f
+        setTextColor(INK)
+        setHintTextColor(Color.parseColor("#98A2B3"))
+        background = box(Color.WHITE, 10, LINE)
+        setPadding(dp(14), dp(12), dp(14), dp(12))
     }
 
-    private fun btn(text: String, onClick: () -> Unit) = Button(this).apply {
+    // kind 0 = utama (biru), 1 = sekunder (outline), 2 = bahaya (merah)
+    private fun btn(text: String, kind: Int = 0, onClick: () -> Unit) = Button(this).apply {
         this.text = text
         isAllCaps = false
+        textSize = 16f
+        stateListAnimator = null
+        minHeight = dp(52)
+        minimumHeight = dp(52)
+        typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
+        if (kind == 0) { setTextColor(Color.WHITE); background = box(BRAND, 12) }
+        else { setTextColor(if (kind == 1) BRAND else ERR); background = box(Color.WHITE, 12, LINE) }
         setOnClickListener { onClick() }
+    }
+
+    private fun chip(text: String, onClick: () -> Unit) = Button(this).apply {
+        this.text = text
+        isAllCaps = false
+        textSize = 14f
+        stateListAnimator = null
+        minHeight = 0; minimumHeight = 0; minWidth = dp(76); minimumWidth = dp(76)
+        setTextColor(Color.WHITE)
+        background = box(BRAND, 20)
+        setPadding(dp(14), dp(8), dp(14), dp(8))
+        setOnClickListener { onClick() }
+    }
+
+    private fun setChip(b: Button, ok: Boolean) {
+        b.text = if (ok) "Aktif" else "Atur"
+        b.isEnabled = !ok
+        b.setTextColor(if (ok) OK else Color.WHITE)
+        b.background = if (ok) box(Color.parseColor("#E7F6EE"), 20) else box(BRAND, 20)
+    }
+
+    private fun card(parent: LinearLayout, top: Int = 12): LinearLayout {
+        val c = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = box(Color.WHITE, 16, LINE)
+            setPadding(dp(16), dp(16), dp(16), dp(16))
+        }
+        parent.put(c, top)
+        return c
+    }
+
+    private fun row(parent: LinearLayout, title: String, desc: String, action: Button, top: Int) {
+        val r = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER_VERTICAL }
+        val t = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        t.put(label(title, 15f, INK, true))
+        t.put(label(desc, 13f, MUTED))
+        r.addView(t, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
+        r.addView(action, LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        ).apply { marginStart = dp(12) })
+        parent.put(r, top)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val col = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(dp(16), dp(32), dp(16), dp(24))
+            setPadding(dp(20), dp(28), dp(20), dp(32))
         }
-        setContentView(ScrollView(this).apply { addView(col) })
+        setContentView(ScrollView(this).apply { setBackgroundColor(BG); isFillViewport = true; addView(col) })
 
-        col.addView(TextView(this).apply { text = "SMS Gateway"; textSize = 22f })
+        // Header
+        val head = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER_VERTICAL }
+        head.addView(ImageView(this).apply {
+            setImageResource(R.drawable.ic_launcher_foreground)
+            scaleType = ImageView.ScaleType.CENTER_INSIDE
+            background = box(BRAND, 14)
+        }, LinearLayout.LayoutParams(dp(48), dp(48)))
+        val ht = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        ht.put(label("Boombastis Gateway", 20f, INK, true))
+        ht.put(label("Kirim SMS dari HP ini", 13f, MUTED))
+        head.addView(ht, LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        ).apply { marginStart = dp(12) })
+        col.put(head)
+
+        // Kartu status
+        val sc = card(col, 20)
+        val top = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER_VERTICAL }
+        dot = View(this)
+        top.addView(dot, LinearLayout.LayoutParams(dp(12), dp(12)).apply { marginEnd = dp(10) })
+        tvState = label("", 18f, INK, true)
+        top.addView(tvState)
+        sc.put(top)
+        tvDetail = label("", 14f, MUTED)
+        sc.put(tvDetail, 4)
+        tvSent = label("0", 24f, INK, true)
+        tvRecv = label("0", 24f, INK, true)
+        val stats = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+        for ((n, cap) in listOf(tvSent to "Terkirim", tvRecv to "Diterima")) {
+            val c = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+            c.addView(n); c.addView(label(cap, 13f, MUTED))
+            stats.addView(c, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
+        }
+        sc.put(stats, 16)
+        tvBeat = label("", 12f, MUTED)
+        sc.put(tvBeat, 12)
+
+        // Siapkan HP
+        val sp = card(col)
+        sp.put(label("Siapkan HP", 16f, INK, true))
+        btnPerm = chip("Atur") { requestPerms() }
+        btnBat = chip("Atur") {
+            try {
+                startActivity(Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:$packageName")))
+            } catch (e: Exception) {
+                startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
+            }
+        }
+        row(sp, "Izin SMS", "Untuk kirim dan terima SMS", btnPerm, 12)
+        row(sp, "Tetap berjalan", "Matikan penghematan baterai", btnBat, 14)
+        row(sp, "Setelan terbatas", "Perlu untuk aplikasi dari luar Play Store", chip("Buka") {
+            Toast.makeText(
+                this,
+                "Ketuk ⋮ di kanan atas, lalu pilih 'Izinkan setelan terbatas', baru izinkan SMS.",
+                Toast.LENGTH_LONG
+            ).show()
+            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName")))
+        }, 14)
+
+        // Pairing
         etUrl = field("Project URL (https://xxxx.supabase.co)", InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI)
         etAnon = field("Anon key", InputType.TYPE_CLASS_TEXT)
         etEmail = field("Email akun HP", InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
@@ -73,51 +228,38 @@ class MainActivity : Activity() {
         etAnon.setText(Store.get(this, "anon"))
         etEmail.setText(Store.get(this, "email"))
         if (Store.get(this, "pass").isNotEmpty()) etPass.hint = "Password tersimpan (kosongkan jika tidak diganti)"
-        etCode = field("Kode pairing dari panel (8 karakter)", InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS)
-        col.addView(TextView(this).apply { text = "Pasangkan HP ini"; textSize = 16f })
-        col.addView(etCode)
-        col.addView(btn("Pasangkan & Mulai") { pairAndStart() })
+
+        val pc = card(col)
+        pc.put(label(if (Store.get(this, "mode") == "pair") "Pasangkan ulang HP ini" else "Pasangkan HP ini", 16f, INK, true))
+        pc.put(label("Di panel Boombastis: Perangkat > Tambah perangkat, lalu masukkan kodenya di sini.", 13f, MUTED), 4)
+        etCode = field("KODE 8 KARAKTER", InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS).apply {
+            gravity = Gravity.CENTER
+            textSize = 22f
+            letterSpacing = 0.15f
+            filters = arrayOf(InputFilter.LengthFilter(8))
+        }
+        pc.put(etCode, 14)
+        pc.put(btn("Pasangkan & Mulai") { pairAndStart() }, 12)
+
+        // SIM
+        val ic = card(col)
+        ic.put(label("SIM untuk mengirim", 16f, INK, true))
+        spSim = Spinner(this)
+        ic.put(spSim, 6)
+
+        col.put(btn("Berhenti", 2) { stopGateway() }, 16)
 
         legacyBox = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
-        legacyBox.addView(etUrl); legacyBox.addView(etAnon); legacyBox.addView(etEmail); legacyBox.addView(etPass)
-        legacyBox.addView(btn("Simpan & Mulai (email)") { saveAndStart() })
+        legacyBox.put(etUrl, 8); legacyBox.put(etAnon, 8); legacyBox.put(etEmail, 8); legacyBox.put(etPass, 8)
+        legacyBox.put(btn("Simpan & Mulai (email)", 1) { saveAndStart() }, 8)
         legacyBox.visibility =
             if (Store.get(this, "email").isNotEmpty() && Store.get(this, "mode") != "pair") View.VISIBLE else View.GONE
-        col.addView(btn("Mode email & password (lama)") {
+        col.put(btn("Mode lanjutan (email & password)", 1) {
             legacyBox.visibility = if (legacyBox.visibility == View.VISIBLE) View.GONE else View.VISIBLE
-        })
-        col.addView(legacyBox)
+        }, 10)
+        col.put(legacyBox)
 
-        col.addView(TextView(this).apply { text = "SIM untuk mengirim"; setPadding(0, dp(8), 0, 0) })
-        spSim = Spinner(this)
-        col.addView(spSim)
-
-        col.addView(btn("Berhenti") { stopGateway() })
-
-        tvStatus = TextView(this).apply { setPadding(0, dp(12), 0, dp(12)); textSize = 15f }
-        col.addView(tvStatus)
-
-        col.addView(btn("Izinkan SMS, telepon & notifikasi") { requestPerms() })
-        col.addView(btn("Pengecualian baterai") {
-            try {
-                startActivity(Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:$packageName")))
-            } catch (e: Exception) {
-                startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
-            }
-        })
-        col.addView(btn("Buka Info Aplikasi (setelan terbatas)") {
-            Toast.makeText(
-                this,
-                "Ketuk ⋮ di kanan atas, lalu pilih 'Izinkan setelan terbatas', baru izinkan SMS.",
-                Toast.LENGTH_LONG
-            ).show()
-            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName")))
-        })
-        col.addView(TextView(this).apply {
-            text = "Samsung: matikan Auto Blocker sebelum memasang APK, dan masukkan aplikasi ini ke " +
-                "daftar 'Aplikasi yang tidak pernah tidur'."
-            setPadding(0, dp(8), 0, 0)
-        })
+        col.put(label("Samsung: matikan Auto Blocker sebelum memasang APK, dan masukkan aplikasi ini ke daftar 'Aplikasi yang tidak pernah tidur'.", 12f, MUTED), 16)
 
         refreshSims()
     }
@@ -229,13 +371,24 @@ class MainActivity : Activity() {
     }
 
     private fun render() {
+        val m = Status.message
+        val (st, c) = when {
+            m.startsWith("Online") -> "Terhubung" to OK
+            m.startsWith("Gagal") || m.contains("bermasalah", true) -> "Bermasalah" to ERR
+            m.startsWith("Berhenti") || m.startsWith("Belum") -> "Tidak aktif" to MUTED
+            else -> "Menyambungkan…" to WARN
+        }
+        tvState.text = st
+        tvState.setTextColor(c)
+        dot.background = oval(c)
+        val dn = Store.get(this, "device_name")
+        tvDetail.text = if (Store.get(this, "mode") == "pair" && dn.isNotEmpty()) "$dn · $m" else m
+        tvSent.text = Status.sent.toString()
+        tvRecv.text = Status.received.toString()
         val hb = if (Status.lastHeartbeat == 0L) "-"
         else SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date(Status.lastHeartbeat))
-        val dn = Store.get(this, "device_name")
-        tvStatus.text = "Status: ${Status.message}\n" +
-            (if (Store.get(this, "mode") == "pair" && dn.isNotEmpty()) "Perangkat: $dn\n" else "") +
-            "Terkirim sesi ini: ${Status.sent}\n" +
-            "Diterima sesi ini: ${Status.received}\n" +
-            "Heartbeat terakhir: $hb"
+        tvBeat.text = "Terakhir sinkron: $hb"
+        setChip(btnPerm, hasPerm(Manifest.permission.SEND_SMS) && hasPerm(Manifest.permission.RECEIVE_SMS))
+        setChip(btnBat, getSystemService(PowerManager::class.java).isIgnoringBatteryOptimizations(packageName))
     }
 }
