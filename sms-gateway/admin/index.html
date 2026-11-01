@@ -63,10 +63,12 @@
   <div class="card">
     <h2 style="margin-top:0">Hubungkan ke Supabase</h2>
     <small>Ada di Supabase &gt; Project Settings &gt; API. Pakai <b>anon / publishable key</b>, jangan pernah service_role.</small>
+    <div class="row" style="margin-top:10px"><button id="btnPaste" class="small">📋 Tempel dari clipboard</button></div>
+    <small>Salin URL atau key dari Supabase, ketuk tombol di atas, kolom terisi otomatis.</small>
     <label>Project URL</label>
-    <input id="cfgUrl" placeholder="https://xxxx.supabase.co" autocomplete="off">
+    <input id="cfgUrl" value="https://pxcicgzvmbxjlbsbwetp.supabase.co" placeholder="https://xxxx.supabase.co" autocomplete="off">
     <label>Anon (publishable) key</label>
-    <input id="cfgKey" placeholder="eyJ..." autocomplete="off">
+    <input id="cfgKey" placeholder="sb_publishable_... atau eyJ..." autocomplete="off">
     <div class="row" style="margin-top:14px"><button id="btnSaveCfg" class="primary">Simpan</button></div>
     <div id="setupMsg"></div>
   </div>
@@ -175,12 +177,36 @@
     render();
   }
 
-  $('btnSaveCfg').onclick = () => {
+  function fillFromText(t) {
+    t = String(t || '');
+    const u = t.match(/https:\/\/[a-z0-9-]+\.supabase\.(?:co|in)/i);
+    const k = t.match(/sb_publishable_[A-Za-z0-9_-]+|eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/);
+    if (u) $('cfgUrl').value = u[0];
+    if (k) $('cfgKey').value = k[0];
+    return !!(u || k);
+  }
+  $('btnPaste').onclick = async () => {
+    try {
+      const ok = fillFromText(await navigator.clipboard.readText());
+      note('setupMsg', ok ? 'Terisi dari clipboard. Ketuk Simpan.' : 'Clipboard tidak berisi URL atau key Supabase.', ok);
+    } catch { note('setupMsg', 'Izin clipboard ditolak. Tempel manual di kolom.'); }
+  };
+  ['cfgUrl', 'cfgKey'].forEach((id) => $(id).addEventListener('paste', (e) => {
+    const t = (e.clipboardData || window.clipboardData).getData('text');
+    if (fillFromText(t)) e.preventDefault();
+  }));
+
+  $('btnSaveCfg').onclick = async () => {
     const url = $('cfgUrl').value.trim().replace(/\/+$/, '');
     const key = $('cfgKey').value.trim();
     if (!/^https:\/\/.+\.supabase\.(co|in)$/.test(url) || key.length < 20) {
       return note('setupMsg', 'URL atau key tidak valid.');
     }
+    note('setupMsg', 'Memeriksa koneksi...', true);
+    try {
+      const r = await fetch(url + '/auth/v1/settings', { headers: { apikey: key } });
+      if (!r.ok) return note('setupMsg', 'Server menolak (' + r.status + '). Cek URL dan key.');
+    } catch { return note('setupMsg', 'Tidak bisa terhubung. Cek URL dan internet.'); }
     localStorage.setItem('sms_cfg', JSON.stringify({ url, key }));
     boot();
   };
