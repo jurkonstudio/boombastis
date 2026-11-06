@@ -37,6 +37,21 @@ Live site: https://boombastis.my.id (static HTML, hosted on GitHub Pages).
 4. Write a unique About section and 5 to 6 FAQ items. Keep the FAQPage JSON-LD identical to the visible FAQ.
 5. Bump the `?v=` number of `site.css` when styles change, to avoid stale cache.
 
+## Indonesian tools (`/id/`)
+
+Indonesian-language pages with their own hub at `/id/`, grouped by category. Logic is in `assets/` and is plain JS.
+
+| Tool | Path | Category |
+| --- | --- | --- |
+| Terbilang (angka ke huruf) | `/id/terbilang/` | Keuangan |
+| Kalkulator THR (Permenaker 6/2016) | `/id/kalkulator-thr/` | Keuangan |
+| Kalkulator Pace Lari | `/id/pace-lari/` | Olahraga |
+| Hitung Umur dan Selisih Tanggal (plus weton) | `/id/hitung-umur/` | Tanggal & Waktu |
+| Kompres Foto ke Ukuran KB | `/id/kompres-foto/` | Gambar |
+| Konverter JSON ke CSV / CSV ke JSON | `/id/json-csv/` | Developer & Data |
+
+The English home page is now grouped into categories and links to the Indonesian section.
+
 ## Keeping the site reachable
 
 - **Offline / PWA:** `sw.js` caches every page after the first visit, so returning visitors can still
@@ -51,6 +66,11 @@ Live site: https://boombastis.my.id (static HTML, hosted on GitHub Pages).
   (Internet Positif) is different from an IP block.
 
 ## Patch notes
+
+### v1.4 (2026-11-06) - Indonesian tools batch 1
+- Added six Indonesian tools under `/id/` plus an `/id/` hub; home page grouped by category.
+- Each page has About, FAQ, FAQPage, WebApplication and BreadcrumbList structured data.
+- Service worker cache is now `v4`; `site.css` is `?v=4`.
 
 ### v1.3 (2026-11-06) - More tools and offline mode
 - Added JSON Formatter, Base64 Encoder / Decoder and Text Case Converter.

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kompres Foto ke 100 KB, 200 KB, 500 KB Online (Tanpa Upload) | Boombastis</title>
+<meta name="description" content="Perkecil ukuran foto ke target KB tertentu, dengan opsi rasio 3:4 atau 2:3 untuk pas foto. Diproses di browser, foto tidak diunggah.">
+<link rel="canonical" href="https://boombastis.my.id/id/kompres-foto/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#ff3b30">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Boombastis"><meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Kompres Foto ke 100 KB, 200 KB, 500 KB Online (Tanpa Upload)"><meta property="og:url" content="https://boombastis.my.id/id/kompres-foto/">
+<meta property="og:description" content="Perkecil ukuran foto ke target KB tertentu, dengan opsi rasio 3:4 atau 2:3 untuk pas foto. Diproses di browser, foto tidak diunggah."><meta property="og:image" content="https://boombastis.my.id/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://boombastis.my.id/og.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Kompres Foto ke Ukuran KB", "url": "https://boombastis.my.id/id/kompres-foto/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "IDR"}, "inLanguage": "id"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Bagaimana memperkecil foto jadi 100 KB?", "acceptedAnswer": {"@type": "Answer", "text": "Isi target 100, klik Kompres. Alat akan menurunkan kualitas dan, bila perlu, ukuran piksel sampai hasilnya di bawah 100 KB."}}, {"@type": "Question", "name": "Apakah foto saya diunggah ke server?", "acceptedAnswer": {"@type": "Answer", "text": "Tidak. Foto diproses di browser dan tidak meninggalkan perangkat Anda."}}, {"@type": "Question", "name": "Kenapa hasilnya lebih kecil dari target?", "acceptedAnswer": {"@type": "Answer", "text": "Alat mencari kualitas tertinggi yang masih di bawah target, jadi hasil bisa sedikit lebih kecil."}}, {"@type": "Question", "name": "Berapa piksel untuk pas foto 3x4?", "acceptedAnswer": {"@type": "Answer", "text": "Pada 300 dpi sekitar 354 × 472 px. Pilih rasio 3:4 lalu isi lebar maksimum 354."}}, {"@type": "Question", "name": "Format apa yang dihasilkan?", "acceptedAnswer": {"@type": "Answer", "text": "JPG. Latar transparan dari PNG diganti putih."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Beranda", "item": "https://boombastis.my.id/id/"}, {"@type": "ListItem", "position": 2, "name": "Kompres Foto ke Ukuran KB", "item": "https://boombastis.my.id/id/kompres-foto/"}]}</script>
+<link rel="stylesheet" href="/assets/site.css?v=4">
+</head>
+<body>
+<main>
+<a class="brand" href="/id/"><img src="/brand/logo-mark.svg" alt="" width="36" height="36"><span>Boom<b>bastis</b></span></a>
+<nav><a href="/id/">Beranda</a><a href="/id/terbilang/">Terbilang</a><a href="/id/pace-lari/">Pace Lari</a><a href="/id/kalkulator-thr/">THR</a><a href="/id/hitung-umur/">Hitung Umur dan Selisih Tanggal</a><a href="/id/kompres-foto/" class="on">Kompres Foto ke Ukuran KB</a><a href="/id/json-csv/">JSON ke CSV dan CSV ke JSON</a><a href="/">English</a></nav>
+<section class="on"><h1>Kompres Foto ke Ukuran KB</h1><p class="sub">Pilih foto, tentukan target KB, unduh hasilnya.</p>
+<div class="card"><label class="fl">Foto (JPG, PNG, WebP)<input id="fin" class="in" type="file" accept="image/*"></label>
+<div class="grid2"><label class="fl">Target ukuran (KB)<input id="fkb" class="in" inputmode="numeric" value="200"></label><label class="fl">Lebar maksimum (px, opsional)<input id="fw" class="in" inputmode="numeric" placeholder="mis. 1000"></label></div>
+<label class="fl">Potong ke rasio<select id="frat" class="in"><option value="">Tanpa potong (asli)</option><option value="3:4">3:4 (pas foto 3x4)</option><option value="2:3">2:3 (pas foto 4x6)</option><option value="1:1">1:1 (persegi)</option><option value="4:3">4:3 (landscape)</option></select></label>
+<div class="acts"><button class="btn" id="fgo">Kompres</button><a class="btn alt" id="fdl" hidden>Unduh hasil</a></div>
+<p id="fmsg" class="sub" role="status"></p><p id="finfo" class="sub"></p><img id="fprev" alt="Hasil kompres" hidden style="max-width:100%;border-radius:12px"></div>
+</section>
+<div class="about">
+<h2>Tentang alat ini</h2>
+<p>Banyak formulir online seperti pendaftaran CPNS, beasiswa, atau sekolah membatasi ukuran foto, misalnya maksimal 200 KB. Alat ini memperkecil foto Anda sampai di bawah target KB yang Anda tentukan, dengan menjaga kualitas setinggi mungkin.</p><p>Caranya: foto dikecilkan dengan menurunkan kualitas JPEG secara bertahap, dan jika masih terlalu besar, dimensinya dikurangi sedikit demi sedikit. Anda juga bisa memotong foto ke rasio pas foto (3:4 atau 2:3) dan membatasi lebar maksimum. Semua proses berjalan di browser Anda, sehingga foto KTP, ijazah, atau pas foto tidak pernah diunggah. Hasil selalu berformat JPG dengan latar putih untuk gambar transparan.</p>
+<h2>Cara memakai</h2>
+<ol><li>Pilih foto dari perangkat Anda.</li><li>Isi target KB, dan pilih rasio atau lebar maksimum bila perlu.</li><li>Klik Kompres, lalu Unduh hasil.</li></ol>
+<h2>Pertanyaan yang sering diajukan</h2>
+<details><summary>Bagaimana memperkecil foto jadi 100 KB?</summary><p>Isi target 100, klik Kompres. Alat akan menurunkan kualitas dan, bila perlu, ukuran piksel sampai hasilnya di bawah 100 KB.</p></details><details><summary>Apakah foto saya diunggah ke server?</summary><p>Tidak. Foto diproses di browser dan tidak meninggalkan perangkat Anda.</p></details><details><summary>Kenapa hasilnya lebih kecil dari target?</summary><p>Alat mencari kualitas tertinggi yang masih di bawah target, jadi hasil bisa sedikit lebih kecil.</p></details><details><summary>Berapa piksel untuk pas foto 3x4?</summary><p>Pada 300 dpi sekitar 354 × 472 px. Pilih rasio 3:4 lalu isi lebar maksimum 354.</p></details><details><summary>Format apa yang dihasilkan?</summary><p>JPG. Latar transparan dari PNG diganti putih.</p></details>
+</div>
+<div class="related"><h2>Alat terkait</h2><div><a href="/id/json-csv/"><b>Konverter JSON ke CSV dan CSV ke JSON</b><span>JSON ke CSV dan sebaliknya, siap Excel.</span></a><a href="/id/terbilang/"><b>Terbilang: Angka ke Huruf</b><span>Ubah angka jadi kata, untuk kwitansi dan surat.</span></a><a href="/id/hitung-umur/"><b>Hitung Umur dan Selisih Tanggal</b><span>Umur tepat, selisih tanggal, dan weton.</span></a></div></div>
+<footer><div><a href="/id/">Beranda</a><a href="/id/terbilang/">Terbilang: Angka ke Huruf</a><a href="/id/pace-lari/">Kalkulator Pace Lari</a><a href="/id/kalkulator-thr/">Kalkulator THR</a><a href="/id/hitung-umur/">Hitung Umur dan Selisih Tanggal</a><a href="/id/kompres-foto/">Kompres Foto ke Ukuran KB</a><a href="/id/json-csv/">Konverter JSON ke CSV dan CSV ke JSON</a><a href="/">English</a></div><p>© 2026 Boombastis. File dan data Anda tidak pernah meninggalkan browser.</p></footer>
+</main>
+<script src="/assets/foto.js?v=1"></script>
+<script src="/assets/sw-register.js?v=1"></script>
+</body>
+</html>
