@@ -29,7 +29,7 @@ const T = {
   en: {
     skip: "Skip to content", tools: "All tools", about: "About", switchTo: "Bahasa Indonesia", switchShort: "ID",
     theme: "Theme", menu: "Menu", home: "Home", crumbs: "Breadcrumb", main: "Main navigation",
-    h1: "Free online tools that stay private", sub: "Fast tools that run in your browser. Your files and passwords are never uploaded.",
+    badge: "Browser-only tools · your files never leave", h1: "Free online tools that stay <span>private.</span>", twPre: "I need help with", tw: [["compress an image", "image compressor"], ["count words", "word counter"], ["make a password", "password"], ["make a QR code", "qr"], ["format JSON", "json formatter"], ["check my IP and DNS", "ip & dns"], ["hash a file", "hash"], ["decode Base64", "base64"]], go: "Find tool", featLbl: "FEATURED", open: "Open", ready: "Ready to use", meet: "Meet the tools", sub: "Fast tools that run in your browser. Your files and passwords are never uploaded.",
     search: "Search tools", ph: "Search tools, e.g. hash", all: "All", fav: "Favorites",
     one: "tool", many: "tools", none: "No tools found", noneSub: "Try another word or pick a different category.", clear: "Clear filters",
     noFav: "You have no favorites yet. Tap the heart on a tool to save it here.",
@@ -42,7 +42,7 @@ const T = {
   id: {
     skip: "Langsung ke konten", tools: "Semua alat", about: "Tentang", switchTo: "English", switchShort: "EN",
     theme: "Tema", menu: "Menu", home: "Beranda", crumbs: "Jejak halaman", main: "Navigasi utama",
-    h1: "Alat online gratis, privat, dan cepat", sub: "Terbilang, THR, pace lari, umur, kompres foto, dan lainnya. Berjalan di browser, data Anda tidak diunggah.",
+    badge: "Alat berbasis browser · file tidak diunggah", h1: "Alat online gratis yang tetap <span>privat.</span>", twPre: "Saya butuh bantuan untuk", tw: [["mengompres foto", "kompres foto"], ["menghitung THR", "thr"], ["menghitung pace lari", "pace"], ["menghitung umur", "umur"], ["mengubah angka jadi huruf", "terbilang"], ["mengubah JSON ke CSV", "json"]], go: "Cari alat", featLbl: "UNGGULAN", open: "Buka", ready: "Siap dipakai", meet: "Kenali alatnya", sub: "Terbilang, THR, pace lari, umur, kompres foto, dan lainnya. Berjalan di browser, data Anda tidak diunggah.",
     search: "Cari alat", ph: "Cari alat, misalnya THR", all: "Semua", fav: "Favorit",
     one: "alat", many: "alat", none: "Alat tidak ditemukan", noneSub: "Coba kata lain atau pilih kategori yang berbeda.", clear: "Hapus filter",
     noFav: "Belum ada favorit. Ketuk ikon hati pada alat untuk menyimpannya di sini.",
@@ -140,25 +140,45 @@ function page(p, body, { wide = false, cls = "", extra = [] } = {}) {
 }
 
 // ---------- home and hub ----------
-function card(x, t) {
+const GRAD = {
+  image: ["#f472b6", "#7e22ce"], text: ["#818cf8", "#3730a3"], security: ["#fb923c", "#dc2626"],
+  network: ["#38bdf8", "#1d4ed8"], utility: ["#2dd4bf", "#0f766e"], fin: ["#fbbf24", "#c2410c"],
+  sport: ["#34d399", "#047857"], date: ["#fbbf24", "#b45309"], dev: ["#a78bfa", "#5b21b6"],
+};
+const grad = (c) => GRAD[c] || GRAD.utility;
+const FAV_ICON = '<svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.8a4.3 4.3 0 0 1 7.5 2.7c0 5.4-7.5 10-7.5 10z"/></svg>';
+const icon = (x) => x.svg.replace(/ role="img" aria-label="[^"]*"/, ' aria-hidden="true"').replace(/width="30" height="30"/, 'width="28" height="28"');
+
+function card(x, t, i) {
   const text = (x.name + " " + x.desc).toLowerCase();
-  return `<div class="tcard" data-slug="${x.slug}" data-cats="${x.cats.join(" ")}" data-text="${esc(text)}"><a href="${x.slug}">${x.svg.replace(/ role="img" aria-label="[^"]*"/, ' aria-hidden="true"')}<h2>${esc(x.name)}</h2><p>${esc(x.desc)}</p></a><button class="fav" type="button" aria-pressed="false" aria-label="${t.add}: ${esc(x.name)}" data-add="${t.add}: ${esc(x.name)}" data-rem="${t.rem}: ${esc(x.name)}"><svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.8a4.3 4.3 0 0 1 7.5 2.7c0 5.4-7.5 10-7.5 10z"/></svg></button></div>`;
+  const c = x.cats[0];
+  const [g1, g2] = grad(c);
+  const code = `${t.cats[c] || ""} · BB-${String(i + 1).padStart(3, "0")}`;
+  return `<div class="tcard" data-slug="${x.slug}" data-cats="${x.cats.join(" ")}" data-text="${esc(text)}" style="--g1:${g1};--g2:${g2}"><a class="tc-link" href="${x.slug}"><span class="tc-head" aria-hidden="true"></span><span class="tc-ic">${icon(x)}</span><span class="tc-body"><span class="tc-meta">${esc(code)}</span><h2 class="tc-name">${esc(x.name)}</h2><p class="tc-sub">${esc(x.desc)}</p></span><span class="tc-foot"><span class="tc-ready"><i aria-hidden="true"></i>${t.ready}</span><span class="tc-btn">${t.open}</span></span></a><button class="fav" type="button" aria-pressed="false" aria-label="${t.add}: ${esc(x.name)}" data-add="${t.add}: ${esc(x.name)}" data-rem="${t.rem}: ${esc(x.name)}">${FAV_ICON}</button></div>`;
+}
+
+function feat(x, t) {
+  const [g1, g2] = grad(x.cats[0]);
+  return `<div class="feat" style="--g1:${g1};--g2:${g2}"><span class="feat-lbl">${t.featLbl}</span><div class="feat-in"><span class="feat-ic">${icon(x)}</span><div class="feat-txt"><b>${esc(x.name)}</b><span>${esc(x.desc)}</span></div><a class="tc-btn" href="${x.slug}">${t.open}</a></div></div>`;
 }
 
 function homeBody(lang) {
   const t = T[lang];
   const list = data.tools.filter((x) => (lang === "id" ? x.lang === "id" : true));
-  const keys = lang === "id" ? Object.keys(t.cats) : Object.keys(t.cats);
+  const keys = Object.keys(t.cats);
   const used = keys.filter((k) => list.some((x) => x.cats.includes(k)));
   const chips = `<button class="chip" type="button" data-cat="all" aria-pressed="true">${t.all}</button>` + used.map((k) => `<button class="chip" type="button" data-cat="${k}" aria-pressed="false">${t.cats[k]}</button>`).join("");
-  return `<section class="hero"><h1>${t.h1}</h1><p>${t.sub}</p>
+  return `<section class="hero"><span class="hb-badge">${t.badge}</span><h1>${t.h1}</h1><p>${t.sub}</p>
+<p class="tw-line"><span class="tw-pre">${t.twPre}</span> <button class="tw-word" id="twWord" type="button" data-items="${esc(JSON.stringify(t.tw))}"><span class="tw-txt">${esc(t.tw[0][0])}</span><span class="tw-cur" aria-hidden="true"></span></button></p>
 <form class="finder" id="finder" role="search" data-lbl-one="${t.one}" data-lbl-many="${t.many}" data-lbl-fav="${t.fav}" data-nofav="${esc(t.noFav)}">
 <svg class="mag" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
-<label class="sr" for="q">${t.search}</label><input id="q" type="search" name="q" placeholder="${t.ph}" autocomplete="off" enterkeyhint="search"><kbd aria-hidden="true">Ctrl K</kbd></form></section>
+<label class="sr" for="q">${t.search}</label><input id="q" type="search" name="q" placeholder="${t.ph}" autocomplete="off" enterkeyhint="search"><kbd aria-hidden="true">Ctrl K</kbd><button class="go" type="submit">${t.go}</button></form>
+${feat(list[0], t)}</section>
 <section id="tools" class="catalog" aria-label="${t.tools}">
+<h2 class="sec-h">${t.meet}</h2>
 <div class="chips" role="group" aria-label="${t.tools}">${chips}</div>
 <div class="bar"><span id="count" role="status" aria-live="polite">${list.length} ${t.many}</span><button class="favonly" id="favOnly" type="button" aria-pressed="false">${t.fav}</button></div>
-<div class="grid">${list.map((x) => card(x, t)).join("")}</div>
+<div class="grid">${list.map((x, i) => card(x, t, i)).join("")}</div>
 <div class="empty" id="empty" hidden><h2>${t.none}</h2><p id="emptyMsg">${t.noneSub}</p><button class="btn alt" id="reset" type="button">${t.clear}</button></div>
 </section>`;
 }

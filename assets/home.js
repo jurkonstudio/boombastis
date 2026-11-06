@@ -25,3 +25,24 @@ function clean(){try{history.replaceState(null,"",location.pathname+location.sea
 if(location.hash==="#tools")clean();
 document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest('a[href$="#tools"]');if(!a)return;var t=document.getElementById("tools");if(!t)return;e.preventDefault();t.scrollIntoView();clean()});
 })();
+
+/* Typing line in the hero: cycles through tasks; click one to search for it. */
+(function(){var B=document.getElementById("twWord");if(!B)return;
+var q=document.getElementById("q"),TX=B.querySelector(".tw-txt"),items=[];
+try{items=JSON.parse(B.dataset.items||"[]")}catch(e){}
+if(!items.length)return;
+var kw=items[0][1],reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+function sleep(ms){return new Promise(function(r){setTimeout(r,ms)})}
+async function loop(){
+  if(reduce){TX.textContent=items[0][0];return}
+  for(var i=0;;i++){
+    var it=items[i%items.length];kw=it[1];
+    for(var n=1;n<=it[0].length;n++){TX.textContent=it[0].slice(0,n);await sleep(70)}
+    await sleep(1600);
+    for(var m=it[0].length;m>=0;m--){TX.textContent=it[0].slice(0,m);await sleep(35)}
+    await sleep(300);
+  }
+}
+loop();
+B.addEventListener("click",function(){if(!q)return;q.value=kw;q.dispatchEvent(new Event("input"));document.getElementById("tools").scrollIntoView()});
+})();
