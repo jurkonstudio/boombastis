@@ -80,3 +80,6 @@ footer>div{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px}foote
 }
 @media(hover:none){.tool:hover{transform:none}}
 :focus-visible{outline:2px solid var(--a);outline-offset:2px}
+.legal{margin:10px 0 0;color:var(--sub);font-size:.82rem}.legal a{margin:0 4px}
+.about ul{padding-left:20px}.about code{font:.88em ui-monospace,Menlo,Consolas,monospace;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:1px 5px}
+.about a{color:var(--a)}

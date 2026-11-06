@@ -67,6 +67,11 @@ The English home page is now grouped into categories and links to the Indonesian
 
 ## Patch notes
 
+### v1.6 (2026-11-06) - Brand assets and trust pages
+- Custom duotone SVG icon set for all 17 tools (`brand/icons/`) and per-tool share images (`og/*.jpg`, 1200x630).
+- Added About, Privacy and Contact pages in English and Indonesian (`/about/`, `/privacy/`, `/contact/`, `/id/tentang/`, `/id/privasi/`, `/id/kontak/`); legal links in every footer.
+- `LICENSE-ASSETS.md` rewritten to match the real folders. Service worker cache is `v6`.
+
 ### v1.5 (2026-11-06) - Responsive polish
 - Desktop: wider home grid (3 columns), navigation wraps instead of being cut off, no stretched single cards.
 - Mobile: full-width tap-friendly buttons (44px), numeric fields stay side by side, rupiah inputs show thousand separators.
