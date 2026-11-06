@@ -20,4 +20,8 @@ document.getElementById("reset").addEventListener("click",function(){S={cat:"all
 F.addEventListener("submit",function(e){e.preventDefault();document.getElementById("tools").scrollIntoView()});
 document.addEventListener("keydown",function(e){if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();q.focus()}});
 var p=new URLSearchParams(location.search).get("q");if(p){q.value=p;S.q=p}render();
+/* clean URL: no #tools in the address bar */
+function clean(){try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}}
+if(location.hash==="#tools")clean();
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest('a[href$="#tools"]');if(!a)return;var t=document.getElementById("tools");if(!t)return;e.preventDefault();t.scrollIntoView();clean()});
 })();
