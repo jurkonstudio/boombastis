@@ -1,12 +1,6 @@
-# boombastis
+# Boombastis
 
-SMS gateway mandiri (Supabase + GitHub Pages + HP Android).
+Free online tools that run entirely in the browser: image compressor, QR code generator,
+password generator and word counter. Nothing is uploaded to a server.
 
-- Panduan lengkap: [sms-gateway/README.md](sms-gateway/README.md)
-- Rancangan sistem: [sms-gateway/docs/rancangan.md](sms-gateway/docs/rancangan.md)
-
-## Multi-bahasa & SEO
-
-- Halaman utama (Indonesia) ada di `/`; terjemahan di `/en/`, `/zh/`, `/hi/`, `/es/`, `/ar/`, `/fr/`, `/pt/`, `/ru/`.
-- Edit teks terjemahan di `tools/translations.py`, lalu jalankan `python3 tools/build_i18n.py`
-  (membuat ulang halaman bahasa, tag `hreflang`, pemilih bahasa, dan `sitemap.xml`).
+Hosted on GitHub Pages at https://boombastis.my.id (single static `index.html`).
