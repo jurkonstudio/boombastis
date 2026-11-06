@@ -18,6 +18,9 @@ Live site: https://boombastis.my.id (static HTML, hosted on GitHub Pages).
 | Password Strength Checker | `/password-strength-checker/` | Browser only |
 | Hash Generator | `/hash-generator/` | Browser only |
 | Browser Info (User Agent) | `/user-agent-checker/` | Browser only |
+| JSON Formatter | `/json-formatter/` | Browser only |
+| Base64 Encoder / Decoder | `/base64/` | Browser only |
+| Text Case Converter | `/case-converter/` | Browser only |
 
 ## Project structure
 
@@ -34,7 +37,25 @@ Live site: https://boombastis.my.id (static HTML, hosted on GitHub Pages).
 4. Write a unique About section and 5 to 6 FAQ items. Keep the FAQPage JSON-LD identical to the visible FAQ.
 5. Bump the `?v=` number of `site.css` when styles change, to avoid stale cache.
 
+## Keeping the site reachable
+
+- **Offline / PWA:** `sw.js` caches every page after the first visit, so returning visitors can still
+  open the tools if the domain is blocked. Bump `VERSION` in `sw.js` and add new tool URLs to `PRECACHE` on every release.
+- **Mirrors:** all assets use root-relative paths and the site is plain static files, so the same repo
+  can be deployed unchanged to Cloudflare Pages, Netlify, GitLab Pages or a second GitHub Pages repo
+  on another domain. Update `canonical`/`og:url`/`sitemap.xml` per domain.
+- **Self-host / download:** the zip of this repo works from any static web server (`python3 -m http.server`).
+- **Unblocking:** these are harmless client-side utilities, so ask for review. Komdigi allows normalisation requests
+  through its content complaint channel (aduankonten.id) and ISPs can be asked to lift a mistaken block.
+  Check the block first with the IP & DNS checker or `nslookup boombastis.my.id 1.1.1.1`: a DNS block
+  (Internet Positif) is different from an IP block.
+
 ## Patch notes
+
+### v1.3 (2026-11-06) - More tools and offline mode
+- Added JSON Formatter, Base64 Encoder / Decoder and Text Case Converter.
+- Added service worker (`sw.js`) for offline use; nav, footer, home cards and sitemap updated; `site.css` is now `?v=3`.
+
 
 ### v1.2 (2026-11-06) - SEO content
 - Rewrote the About section on all 8 tool pages (about 300 to 400 words each).

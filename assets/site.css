@@ -53,3 +53,5 @@ input[type=password]{font:inherit;color:var(--text);background:var(--bg);border:
 .about p{margin:6px 0 12px}.about details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:8px 0}.about summary{cursor:pointer;font-weight:600;color:var(--text)}.about details p{margin:8px 0 2px}
 .related{margin-top:26px}.related h2{font-size:1.05rem;margin:0 0 8px}.related>div{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
 .related a{display:block;text-decoration:none;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}.related a:hover{border-color:var(--a)}.related a span{display:block;color:var(--sub);font-size:.85rem}
+.acts{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.acts label{font-size:.92rem;color:var(--sub);display:inline-flex;gap:6px;align-items:center}
