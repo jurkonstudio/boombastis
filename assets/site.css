@@ -50,3 +50,6 @@ footer a{color:var(--sub);margin:0 6px}
 .cp{font:inherit;font-size:.8rem;font-weight:600;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:8px;padding:4px 10px;cursor:pointer}
 .ua{font:.85rem/1.4 ui-monospace,Menlo,Consolas,monospace;word-break:break-all;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px}
 input[type=password]{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;width:100%}
+.about p{margin:6px 0 12px}.about details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:8px 0}.about summary{cursor:pointer;font-weight:600;color:var(--text)}.about details p{margin:8px 0 2px}
+.related{margin-top:26px}.related h2{font-size:1.05rem;margin:0 0 8px}.related>div{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.related a{display:block;text-decoration:none;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}.related a:hover{border-color:var(--a)}.related a span{display:block;color:var(--sub);font-size:.85rem}
