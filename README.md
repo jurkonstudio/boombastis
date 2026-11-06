@@ -52,18 +52,11 @@ Indonesian-language pages with their own hub at `/id/`, grouped by category. Log
 
 The English home page is now grouped into categories and links to the Indonesian section.
 
-## Keeping the site reachable
+## Offline use (PWA)
 
-- **Offline / PWA:** `sw.js` caches every page after the first visit, so returning visitors can still
-  open the tools if the domain is blocked. Bump `VERSION` in `sw.js` and add new tool URLs to `PRECACHE` on every release.
-- **Mirrors:** all assets use root-relative paths and the site is plain static files, so the same repo
-  can be deployed unchanged to Cloudflare Pages, Netlify, GitLab Pages or a second GitHub Pages repo
-  on another domain. Update `canonical`/`og:url`/`sitemap.xml` per domain.
-- **Self-host / download:** the zip of this repo works from any static web server (`python3 -m http.server`).
-- **Unblocking:** these are harmless client-side utilities, so ask for review. Komdigi allows normalisation requests
-  through its content complaint channel (aduankonten.id) and ISPs can be asked to lift a mistaken block.
-  Check the block first with the IP & DNS checker or `nslookup boombastis.my.id 1.1.1.1`: a DNS block
-  (Internet Positif) is different from an IP block.
+`sw.js` caches every page after the first visit, so returning visitors can open the tools without a
+connection. Bump `VERSION` in `sw.js` and add new tool URLs to `PRECACHE` on every release.
+The site is plain static files and can be served by any static web server (`python3 -m http.server`).
 
 ## Patch notes
 
