@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Boombastis — Free Online Tools</title>
-<meta name="description" content="Free browser tools: image compressor, QR code generator, password generator, word counter. Private and fast. Nothing is uploaded.">
+<title>Boombastis: Free Online Tools | Boombastis</title>
+<meta name="description" content="Free browser tools: image compressor, QR code generator, password generator and word counter. Private and fast. Nothing is uploaded.">
 <link rel="canonical" href="https://boombastis.my.id/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -12,147 +12,23 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#ff3b30">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Boombastis">
-<meta property="og:title" content="Boombastis — Free Online Tools"><meta property="og:url" content="https://boombastis.my.id/"><meta property="og:image" content="https://boombastis.my.id/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Boombastis: free online tools"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://boombastis.my.id/og.png">
-<meta property="og:description" content="Image compressor, QR code generator, password generator and word counter. Free, private, no upload.">
+<meta property="og:title" content="Boombastis: Free Online Tools"><meta property="og:url" content="https://boombastis.my.id/">
+<meta property="og:description" content="Free browser tools: image compressor, QR code generator, password generator and word counter. Private and fast. Nothing is uploaded."><meta property="og:image" content="https://boombastis.my.id/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://boombastis.my.id/og.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Boombastis","url":"https://boombastis.my.id/","inLanguage":"en"}</script>
-<style>
-:root{--bg:#fff;--card:#f5f5f7;--text:#1d1d1f;--sub:#6e6e73;--line:#d2d2d7;--a:#ff3b30;--b:#ff9f0a;--ok:#1a9b45;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0b0d;--card:#1c1c1e;--text:#f5f5f7;--sub:#98989d;--line:#38383a;--ok:#30d158;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0b0b0d;--card:#1c1c1e;--text:#f5f5f7;--sub:#98989d;--line:#38383a;--ok:#30d158;color-scheme:dark}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-main{max-width:760px;margin:0 auto;padding:16px 16px 48px}
-h1{margin:4px 0 2px;font-size:1.8rem;letter-spacing:-.02em}h1 b{background:linear-gradient(90deg,var(--a),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
-.tag{margin:0 0 14px;color:var(--sub)}
-nav{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px}
-nav button{flex:none;font:inherit;font-weight:600;font-size:.92rem;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:99px;padding:8px 14px;cursor:pointer}
-nav button.on{background:linear-gradient(90deg,var(--a),var(--b));color:#fff;border-color:transparent}
-section{display:none}section.on{display:block}
-h2{font-size:1.2rem;margin:0 0 4px}.sub{color:var(--sub);margin:0 0 14px;font-size:.92rem}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px;display:grid;gap:12px}
-label{display:flex;flex-direction:column;gap:6px;font-size:.88rem;color:var(--sub)}label b{color:var(--text)}
-select,input[type=text],textarea{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;width:100%}
-textarea{min-height:150px;resize:vertical}input[type=range]{width:100%;accent-color:var(--a)}
-.r2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.chk{flex-direction:row;align-items:center;gap:8px;color:var(--text)}
-.btn{font:inherit;font-weight:600;border:0;border-radius:12px;padding:11px 16px;background:linear-gradient(90deg,var(--a),var(--b));color:#fff;cursor:pointer;text-decoration:none;text-align:center;display:inline-block}
-.btn.alt{background:var(--text);color:var(--bg)}
-.drop{display:block;border:2px dashed var(--line);border-radius:18px;background:var(--card);padding:24px 14px;text-align:center;cursor:pointer;margin-bottom:12px}
-.drop.on{border-color:var(--a)}.drop input{display:none}.drop small{color:var(--sub);display:block}
-.sum{display:none;text-align:center;margin-bottom:12px;padding:14px;border-radius:18px;background:linear-gradient(135deg,var(--a),var(--b));color:#fff}.sum.show{display:block}.sum .n{font-size:2rem;font-weight:800;line-height:1}
-.item{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px;margin-bottom:10px}
-.item img{width:60px;height:60px;object-fit:cover;border-radius:10px;flex:none}.info{flex:1;min-width:0}.nm{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sz{font-size:.85rem;color:var(--sub)}
-.badge{display:inline-block;font-size:.75rem;font-weight:800;border-radius:99px;padding:2px 9px;color:#fff;background:var(--ok)}.badge.no{background:var(--sub)}
-.out{font:600 1.1rem/1.4 ui-monospace,Menlo,Consolas,monospace;word-break:break-all;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px}
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stats div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}.stats b{display:block;font-size:1.5rem}.stats span{font-size:.8rem;color:var(--sub)}
-.qr{display:flex;flex-direction:column;align-items:center;gap:12px}.qr canvas{max-width:100%;height:auto;border-radius:12px;background:#fff}
-footer{margin-top:28px;text-align:center;color:var(--sub);font-size:.8rem}
-</style>
+<link rel="stylesheet" href="/assets/site.css?v=1">
 </head>
 <body>
 <main>
-<h1 style="display:flex;align-items:center;gap:10px"><img src="/brand/logo-mark.svg" width="36" height="36" alt="" style="border-radius:9px">Boom<b>bastis</b></h1>
-<p class="tag">Free online tools. Fast, private, and nothing is uploaded.</p>
-<nav id="nav">
-<button data-t="image">Image Compressor</button><button data-t="qr">QR Code</button><button data-t="password">Password</button><button data-t="words">Word Counter</button>
-</nav>
-
-<section id="image">
-<h2>Image Compressor</h2><p class="sub">Shrink and convert images right in your browser.</p>
-<label class="drop" id="drop"><input id="file" type="file" accept="image/*" multiple><div style="font-size:2rem">💥</div><b>Tap or drop images here</b><small>JPG, PNG, WebP and more. Multiple files supported.</small></label>
-<div class="card"><div class="r2">
-<label>Output format<select id="fmt"><option value="image/webp">WebP (smallest)</option><option value="image/jpeg">JPEG</option><option value="image/png">PNG (lossless)</option></select></label>
-<label>Max width<select id="mw"><option value="0">Original</option><option value="3840">3840 px</option><option value="1920" selected>1920 px</option><option value="1280">1280 px</option><option value="800">800 px</option><option value="480">480 px</option></select></label></div>
-<label>Quality: <b id="qv">75</b>%<input id="q" type="range" min="10" max="100" value="75"></label></div>
-<div class="sum" id="sum"><div class="n" id="sn"></div><small id="st"></small></div>
-<div id="list"></div>
-</section>
-
-<section id="qr">
-<h2>QR Code Generator</h2><p class="sub">Turn any link or text into a QR code you can download.</p>
-<div class="card"><label>Text or URL<input type="text" id="qt" value="https://boombastis.my.id"></label>
-<div class="r2"><label>Size<select id="qs"><option value="512">512 px</option><option value="1024">1024 px</option><option value="256">256 px</option></select></label>
-<label>Error correction<select id="qe"><option>M</option><option>L</option><option>Q</option><option>H</option></select></label></div></div>
-<div class="qr"><canvas id="qc" width="512" height="512"></canvas><a class="btn" id="qd" download="boombastis-qr.png">Download PNG</a></div>
-</section>
-
-<section id="password">
-<h2>Password Generator</h2><p class="sub">Strong random passwords, created on your device.</p>
-<div class="card"><div class="out" id="pw"></div>
-<label>Length: <b id="pl">16</b><input id="plen" type="range" min="8" max="64" value="16"></label>
-<label class="chk"><input type="checkbox" id="pu" checked> Uppercase (A–Z)</label>
-<label class="chk"><input type="checkbox" id="pn" checked> Numbers (0–9)</label>
-<label class="chk"><input type="checkbox" id="ps" checked> Symbols (!@#$…)</label>
-<div class="r2"><button class="btn" id="pg">Generate</button><button class="btn alt" id="pc">Copy</button></div></div>
-</section>
-
-<section id="words">
-<h2>Word Counter</h2><p class="sub">Count words, characters, and reading time as you type.</p>
-<div class="card"><textarea id="wt" placeholder="Paste or type your text here…"></textarea></div>
-<div class="stats"><div><b id="w1">0</b><span>Words</span></div><div><b id="w2">0</b><span>Characters</span></div><div><b id="w3">0</b><span>Without spaces</span></div><div><b id="w4">0 min</b><span>Reading time</span></div></div>
-</section>
-
-<footer>© 2026 Boombastis. All processing happens in your browser.</footer>
+<a class="brand" href="/"><img src="/brand/logo-mark.svg" alt="" width="36" height="36"><span>Boom<b>bastis</b></span></a>
+<section class="hero on"><h1>Free online tools that stay private</h1><p>Fast tools that run in your browser. Nothing is uploaded.</p></section>
+<div class="tools"><a class="tool" href="/image-compressor/"><svg width="30" height="30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="image-compressor"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.6"/><path d="m4 17 5-4.5 3.5 3L16 12l4 4.5"/></svg>
+<h2>Image Compressor</h2><p>Shrink and convert images right in your browser.</p></a><a class="tool" href="/qr-code-generator/"><svg width="30" height="30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="qr-code"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h2.500v2.500H14zM18 14h2v2M14 19h2M18.500 18.500H20V20"/></svg>
+<h2>QR Code</h2><p>Turn any link or text into a QR code you can download.</p></a><a class="tool" href="/password-generator/"><svg width="30" height="30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="password"><rect x="5" y="10.500" width="14" height="9.500" rx="2.500"/><path d="M8.500 10.500V8a3.500 3.500 0 0 1 7 0v2.500"/><path d="M12 14.500v2"/></svg>
+<h2>Password</h2><p>Strong random passwords, created on your device.</p></a><a class="tool" href="/word-counter/"><svg width="30" height="30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="word-counter"><path d="M5 6h14M5 11h14M5 16h8"/><path d="m16.500 17 1.800 1.800 3-3.300"/></svg>
+<h2>Word Counter</h2><p>Count words, characters, and reading time as you type.</p></a></div>
+<footer><div><a href="/image-compressor/">Image Compressor</a><a href="/qr-code-generator/">QR Code</a><a href="/password-generator/">Password</a><a href="/word-counter/">Word Counter</a></div><p>© 2026 Boombastis. All processing happens in your browser.</p></footer>
 </main>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
-<script>
-var $=function(i){return document.getElementById(i)};
-// ---- Tabs (hash routing: #image #qr #password #words)
-var tabs=["image","qr","password","words"];
-function show(){var h=location.hash.slice(1);if(tabs.indexOf(h)<0)h="image";
-tabs.forEach(function(t){$(t).classList.toggle("on",t===h)});
-document.querySelectorAll("#nav button").forEach(function(b){b.classList.toggle("on",b.dataset.t===h)})}
-document.querySelectorAll("#nav button").forEach(function(b){b.onclick=function(){location.hash=b.dataset.t}});
-window.addEventListener("hashchange",show);show();
-
-// ---- Image compressor
-var files=[],results=[],timer=null,EXT={"image/webp":"webp","image/jpeg":"jpg","image/png":"png"};
-function fmt(n){return n<1024?n+" B":n<1048576?(n/1024).toFixed(1)+" KB":(n/1048576).toFixed(2)+" MB"}
-function add(l){Array.prototype.forEach.call(l,function(f){if(/^image\//.test(f.type))files.push(f)});run()}
-$("file").onchange=function(e){add(e.target.files);e.target.value=""};
-var dz=$("drop");["dragover","dragenter"].forEach(function(t){dz.addEventListener(t,function(e){e.preventDefault();dz.classList.add("on")})});
-["dragleave","drop"].forEach(function(t){dz.addEventListener(t,function(e){e.preventDefault();dz.classList.remove("on")})});
-dz.addEventListener("drop",function(e){add(e.dataTransfer.files)});
-function sched(){clearTimeout(timer);timer=setTimeout(run,250)}
-$("q").oninput=function(){$("qv").textContent=this.value;sched()};$("fmt").onchange=sched;$("mw").onchange=sched;
-async function conv(f,type,q,mw){var bmp=await createImageBitmap(f,{imageOrientation:"from-image"}),w=bmp.width,h=bmp.height;
-if(mw&&w>mw){h=Math.round(h*mw/w);w=mw}var c=document.createElement("canvas");c.width=w;c.height=h;var x=c.getContext("2d");
-if(type==="image/jpeg"){x.fillStyle="#fff";x.fillRect(0,0,w,h)}x.drawImage(bmp,0,0,w,h);
-return new Promise(function(r){c.toBlob(r,type,q)})}
-async function run(){results.forEach(function(r){URL.revokeObjectURL(r.url)});results=[];
-var type=$("fmt").value,q=$("q").value/100,mw=+$("mw").value;
-for(var i=0;i<files.length;i++){var f=files[i];try{var b=await conv(f,type,q,mw)||f;
-results.push({name:f.name.replace(/\.[^.]+$/,"")+"-boom."+(EXT[b.type]||"png"),orig:f.size,size:b.size,url:URL.createObjectURL(b)})}
-catch(e){results.push({name:f.name,orig:f.size,size:f.size,url:URL.createObjectURL(f),err:1})}}render()}
-function render(){var L=$("list");L.innerHTML="";var to=0,tn=0;
-results.forEach(function(r){to+=r.orig;tn+=Math.min(r.size,r.orig);var p=Math.round((1-r.size/r.orig)*100),d=document.createElement("div");d.className="item";
-d.innerHTML='<img alt=""><div class="info"><div class="nm"></div><div class="sz"></div><span class="badge'+(p>0?'':' no')+'"></span></div><a class="btn" download>Download</a>';
-d.querySelector("img").src=r.url;d.querySelector(".nm").textContent=r.name;d.querySelector(".sz").textContent=fmt(r.orig)+" → "+fmt(r.size);
-d.querySelector(".badge").textContent=r.err?"Could not read":p>0?"BOOM! -"+p+"%":"Already optimal";
-var a=d.querySelector("a");a.href=r.url;a.download=r.name;L.appendChild(d)});
-var s=$("sum");if(results.length){s.classList.add("show");$("sn").textContent="-"+Math.max(0,Math.round((1-tn/to)*100))+"%";$("st").textContent=results.length+" image(s): "+fmt(to)+" down to "+fmt(tn)}else s.classList.remove("show")}
-
-// ---- QR generator
-function drawQR(){var t=$("qt").value||" ",n=+$("qs").value,c=$("qc");
-try{var q=qrcode(0,$("qe").value);q.addData(t);q.make();var m=q.getModuleCount(),pad=4,cell=Math.floor(n/(m+pad*2)),sz=cell*(m+pad*2);
-c.width=c.height=sz;var x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,sz,sz);x.fillStyle="#000";
-for(var r=0;r<m;r++)for(var k=0;k<m;k++)if(q.isDark(r,k))x.fillRect((k+pad)*cell,(r+pad)*cell,cell,cell);
-$("qd").href=c.toDataURL("image/png")}catch(e){}}
-["qt","qs","qe"].forEach(function(i){$(i).addEventListener("input",drawQR)});
-
-// ---- Password generator
-function gen(){var len=+$("plen").value,set="abcdefghijklmnopqrstuvwxyz";
-if($("pu").checked)set+="ABCDEFGHIJKLMNOPQRSTUVWXYZ";if($("pn").checked)set+="0123456789";if($("ps").checked)set+="!@#$%^&*()-_=+[]{};:,.?";
-var a=new Uint32Array(len),max=Math.floor(4294967296/set.length)*set.length,o="";
-while(o.length<len){crypto.getRandomValues(a);for(var i=0;i<len&&o.length<len;i++)if(a[i]<max)o+=set[a[i]%set.length]}
-$("pw").textContent=o}
-$("plen").oninput=function(){$("pl").textContent=this.value;gen()};["pu","pn","ps"].forEach(function(i){$(i).onchange=gen});
-$("pg").onclick=gen;$("pc").onclick=function(){var b=this;try{navigator.clipboard.writeText($("pw").textContent).then(function(){b.textContent="Copied!";setTimeout(function(){b.textContent="Copy"},1200)})}catch(e){}};
-
-// ---- Word counter
-$("wt").oninput=function(){var t=this.value,w=(t.trim().match(/\S+/g)||[]).length;
-$("w1").textContent=w;$("w2").textContent=t.length;$("w3").textContent=t.replace(/\s/g,"").length;$("w4").textContent=(w?Math.max(1,Math.round(w/200)):0)+" min"};
-drawQR();gen();
-</script>
+<script>(function(){var m={image:"image-compressor",qr:"qr-code-generator",password:"password-generator",words:"word-counter"},h=location.hash.slice(1);if(m[h])location.replace("/"+m[h]+"/")})();</script>
 </body>
 </html>
