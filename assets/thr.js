@@ -20,3 +20,8 @@ if(typeof document!=="undefined"&&document.getElementById("thrbtn")){
   add("Upah sebulan dipakai",rp(upah));add("Masa kerja",r.bulan+" bulan");add("THR",rp(r.thr));add("Rumus",r.rumus);
   var t=$("thrtgl").value;if(t)add("Batas bayar (H-7)",new Date(THR.batas(t)+"T00:00:00Z").toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"}))};
 }
+
+if(typeof document!=="undefined"&&document.getElementById("thrbtn")){
+ var fmtRp=function(i){var el=document.getElementById(i);el.addEventListener("input",function(){var d=el.value.replace(/\D/g,"");el.value=d?Number(d).toLocaleString("id-ID"):""})};
+ ["thrpokok","thrtunj","thrrata"].forEach(fmtRp);
+}

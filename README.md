@@ -67,6 +67,11 @@ The English home page is now grouped into categories and links to the Indonesian
 
 ## Patch notes
 
+### v1.5 (2026-11-06) - Responsive polish
+- Desktop: wider home grid (3 columns), navigation wraps instead of being cut off, no stretched single cards.
+- Mobile: full-width tap-friendly buttons (44px), numeric fields stay side by side, rupiah inputs show thousand separators.
+- `site.css` is now `?v=5`, service worker cache `v5`.
+
 ### v1.4 (2026-11-06) - Indonesian tools batch 1
 - Added six Indonesian tools under `/id/` plus an `/id/` hub; home page grouped by category.
 - Each page has About, FAQ, FAQPage, WebApplication and BreadcrumbList structured data.
