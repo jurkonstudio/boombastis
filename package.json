@@ -1,0 +1,1 @@
+{"name":"boombastis","private":true,"type":"module","scripts":{"build":"node scripts/build.mjs","check":"node tests/check.mjs","smoke":"python3 tests/smoke.py"}}
