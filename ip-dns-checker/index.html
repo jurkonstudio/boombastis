@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IP Address &amp; DNS Lookup Tool: What Is My IP? | Boombastis</title>
+<meta name="description" content="Check your public IP address and look up DNS records (A, AAAA, MX, NS, TXT) for any domain. Compares Cloudflare and Google DNS.">
+<link rel="canonical" href="https://boombastis.my.id/ip-dns-checker/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#ff3b30">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Boombastis">
+<meta property="og:title" content="IP Address &amp; DNS Lookup Tool"><meta property="og:url" content="https://boombastis.my.id/ip-dns-checker/">
+<meta property="og:description" content="Check your public IP address and look up DNS records (A, AAAA, MX, NS, TXT) for any domain. Compares Cloudflare and Google DNS."><meta property="og:image" content="https://boombastis.my.id/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://boombastis.my.id/og.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"IP &amp; DNS Checker","url":"https://boombastis.my.id/ip-dns-checker/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en"}</script>
+<link rel="stylesheet" href="/assets/site.css?v=1">
+</head>
+<body>
+<main>
+<a class="brand" href="/"><img src="/brand/logo-mark.svg" alt="" width="36" height="36"><span>Boom<b>bastis</b></span></a>
+<nav><a href="/image-compressor/">Image Compressor</a><a href="/qr-code-generator/">QR Code</a><a href="/password-generator/">Password</a><a href="/word-counter/">Word Counter</a><a href="/ip-dns-checker/" class="on">IP &amp; DNS</a><a href="/password-strength-checker/">Strength Check</a><a href="/hash-generator/">Hash</a><a href="/user-agent-checker/">Browser Info</a></nav>
+<section class="on" id="ipdns">
+<h1>IP &amp; DNS Checker</h1><p class="sub">See your public IP and look up DNS records for any domain.</p>
+<div class="card"><h2>Your IP address</h2><div id="ipout"></div><button class="btn alt" id="ipr">Refresh</button></div>
+<div class="card"><h2>DNS lookup</h2><label>Domain<input type="text" id="dn" placeholder="example.com" autocapitalize="off" autocorrect="off" spellcheck="false"></label><button class="btn" id="dg">Look up</button></div>
+<div id="dnsout"></div>
+</section>
+<div class="about"><h2>How it works</h2><p>Your IP is detected with a request to ipify, and its country and ISP come from ipwho.is. DNS records are fetched with DNS over HTTPS directly from Cloudflare (1.1.1.1) and Google (8.8.8.8) and shown side by side. Boombastis does not log or store anything.</p><h2>How to use</h2><ol><li>Open the page to see your public IP.</li><li>Type a domain and press Look up.</li><li>Compare the Cloudflare and Google answers.</li></ol><h2>Why does my IP differ from my device’s IP?</h2><p>Your public IP is assigned by your internet provider or VPN. If you are connected to a VPN, you will see the VPN server’s address and location instead of your own.</p></div>
+<footer><div><a href="/image-compressor/">Image Compressor</a><a href="/qr-code-generator/">QR Code</a><a href="/password-generator/">Password</a><a href="/word-counter/">Word Counter</a><a href="/ip-dns-checker/">IP &amp; DNS</a><a href="/password-strength-checker/">Strength Check</a><a href="/hash-generator/">Hash</a><a href="/user-agent-checker/">Browser Info</a></div><p>© 2026 Boombastis. Your files and passwords never leave your browser.</p></footer>
+</main>
+
+<script src="/assets/ipdns.js?v=1"></script>
+</body>
+</html>

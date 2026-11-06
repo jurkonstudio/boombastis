@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hash Generator: MD5, SHA-1, SHA-256, SHA-512 Online | Boombastis</title>
+<meta name="description" content="Generate MD5, SHA-1, SHA-256, SHA-384 and SHA-512 hashes from text or a file. Runs in your browser, nothing is uploaded.">
+<link rel="canonical" href="https://boombastis.my.id/hash-generator/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#ff3b30">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Boombastis">
+<meta property="og:title" content="Hash Generator: MD5, SHA-1, SHA-256, SHA-512"><meta property="og:url" content="https://boombastis.my.id/hash-generator/">
+<meta property="og:description" content="Generate MD5, SHA-1, SHA-256, SHA-384 and SHA-512 hashes from text or a file. Runs in your browser, nothing is uploaded."><meta property="og:image" content="https://boombastis.my.id/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://boombastis.my.id/og.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Hash Generator","url":"https://boombastis.my.id/hash-generator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en"}</script>
+<link rel="stylesheet" href="/assets/site.css?v=1">
+</head>
+<body>
+<main>
+<a class="brand" href="/"><img src="/brand/logo-mark.svg" alt="" width="36" height="36"><span>Boom<b>bastis</b></span></a>
+<nav><a href="/image-compressor/">Image Compressor</a><a href="/qr-code-generator/">QR Code</a><a href="/password-generator/">Password</a><a href="/word-counter/">Word Counter</a><a href="/ip-dns-checker/">IP &amp; DNS</a><a href="/password-strength-checker/">Strength Check</a><a href="/hash-generator/" class="on">Hash</a><a href="/user-agent-checker/">Browser Info</a></nav>
+<section class="on" id="hash">
+<h1>Hash Generator</h1><p class="sub">MD5, SHA-1, SHA-256, SHA-384 and SHA-512 from text or a file.</p>
+<div class="card"><label>Text<textarea id="ht" placeholder="Type or paste text"></textarea></label>
+<label>Or choose a file<input type="file" id="hf"></label><div class="sub" id="fn"></div>
+<label class="chk"><input type="checkbox" id="hu"> Uppercase output</label></div>
+<div class="card" id="hout"></div>
+</section>
+<div class="about"><h2>How it works</h2><p>Hashes are computed locally: SHA algorithms use your browser’s built-in Web Crypto API, and MD5 uses a small built-in implementation. Your text and files are never uploaded.</p><h2>How to use</h2><ol><li>Type text, or pick a file to hash.</li><li>Copy the hash you need.</li><li>Compare it with a published checksum to verify a download.</li></ol><h2>Which hash should I use?</h2><p>Use SHA-256 or SHA-512 for integrity checks. MD5 and SHA-1 are broken for security purposes and should only be used for non-security checksums. Never use a plain hash to store passwords.</p></div>
+<footer><div><a href="/image-compressor/">Image Compressor</a><a href="/qr-code-generator/">QR Code</a><a href="/password-generator/">Password</a><a href="/word-counter/">Word Counter</a><a href="/ip-dns-checker/">IP &amp; DNS</a><a href="/password-strength-checker/">Strength Check</a><a href="/hash-generator/">Hash</a><a href="/user-agent-checker/">Browser Info</a></div><p>© 2026 Boombastis. Your files and passwords never leave your browser.</p></footer>
+</main>
+
+<script src="/assets/hash.js?v=1"></script>
+</body>
+</html>
