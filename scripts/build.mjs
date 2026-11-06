@@ -68,9 +68,12 @@ function head(p) {
     ? `<link rel="alternate" hreflang="en" href="${ORIGIN + alts.en}"><link rel="alternate" hreflang="id" href="${ORIGIN + alts.id}"><link rel="alternate" hreflang="x-default" href="${ORIGIN + alts.en}">`
     : "";
   const usesQr = p.scripts.some((s) => s.includes("qrcode"));
-  const script = ["'self'", usesQr && !exists("assets/vendor/qrcode.min.js") ? "https://cdnjs.cloudflare.com" : ""].filter(Boolean).join(" ");
-  const connect = ["'self'", p.scripts.some((s) => s.includes("ipdns")) ? IP_HOSTS : ""].filter(Boolean).join(" ");
-  const csp = `default-src 'self'; script-src ${script}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src ${connect}; object-src 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'; worker-src 'self'`;
+  const ADS_SCRIPT = "'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.google.com https://*.adtrafficquality.google";
+  const ADS_CONNECT = "https://pagead2.googlesyndication.com https://*.google.com https://*.doubleclick.net https://*.adtrafficquality.google";
+  const ADS_FRAME = "https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.google.com https://*.adtrafficquality.google";
+  const script = ["'self'", ADS_SCRIPT, usesQr && !exists("assets/vendor/qrcode.min.js") ? "https://cdnjs.cloudflare.com" : ""].filter(Boolean).join(" ");
+  const connect = ["'self'", ADS_CONNECT, p.scripts.some((s) => s.includes("ipdns")) ? IP_HOSTS : ""].filter(Boolean).join(" ");
+  const csp = `default-src 'self'; script-src ${script}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; frame-src ${ADS_FRAME}; connect-src ${connect}; object-src 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'; worker-src 'self'`;
   return `<!doctype html>
 <html lang="${p.lang}">
 <head>
@@ -90,6 +93,7 @@ function head(p) {
 <meta property="og:description" content="${esc(p.description)}"><meta property="og:image" content="${og}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${og}">
 ${p.ld.map((j) => `<script type="application/ld+json">${j}</script>`).join("\n")}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4061736664415123" crossorigin="anonymous"></script>
 <script src="${asset("assets/theme-init.js")}"></script>
 <link rel="stylesheet" href="${asset("assets/site.css")}">
 </head>`;
