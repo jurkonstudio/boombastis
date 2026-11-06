@@ -1,16 +1,9 @@
-Update homepage Boombastis (gaya staff-card, teks mengetik di hero).
+Update homepage Boombastis v2 (staff-card + "hidup").
+Baru: maskot blob bermata yang mengikuti jari/kursor dan melompat saat mengetik,
+kartu "Your expert" ikut berganti sesuai teks yang mengetik + "Also good for this",
+klik kartu membuka panel detail (Open / Copy link).
 
-File yang diganti:
-  scripts/build.mjs
-  assets/site.css
-  assets/home.js
-
-Cara di Codespace:
-  1. Upload folder ini (atau zip-nya lalu unzip) ke root repo.
-  2. Di terminal, dari root repo:
-       bash boombastis-redesign-update/replace.sh
-  3. Cek http://localhost:8000 (atau preview Codespace), lalu commit & push:
-       git add -A && git commit -m "Redesign homepage" && git push
-
-Backup file lama otomatis disimpan di folder .backup-<waktu>.
-Preview ada di folder preview/.
+Di Codespace, dari root repo:
+  unzip -o boombastis-redesign-update-v2.zip
+  bash boombastis-redesign-update/replace.sh
+  git add -A && git commit -m "Homepage alive" && git push

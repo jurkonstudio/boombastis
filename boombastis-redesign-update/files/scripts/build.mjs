@@ -159,7 +159,7 @@ function card(x, t, i) {
 
 function feat(x, t) {
   const [g1, g2] = grad(x.cats[0]);
-  return `<div class="feat" style="--g1:${g1};--g2:${g2}"><span class="feat-lbl">${t.featLbl}</span><div class="feat-in"><span class="feat-ic">${icon(x)}</span><div class="feat-txt"><b>${esc(x.name)}</b><span>${esc(x.desc)}</span></div><a class="tc-btn" href="${x.slug}">${t.open}</a></div></div>`;
+  return `<div class="feat" id="feat" style="--g1:${g1};--g2:${g2}"><span class="feat-lbl">${t.featLbl}</span><div class="feat-in"><span class="feat-ic">${icon(x)}</span><div class="feat-txt"><b>${esc(x.name)}</b><span>${esc(x.desc)}</span></div><a class="tc-btn" href="${x.slug}">${t.open}</a></div></div>`;
 }
 
 function homeBody(lang) {
@@ -168,19 +168,20 @@ function homeBody(lang) {
   const keys = Object.keys(t.cats);
   const used = keys.filter((k) => list.some((x) => x.cats.includes(k)));
   const chips = `<button class="chip" type="button" data-cat="all" aria-pressed="true">${t.all}</button>` + used.map((k) => `<button class="chip" type="button" data-cat="${k}" aria-pressed="false">${t.cats[k]}</button>`).join("");
-  return `<section class="hero"><span class="hb-badge">${t.badge}</span><h1>${t.h1}</h1><p>${t.sub}</p>
+  return `<section class="hero"><div class="pals" aria-hidden="true"><span class="pal p1"><i></i><i></i></span><span class="pal p2"><i></i><i></i></span><span class="pal p3"><i></i><i></i></span><span class="pal p4"><i></i><i></i></span></div><span class="hb-badge">${t.badge}</span><h1>${t.h1}</h1><p>${t.sub}</p>
 <p class="tw-line"><span class="tw-pre">${t.twPre}</span> <button class="tw-word" id="twWord" type="button" data-items="${esc(JSON.stringify(t.tw))}"><span class="tw-txt">${esc(t.tw[0][0])}</span><span class="tw-cur" aria-hidden="true"></span></button></p>
 <form class="finder" id="finder" role="search" data-lbl-one="${t.one}" data-lbl-many="${t.many}" data-lbl-fav="${t.fav}" data-nofav="${esc(t.noFav)}">
 <svg class="mag" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
 <label class="sr" for="q">${t.search}</label><input id="q" type="search" name="q" placeholder="${t.ph}" autocomplete="off" enterkeyhint="search"><kbd aria-hidden="true">Ctrl K</kbd><button class="go" type="submit">${t.go}</button></form>
-${feat(list[0], t)}</section>
+${feat(list[0], t)}<p class="also" id="also"></p></section>
 <section id="tools" class="catalog" aria-label="${t.tools}">
 <h2 class="sec-h">${t.meet}</h2>
 <div class="chips" role="group" aria-label="${t.tools}">${chips}</div>
 <div class="bar"><span id="count" role="status" aria-live="polite">${list.length} ${t.many}</span><button class="favonly" id="favOnly" type="button" aria-pressed="false">${t.fav}</button></div>
 <div class="grid">${list.map((x, i) => card(x, t, i)).join("")}</div>
 <div class="empty" id="empty" hidden><h2>${t.none}</h2><p id="emptyMsg">${t.noneSub}</p><button class="btn alt" id="reset" type="button">${t.clear}</button></div>
-</section>`;
+</section>
+<dialog class="dlg" id="dlg" aria-labelledby="dlgName"><div class="dlg-side"><span class="dlg-ic" id="dlgIc"></span><h2 id="dlgName"></h2><a class="tc-btn dlg-open" id="dlgOpen" href="#">${t.open}</a><button class="dlg-copy" id="dlgCopy" type="button" data-ok="${lang === "id" ? "Tautan disalin" : "Link copied"}">${lang === "id" ? "Salin tautan" : "Copy link"}</button></div><div class="dlg-main"><button class="dlg-x" id="dlgX" type="button" aria-label="${lang === "id" ? "Tutup" : "Close"}">×</button><p class="dlg-k">${lang === "id" ? "Ringkasan" : "Summary"}</p><p class="dlg-sum" id="dlgSum"></p><p class="dlg-k">${lang === "id" ? "Cara kerja" : "How it works"}</p><ul class="dlg-ul"><li>${lang === "id" ? "Berjalan di browser kamu" : "Runs in your browser"}</li><li>${lang === "id" ? "File tidak pernah diunggah" : "Files are never uploaded"}</li><li>${lang === "id" ? "Gratis, tanpa akun" : "Free, no account"}</li></ul><p class="dlg-k" id="dlgCode"></p></div></dialog>`;
 }
 
 function homeMeta(lang) {
