@@ -35,15 +35,16 @@ $("ttModes").addEventListener("click",function(e){var b=e.target.closest("button
 [].forEach.call($("ttModes").children,function(x){x.setAttribute("aria-pressed",x===b?"true":"false")});reset();board()});
 // ---- leaderboard (Supabase REST; hidden when not configured)
 function esc(s){return String(s)}
+function hdr(extra){var h={apikey:SB.key};if(SB.key.indexOf("sb_")!==0)h.Authorization="Bearer "+SB.key;for(var k in extra)h[k]=extra[k];return h}
 function board(){if(!(SB&&SB.url&&SB.key))return;var box=$("ttBoard");box.hidden=false;$("ttBoardMode").textContent=dur+" s";$("ttBoardMsg").textContent="Loading…";
-fetch(SB.url+"/rest/v1/typing_leaderboard?select=name,wpm,accuracy&duration=eq."+dur+"&order=wpm.desc,accuracy.desc&limit=20",{headers:{apikey:SB.key,Authorization:"Bearer "+SB.key}})
+fetch(SB.url+"/rest/v1/typing_leaderboard?select=name,wpm,accuracy&duration=eq."+dur+"&order=wpm.desc,accuracy.desc&limit=20",{headers:hdr()})
 .then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(rows){var ol=$("ttList");ol.innerHTML="";
 rows.forEach(function(r){var li=document.createElement("li"),n=document.createElement("span"),s=document.createElement("b");n.textContent=esc(r.name);s.textContent=r.wpm+" WPM · "+r.accuracy+"%";li.appendChild(n);li.appendChild(s);ol.appendChild(li)});
 $("ttBoardMsg").textContent=rows.length?"":"No scores yet. Be the first."}).catch(function(){$("ttBoardMsg").textContent="The leaderboard could not be loaded right now."})}
 $("ttSend").onclick=function(){if(!last)return;var n=$("ttName").value.trim().replace(/\s+/g," "),m=$("ttMsg");
 if(!/^[A-Za-z0-9 _-]{2,16}$/.test(n)){m.textContent="Use 2 to 16 letters, numbers, spaces, _ or -.";return}
 var btn=this;btn.disabled=true;m.textContent="Sending…";
-fetch(SB.url+"/rest/v1/typing_scores",{method:"POST",headers:{apikey:SB.key,Authorization:"Bearer "+SB.key,"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify({name:n,duration:last.dur,wpm:last.wpm,accuracy:last.acc})})
+fetch(SB.url+"/rest/v1/typing_scores",{method:"POST",headers:hdr({"Content-Type":"application/json",Prefer:"return=minimal"}),body:JSON.stringify({name:n,duration:last.dur,wpm:last.wpm,accuracy:last.acc})})
 .then(function(r){if(!r.ok)throw r.status;store("bb_tt_name",n);m.textContent="Score submitted. Thanks!";$("ttSend").hidden=true;board()})
 .catch(function(c){btn.disabled=false;m.textContent=c===429||c===400?"The score was rejected. Wait a minute and try again.":"Could not send the score. Try again later."})};
 reset();board();
