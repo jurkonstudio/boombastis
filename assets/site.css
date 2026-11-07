@@ -259,3 +259,14 @@ main.wide{max-width:1080px}
 .tt-lb li span{overflow-wrap:anywhere}
 .tt-lb li b{flex:none;font-variant-numeric:tabular-nums}
 @media(max-width:520px){.tt-words{font-size:1.1rem;line-height:2rem;height:6rem}}
+/* Click and reaction tests */
+.gm-pad{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:100%;min-height:240px;padding:16px;border:2px solid var(--line);border-radius:18px;background:var(--bg);color:var(--text);font:inherit;font-size:1.25rem;font-weight:700;text-align:center;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.gm-pad small{font-size:.9rem;font-weight:500;opacity:.85}
+.gm-pad:focus-visible{outline:3px solid var(--a);outline-offset:3px}
+.gm-pad.run{border-color:var(--a)}
+.gm-pad.wait{background:#c62828;border-color:#c62828;color:#fff}
+.gm-pad.go{background:#15803d;border-color:#15803d;color:#fff}
+.gm-pad.early{background:#1d4ed8;border-color:#1d4ed8;color:#fff}
+.gm-pad.done{opacity:.75}
+.gm-rounds{margin:0;padding-left:1.4em;columns:2;font-variant-numeric:tabular-nums}
+@media(max-width:520px){.gm-pad{min-height:200px}}

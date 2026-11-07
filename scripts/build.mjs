@@ -53,7 +53,7 @@ const T = {
   en: {
     skip: "Skip to content", tools: "All tools", about: "About", switchTo: "Bahasa Indonesia", switchShort: "ID",
     theme: "Theme", menu: "Menu", home: "Home", crumbs: "Breadcrumb", main: "Main navigation",
-    badge: "Browser-only tools · your files never leave", h1: "Free online tools that stay <span>private.</span>", twPre: "I need help with", tw: [["compress an image", "image compressor"], ["count words", "word counter"], ["make a password", "password"], ["make a QR code", "qr"], ["format JSON", "json formatter"], ["check my IP and DNS", "ip & dns"], ["test my typing speed", "typing"], ["hash a file", "hash"], ["decode Base64", "base64"]], go: "Find tool", featLbl: "FEATURED", open: "Open", ready: "Ready to use", meet: "Meet the tools", sub: "Fast tools that run in your browser. Your files and passwords are never uploaded.",
+    badge: "Browser-only tools · your files never leave", h1: "Free online tools that stay <span>private.</span>", twPre: "I need help with", tw: [["compress an image", "image compressor"], ["count words", "word counter"], ["make a password", "password"], ["make a QR code", "qr"], ["format JSON", "json formatter"], ["check my IP and DNS", "ip & dns"], ["test my typing speed", "typing"], ["test my click speed", "cps"], ["test my reaction time", "reaction"], ["hash a file", "hash"], ["decode Base64", "base64"]], go: "Find tool", featLbl: "FEATURED", open: "Open", ready: "Ready to use", meet: "Meet the tools", sub: "Fast tools that run in your browser. Your files and passwords are never uploaded.",
     search: "Search tools", ph: "Search tools, e.g. hash", all: "All", fav: "Favorites",
     one: "tool", many: "tools", none: "No tools found", noneSub: "Try another word or pick a different category.", clear: "Clear filters",
     noFav: "You have no favorites yet. Tap the heart on a tool to save it here.",
@@ -96,7 +96,7 @@ function head(p) {
   const ADS_CONNECT = "https://pagead2.googlesyndication.com https://*.google.com https://*.doubleclick.net https://*.adtrafficquality.google";
   const ADS_FRAME = "https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.google.com https://*.adtrafficquality.google";
   const script = ["'self'", ADS_SCRIPT, usesQr && !exists("assets/vendor/qrcode.min.js") ? "https://cdnjs.cloudflare.com" : ""].filter(Boolean).join(" ");
-  const connect = ["'self'", ADS_CONNECT, p.scripts.some((s) => s.includes("ipdns")) ? IP_HOSTS : "", p.scripts.some((s) => s.includes("typing")) && SB_URL ? SB_URL : ""].filter(Boolean).join(" ");
+  const connect = ["'self'", ADS_CONNECT, p.scripts.some((s) => s.includes("ipdns")) ? IP_HOSTS : "", p.scripts.some((s) => /typing|gameboard/.test(s)) && SB_URL ? SB_URL : ""].filter(Boolean).join(" ");
   const csp = `default-src 'self'; script-src ${script}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; frame-src ${ADS_FRAME}; connect-src ${connect}; object-src 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'; worker-src 'self'`;
   return `<!doctype html>
 <html lang="${p.lang}">

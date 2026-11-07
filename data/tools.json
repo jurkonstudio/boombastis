@@ -200,6 +200,26 @@
    "name": "Tes Kecepatan Mengetik",
    "desc": "Cek WPM dan akurasi dalam 15, 30, atau 60 detik.",
    "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"tes-kecepatan-mengetik\"><rect x=\"2.5\" y=\"6.5\" width=\"19\" height=\"11\" rx=\"3\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M6.5 10.5h.01M10 10.5h.01M13.5 10.5h.01M17 10.5h.01M7.5 14h9\"/></svg>"
+  },
+  {
+   "slug": "/cps-test/",
+   "lang": "en",
+   "cats": [
+    "utility"
+   ],
+   "name": "CPS Test",
+   "desc": "Click speed test for 1 to 60 seconds, with a leaderboard.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"cps-test\"><rect x=\"3.5\" y=\"3.5\" width=\"17\" height=\"17\" rx=\"4\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"m9 7.500 7 3.500-3 1.200-1.200 3z\"/></svg>"
+  },
+  {
+   "slug": "/reaction-time-test/",
+   "lang": "en",
+   "cats": [
+    "utility"
+   ],
+   "name": "Reaction Time Test",
+   "desc": "Measure your reaction time in milliseconds, with a leaderboard.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"reaction-time-test\"><rect x=\"3.5\" y=\"3.5\" width=\"17\" height=\"17\" rx=\"4\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M13 6.500 9 12.500h3l-1 5 4-6.500h-3z\"/></svg>"
   }
  ],
  "site": {
