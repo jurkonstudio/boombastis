@@ -11,6 +11,20 @@ const CONFIG = JSON.parse(fs.readFileSync(path.join(ROOT, "site.config.json"), "
 const ORIGIN = (process.env.SITE_ORIGIN || CONFIG.origin).replace(/\/+$/, "");
 if (!/^https:\/\/[a-z0-9.-]+$/i.test(ORIGIN)) throw new Error("site.config.json origin must look like https://example.com (no path)");
 const HOST = new URL(ORIGIN).hostname;
+const STUDIO = CONFIG.studio || {};
+// Owner/publisher entity (Jurkon Studio, founded by Kalfin Agus Setiawan). Brand stays "Boombastis" for now.
+const ORG = STUDIO.name ? {
+  "@type": "Organization", name: STUDIO.name, url: ORIGIN + "/",
+  ...(STUDIO.email ? { email: STUDIO.email } : {}),
+  ...(STUDIO.founder ? { founder: { "@type": "Person", name: STUDIO.founder } } : {}),
+  brand: { "@type": "Brand", name: "Boombastis" },
+} : null;
+const orgLd = () => JSON.stringify({ "@context": "https://schema.org", ...ORG });
+// Pages that already declare a publisher get the studio as publisher, so the site tells one consistent story.
+const withStudio = (ldList) => ldList.map((j) => {
+  if (!ORG || !j.includes('"publisher"')) return j;
+  const o = JSON.parse(j); if (o.publisher) o.publisher = ORG; return JSON.stringify(o);
+});
 const fillDomain = (s) => s.replaceAll("{{ORIGIN}}", ORIGIN).replaceAll("{{HOST}}", HOST);
 const TODAY = new Date().toISOString().slice(0, 10);
 const data = JSON.parse(fs.readFileSync(path.join(ROOT, "data/tools.json"), "utf8"));
@@ -39,7 +53,7 @@ const T = {
     one: "tool", many: "tools", none: "No tools found", noneSub: "Try another word or pick a different category.", clear: "Clear filters",
     noFav: "You have no favorites yet. Tap the heart on a tool to save it here.",
     add: "Add to favorites", rem: "Remove from favorites", footTools: "Tools", footId: "Bahasa Indonesia", footCo: "Site",
-    legal: ["About", "Privacy", "Contact"], copy: "© 2026 Boombastis. Your files and passwords never leave your browser.",
+    legal: ["About", "Privacy", "Contact"], copy: "© 2026 " + (CONFIG.studio?.name || "Boombastis") + ". Your files and passwords never leave your browser.",
     themeNames: ["System", "Light", "Dark"],
     cats: { image: "Images", text: "Text & Developer", security: "Security & Privacy", network: "Network & Browser", utility: "Utilities", id: "Bahasa Indonesia" },
     title: "Boombastis: free online tools that run in your browser",
@@ -52,7 +66,7 @@ const T = {
     one: "alat", many: "alat", none: "Alat tidak ditemukan", noneSub: "Coba kata lain atau pilih kategori yang berbeda.", clear: "Hapus filter",
     noFav: "Belum ada favorit. Ketuk ikon hati pada alat untuk menyimpannya di sini.",
     add: "Tambah ke favorit", rem: "Hapus dari favorit", footTools: "Alat", footId: "English tools", footCo: "Situs",
-    legal: ["Tentang", "Privasi", "Kontak"], copy: "© 2026 Boombastis. File dan kata sandi Anda tidak pernah meninggalkan browser.",
+    legal: ["Tentang", "Privasi", "Kontak"], copy: "© 2026 " + (CONFIG.studio?.name || "Boombastis") + ". File dan kata sandi Anda tidak pernah meninggalkan browser.",
     themeNames: ["Sistem", "Terang", "Gelap"],
     cats: { fin: "Keuangan & Pekerjaan", sport: "Olahraga", date: "Tanggal & Waktu", image: "Gambar", dev: "Developer & Data" },
     title: "Alat online gratis, privat, dan cepat | Boombastis",
@@ -199,7 +213,7 @@ function homeMeta(lang) {
     ? { "@context": "https://schema.org", "@type": "WebSite", name: "Boombastis", url: ORIGIN + url, inLanguage: "id" }
     : { "@context": "https://schema.org", "@type": "WebSite", name: "Boombastis", url: ORIGIN + url, inLanguage: "en",
         potentialAction: { "@type": "SearchAction", target: { "@type": "EntryPoint", urlTemplate: ORIGIN + "/?q={search_term_string}" }, "query-input": "required name=search_term_string" } };
-  return { url, lang, title: T[lang].title, description: s.description, og: s.og, ld: [JSON.stringify(ld)], scripts: [] };
+  return { url, lang, title: T[lang].title, description: s.description, og: s.og, ld: [JSON.stringify(ld), ...(ORG ? [orgLd()] : [])], scripts: [] };
 }
 
 // ---------- fragments ----------
@@ -218,6 +232,8 @@ for (const f of walk("src/pages")) {
   const raw = fillDomain(read(f));
   const mm = raw.match(/^<!--meta (.*?)-->\n/s);
   const p = JSON.parse(mm[1]);
+  p.ld = withStudio(p.ld);
+  if (ORG && (p.url === "/about/" || p.url === "/id/tentang/")) p.ld.push(orgLd());
   let body = raw.slice(mm[0].length).trim();
   const isTool = /class="about"/.test(body) && /<section/.test(body);
   if (isTool) {

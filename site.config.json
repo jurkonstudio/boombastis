@@ -1,3 +1,8 @@
 {
-  "origin": "https://boombastis.my.id"
+  "origin": "https://boombastis.my.id",
+  "studio": {
+    "name": "Jurkon Studio",
+    "founder": "Kalfin Agus Setiawan",
+    "email": "calvfinka@yahoo.com"
+  }
 }
