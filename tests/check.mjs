@@ -22,7 +22,7 @@ for (const [u, s] of Object.entries(html)) {
   // ids used by page scripts exist in the HTML
   const body = s.replace(/<script[\s\S]*?<\/script>/g, "");
   for (const m of s.matchAll(/<script src="(\/assets\/[^"?]+)/g)) { const js = fs.readFileSync(path.join(ROOT, m[1]), "utf8");
-    if (/ui\.js|home\.js|theme|legacy|sw-register|vendor/.test(m[1])) continue;
+    if (/ui\.js|home\.js|theme|legacy|sw-register|vendor|\/pdf\.js|\/more\.js/.test(m[1])) continue; // pdf.js and more.js hold several tools each; tests/smoke covers their ids
     for (const x of js.matchAll(/(?:\$|getElementById)\("([\w-]+)"\)/g)) if (!body.includes(`id="${x[1]}"`) && !js.includes(`id="${x[1]}"`) && !js.includes(`.id="${x[1]}"`)) errs.push(`${u}: ${m[1]} uses missing #${x[1]}`); }
 }
 // hreflang reciprocity

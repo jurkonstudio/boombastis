@@ -26,6 +26,17 @@ Live site: https://boombastis.my.id (static HTML, hosted on GitHub Pages).
 | Reaction Time Test | `/reaction-time-test/` | Browser; leaderboard uses Supabase (optional) |
 | Instagram Non-Followers Checker | `/instagram-non-followers/` | Browser only (reads the user's own data export) |
 | EXIF Remover | `/exif-remover/` | Browser only |
+| Merge PDF | `/pdf-merge/` | Browser only (pdf-lib, vendored) |
+| Split PDF | `/pdf-split/` | Browser only |
+| Organize PDF (rotate, delete, reorder) | `/pdf-organizer/` | Browser only (pdf.js, vendored) |
+| Compress PDF | `/pdf-compress/` | Browser only |
+| Image to PDF | `/jpg-to-pdf/` | Browser only |
+| PDF to Image (JPG/PNG/WebP) | `/pdf-to-jpg/` | Browser only |
+| PDF to Text | `/pdf-to-text/` | Browser only |
+| Add Page Numbers to PDF | `/pdf-page-numbers/` | Browser only |
+| Watermark PDF | `/pdf-watermark/` | Browser only |
+| Sign PDF | `/pdf-sign/` | Browser only |
+| URL Encoder / Decoder, UUID Generator, Unix Timestamp, Color Converter, Text Diff, Regex Tester, Lorem Ipsum, Unit Converter | `/url-encoder/`, `/uuid-generator/`, `/timestamp-converter/`, `/color-converter/`, `/diff-checker/`, `/regex-tester/`, `/lorem-ipsum-generator/`, `/unit-converter/` | Browser only |
 
 ## Project structure (v2.0)
 
@@ -177,3 +188,7 @@ Yang masih manual saat pindah: DNS domain baru, redirect 301 dari domain lama (G
 ## Supabase setup for the CPS and Reaction Time leaderboards
 
 Run `supabase/game-scores.sql` once in the Supabase SQL Editor (the typing test uses its own `typing-scores*.sql`). It creates `game_scores` (RLS: public read, public insert, no update/delete), a rate-limit trigger and the views `cps_leaderboard` and `reaction_leaderboard`. Without it the tests still work; the leaderboard card stays empty or shows an error.
+
+## PDF suite (v2.1)
+
+`assets/pdf.js` runs all PDF tools (one mode per page via `data-tool`); `assets/more.js` runs the extra utilities. Libraries are vendored in `assets/vendor/` (pdf-lib, pdf.js legacy build, JSZip) so no CDN or CSP change is needed. Page content is generated into `src/pages/<slug>/index.html`; run `node scripts/build.mjs` after edits.

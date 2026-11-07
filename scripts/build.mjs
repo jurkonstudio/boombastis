@@ -53,14 +53,14 @@ const T = {
   en: {
     skip: "Skip to content", tools: "All tools", about: "About", switchTo: "Bahasa Indonesia", switchShort: "ID",
     theme: "Theme", menu: "Menu", home: "Home", crumbs: "Breadcrumb", main: "Main navigation",
-    badge: "Browser-only tools · your files never leave", h1: "Free online tools that stay <span>private.</span>", twPre: "I need help with", tw: [["compress an image", "image compressor"], ["count words", "word counter"], ["make a password", "password"], ["make a QR code", "qr"], ["format JSON", "json formatter"], ["check my IP and DNS", "ip & dns"], ["test my typing speed", "typing"], ["test my click speed", "cps"], ["test my reaction time", "reaction"], ["see who doesn't follow me back", "non-followers"], ["hash a file", "hash"], ["decode Base64", "base64"]], go: "Find tool", featLbl: "FEATURED", open: "Open", ready: "Ready to use", meet: "Meet the tools", sub: "Fast tools that run in your browser. Your files and passwords are never uploaded.",
+    badge: "Browser-only tools · your files never leave", h1: "Free online tools that stay <span>private.</span>", twPre: "I need help with", tw: [["merge PDF files", "pdf merge"], ["compress a PDF", "pdf compress"], ["convert JPG to PDF", "jpg to pdf"], ["sign a PDF", "pdf sign"], ["compress an image", "image compressor"], ["count words", "word counter"], ["make a password", "password"], ["make a QR code", "qr"], ["format JSON", "json formatter"], ["check my IP and DNS", "ip & dns"], ["test my typing speed", "typing"], ["test my click speed", "cps"], ["test my reaction time", "reaction"], ["see who doesn't follow me back", "non-followers"], ["hash a file", "hash"], ["decode Base64", "base64"]], go: "Find tool", featLbl: "FEATURED", open: "Open", ready: "Ready to use", meet: "Meet the tools", sub: "Fast tools that run in your browser. Your files and passwords are never uploaded.",
     search: "Search tools", ph: "Search tools, e.g. hash", all: "All", fav: "Favorites",
     one: "tool", many: "tools", none: "No tools found", noneSub: "Try another word or pick a different category.", clear: "Clear filters",
     noFav: "You have no favorites yet. Tap the heart on a tool to save it here.",
     add: "Add to favorites", rem: "Remove from favorites", footTools: "Tools", footId: "Bahasa Indonesia", footCo: "Site",
     legal: ["About", "Privacy", "Contact"], copy: "© 2026 " + (CONFIG.studio?.name || "Boombastis") + ". Your files and passwords never leave your browser.",
     themeNames: ["System", "Light", "Dark"],
-    cats: { image: "Images", text: "Text & Developer", security: "Security & Privacy", network: "Network & Browser", utility: "Utilities", id: "Bahasa Indonesia" },
+    cats: { pdf: "PDF Tools", image: "Images", text: "Text & Developer", security: "Security & Privacy", network: "Network & Browser", utility: "Utilities", id: "Bahasa Indonesia" },
     title: "Boombastis: free online tools that run in your browser",
   },
   id: {
@@ -165,6 +165,7 @@ function page(p, body, { wide = false, cls = "", extra = [] } = {}) {
 
 // ---------- home and hub ----------
 const GRAD = {
+  pdf: ["#f87171", "#b91c1c"],
   image: ["#f472b6", "#7e22ce"], text: ["#818cf8", "#3730a3"], security: ["#fb923c", "#dc2626"],
   network: ["#38bdf8", "#1d4ed8"], utility: ["#2dd4bf", "#0f766e"], fin: ["#fbbf24", "#c2410c"],
   sport: ["#34d399", "#047857"], date: ["#fbbf24", "#b45309"], dev: ["#a78bfa", "#5b21b6"],

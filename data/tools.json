@@ -230,6 +230,186 @@
    "name": "Instagram Non-Followers Checker",
    "desc": "See who doesn't follow you back, from your own data export.",
    "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"instagram-non-followers\"><rect x=\"3.5\" y=\"3.5\" width=\"17\" height=\"17\" rx=\"4\" fill=\"currentColor\" fill-opacity=\".16\"/><circle cx=\"10\" cy=\"9.500\" r=\"2.500\"/><path d=\"M5.500 17c.4-2.400 2.300-3.800 4.500-3.800s4.100 1.400 4.500 3.800M15.500 10.500h3.500\"/></svg>"
+  },
+  {
+   "slug": "/pdf-merge/",
+   "lang": "en",
+   "cats": [
+    "pdf"
+   ],
+   "name": "Merge PDF",
+   "desc": "Combine several PDF files into one document, in any order.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"pdf-merge\"><path d=\"M7 3.5h7l4.5 4.5v11a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 19V5A1.5 1.5 0 0 1 7 3.5z\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M14 3.5V8h4.5\"/><path d=\"M9 13h6M12 10v6\"/></svg>"
+  },
+  {
+   "slug": "/pdf-split/",
+   "lang": "en",
+   "cats": [
+    "pdf"
+   ],
+   "name": "Split PDF",
+   "desc": "Split a PDF by ranges, extract pages or remove pages.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"pdf-split\"><path d=\"M7 3.5h7l4.5 4.5v11a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 19V5A1.5 1.5 0 0 1 7 3.5z\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M14 3.5V8h4.5\"/><path d=\"M8 13h8\" stroke-dasharray=\"2 2\"/></svg>"
+  },
+  {
+   "slug": "/pdf-organizer/",
+   "lang": "en",
+   "cats": [
+    "pdf"
+   ],
+   "name": "Organize PDF",
+   "desc": "Rotate, delete and reorder PDF pages with thumbnails.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"pdf-organizer\"><path d=\"M7 3.5h7l4.5 4.5v11a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 19V5A1.5 1.5 0 0 1 7 3.5z\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M14 3.5V8h4.5\"/><path d=\"M9 12.5h6M9 15.5h4\"/></svg>"
+  },
+  {
+   "slug": "/pdf-compress/",
+   "lang": "en",
+   "cats": [
+    "pdf"
+   ],
+   "name": "Compress PDF",
+   "desc": "Make a PDF smaller for email and uploads.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"pdf-compress\"><path d=\"M7 3.5h7l4.5 4.5v11a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 19V5A1.5 1.5 0 0 1 7 3.5z\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M14 3.5V8h4.5\"/><path d=\"M12 9v6m0 0-2-2m2 2 2-2\"/></svg>"
+  },
+  {
+   "slug": "/jpg-to-pdf/",
+   "lang": "en",
+   "cats": [
+    "pdf"
+   ],
+   "name": "Image to PDF",
+   "desc": "Turn JPG, PNG and WebP images into one PDF.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"jpg-to-pdf\"><rect x=\"3.5\" y=\"4.5\" width=\"17\" height=\"15\" rx=\"3\" fill=\"currentColor\" fill-opacity=\".16\"/><circle cx=\"9\" cy=\"10\" r=\"1.6\"/><path d=\"m4 17 5-4.5 3.5 3L16 12l4 4.5\"/></svg>"
+  },
+  {
+   "slug": "/pdf-to-jpg/",
+   "lang": "en",
+   "cats": [
+    "pdf"
+   ],
+   "name": "PDF to Image",
+   "desc": "Convert PDF pages to JPG, PNG or WebP images.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"pdf-to-jpg\"><path d=\"M7 3.5h7l4.5 4.5v11a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 19V5A1.5 1.5 0 0 1 7 3.5z\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M14 3.5V8h4.5\"/><circle cx=\"10\" cy=\"14\" r=\"1.2\"/><path d=\"m8 18 3-2.5 2 1.5 2.5-2.5\"/></svg>"
+  },
+  {
+   "slug": "/pdf-to-text/",
+   "lang": "en",
+   "cats": [
+    "pdf"
+   ],
+   "name": "PDF to Text",
+   "desc": "Extract the text from a PDF and copy or save it.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"pdf-to-text\"><path d=\"M7 3.5h7l4.5 4.5v11a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 19V5A1.5 1.5 0 0 1 7 3.5z\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M14 3.5V8h4.5\"/><path d=\"M9 12h6M9 15h6M9 18h3\"/></svg>"
+  },
+  {
+   "slug": "/pdf-page-numbers/",
+   "lang": "en",
+   "cats": [
+    "pdf"
+   ],
+   "name": "Add Page Numbers to PDF",
+   "desc": "Add page numbers to a PDF in any position and style.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"pdf-page-numbers\"><path d=\"M7 3.5h7l4.5 4.5v11a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 19V5A1.5 1.5 0 0 1 7 3.5z\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M14 3.5V8h4.5\"/><path d=\"M10 17.5h4\"/></svg>"
+  },
+  {
+   "slug": "/pdf-watermark/",
+   "lang": "en",
+   "cats": [
+    "pdf"
+   ],
+   "name": "Watermark PDF",
+   "desc": "Stamp text or a logo across every page of a PDF.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"pdf-watermark\"><path d=\"M7 3.5h7l4.5 4.5v11a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 19V5A1.5 1.5 0 0 1 7 3.5z\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M14 3.5V8h4.5\"/><path d=\"M8.5 16.5l7-5.5\" /><path d=\"M8 12.5h3\"/></svg>"
+  },
+  {
+   "slug": "/pdf-sign/",
+   "lang": "en",
+   "cats": [
+    "pdf"
+   ],
+   "name": "Sign PDF",
+   "desc": "Draw, type or upload a signature and place it on a PDF.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"pdf-sign\"><path d=\"M7 3.5h7l4.5 4.5v11a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 19V5A1.5 1.5 0 0 1 7 3.5z\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M14 3.5V8h4.5\"/><path d=\"M8 17c1.5-3 2.5-3 3-1s1.5 1 2.5-1 2 0 2.5 0\"/></svg>"
+  },
+  {
+   "slug": "/url-encoder/",
+   "lang": "en",
+   "cats": [
+    "text"
+   ],
+   "name": "URL Encoder / Decoder",
+   "desc": "Encode or decode URLs and see the parts of a link.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"url-encoder\"><path d=\"M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1\"/><path d=\"M14 10a4 4 0 0 0-5.7 0l-3 3A4 4 0 0 0 11 18.7l1-1\"/></svg>"
+  },
+  {
+   "slug": "/uuid-generator/",
+   "lang": "en",
+   "cats": [
+    "text"
+   ],
+   "name": "UUID Generator",
+   "desc": "Generate random UUID v4 and time-ordered v7 identifiers.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"uuid-generator\"><rect x=\"4\" y=\"6\" width=\"16\" height=\"12\" rx=\"3\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M8 10v4M12 10v4M16 10v4\"/></svg>"
+  },
+  {
+   "slug": "/timestamp-converter/",
+   "lang": "en",
+   "cats": [
+    "text"
+   ],
+   "name": "Unix Timestamp Converter",
+   "desc": "Convert Unix timestamps to dates and dates back.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"timestamp-converter\"><circle cx=\"12\" cy=\"12\" r=\"8\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M12 7.5V12l3 2\"/></svg>"
+  },
+  {
+   "slug": "/color-converter/",
+   "lang": "en",
+   "cats": [
+    "utility"
+   ],
+   "name": "Color Converter",
+   "desc": "Convert HEX, RGB and HSL, check contrast, get shades.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"color-converter\"><circle cx=\"12\" cy=\"12\" r=\"8\" fill=\"currentColor\" fill-opacity=\".16\"/><circle cx=\"9.5\" cy=\"10\" r=\"1.2\"/><circle cx=\"14.5\" cy=\"10\" r=\"1.2\"/><circle cx=\"12\" cy=\"15\" r=\"1.2\"/></svg>"
+  },
+  {
+   "slug": "/diff-checker/",
+   "lang": "en",
+   "cats": [
+    "text"
+   ],
+   "name": "Text Diff Checker",
+   "desc": "Compare two texts and see what was added or removed.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"diff-checker\"><rect x=\"3.5\" y=\"5\" width=\"7.5\" height=\"14\" rx=\"2\" fill=\"currentColor\" fill-opacity=\".16\"/><rect x=\"13\" y=\"5\" width=\"7.5\" height=\"14\" rx=\"2\"/><path d=\"M6 10h2.5M15 12h3\"/></svg>"
+  },
+  {
+   "slug": "/regex-tester/",
+   "lang": "en",
+   "cats": [
+    "text"
+   ],
+   "name": "Regex Tester",
+   "desc": "Test regular expressions with live highlighting and groups.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"regex-tester\"><rect x=\"3.5\" y=\"5\" width=\"17\" height=\"14\" rx=\"3\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M8 15.5h.01M11 9v5M9 10l4 3M13 10l-4 3\"/></svg>"
+  },
+  {
+   "slug": "/lorem-ipsum-generator/",
+   "lang": "en",
+   "cats": [
+    "text"
+   ],
+   "name": "Lorem Ipsum Generator",
+   "desc": "Generate placeholder text in paragraphs, sentences or words.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"lorem-ipsum-generator\"><path d=\"M5 7h14M5 11h14M5 15h9\"/></svg>"
+  },
+  {
+   "slug": "/unit-converter/",
+   "lang": "en",
+   "cats": [
+    "utility"
+   ],
+   "name": "Unit Converter",
+   "desc": "Convert length, weight, volume, temperature, speed and more.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"unit-converter\"><path d=\"M4 8h13m0 0-3-3m3 3-3 3M20 16H7m0 0 3-3m-3 3 3 3\"/></svg>"
   }
  ],
  "site": {

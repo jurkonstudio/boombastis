@@ -4,8 +4,10 @@
   <url><loc>https://boombastis.my.id/about/</loc><lastmod>2026-11-07</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://boombastis.my.id/about/"/><xhtml:link rel="alternate" hreflang="id" href="https://boombastis.my.id/id/tentang/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://boombastis.my.id/about/"/></url>
   <url><loc>https://boombastis.my.id/base64/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://boombastis.my.id/case-converter/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/color-converter/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://boombastis.my.id/contact/</loc><lastmod>2026-11-07</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://boombastis.my.id/contact/"/><xhtml:link rel="alternate" hreflang="id" href="https://boombastis.my.id/id/kontak/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://boombastis.my.id/contact/"/></url>
   <url><loc>https://boombastis.my.id/cps-test/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/diff-checker/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://boombastis.my.id/exif-remover/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://boombastis.my.id/hash-generator/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://boombastis.my.id/id/</loc><lastmod>2026-11-07</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://boombastis.my.id/"/><xhtml:link rel="alternate" hreflang="id" href="https://boombastis.my.id/id/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://boombastis.my.id/"/></url>
@@ -22,13 +24,29 @@
   <url><loc>https://boombastis.my.id/image-compressor/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://boombastis.my.id/instagram-non-followers/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://boombastis.my.id/ip-dns-checker/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/jpg-to-pdf/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://boombastis.my.id/json-formatter/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/lorem-ipsum-generator/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://boombastis.my.id/password-generator/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://boombastis.my.id/password-strength-checker/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/pdf-compress/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/pdf-merge/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/pdf-organizer/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/pdf-page-numbers/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/pdf-sign/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/pdf-split/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/pdf-to-jpg/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/pdf-to-text/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/pdf-watermark/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://boombastis.my.id/privacy/</loc><lastmod>2026-11-07</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://boombastis.my.id/privacy/"/><xhtml:link rel="alternate" hreflang="id" href="https://boombastis.my.id/id/privasi/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://boombastis.my.id/privacy/"/></url>
   <url><loc>https://boombastis.my.id/qr-code-generator/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://boombastis.my.id/reaction-time-test/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/regex-tester/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/timestamp-converter/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://boombastis.my.id/typing-test/</loc><lastmod>2026-11-07</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://boombastis.my.id/typing-test/"/><xhtml:link rel="alternate" hreflang="id" href="https://boombastis.my.id/id/tes-kecepatan-mengetik/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://boombastis.my.id/typing-test/"/></url>
+  <url><loc>https://boombastis.my.id/unit-converter/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/url-encoder/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://boombastis.my.id/user-agent-checker/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://boombastis.my.id/uuid-generator/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://boombastis.my.id/word-counter/</loc><lastmod>2026-11-07</lastmod></url>
 </urlset>
