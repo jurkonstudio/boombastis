@@ -1,3 +1,45 @@
+# Search engines and AI answer/search bots: allowed.
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: DuckDuckBot
+User-agent: Applebot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+Allow: /
+Disallow: /src/
+Disallow: /scripts/
+Disallow: /data/
+Disallow: /tests/
+Disallow: /boombastis-redesign-update/
+Disallow: /?q=
+Disallow: /id/?q=
+
+# AI-training crawlers and SEO scrapers: not allowed.
+# (Google-Extended and Applebot-Extended only control AI training; they do not affect Google Search or ads.)
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: CCBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Meta-ExternalAgent
+User-agent: cohere-ai
+User-agent: Bytespider
+User-agent: PetalBot
+User-agent: Diffbot
+User-agent: ImagesiftBot
+User-agent: Omgilibot
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: MJ12bot
+User-agent: DataForSeoBot
+Disallow: /
+
+# Everyone else (including the AdSense crawler Mediapartners-Google).
 User-agent: *
 Allow: /
 Disallow: /src/

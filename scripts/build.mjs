@@ -245,20 +245,38 @@ for (const f of walk("src/pages")) {
   emit(p, page(p, body, { wide: isTool }));
 }
 
-// ---------- robots.txt and CNAME (generated so they always match the configured domain) ----------
-fs.writeFileSync(path.join(ROOT, "robots.txt"), `User-agent: *
+// ---------- robots.txt, security.txt and CNAME (generated so they always match site.config.json) ----------
+// Policy: search engines and AI answer/search bots may crawl; AI-training crawlers and SEO scrapers are asked not to.
+// robots.txt is a request, not enforcement. A bot-specific group REPLACES the "*" group, so Disallow lines are repeated in every group.
+const PRIVATE_PATHS = ["/src/", "/scripts/", "/data/", "/tests/", "/boombastis-redesign-update/", "/?q=", "/id/?q="];
+const dis = PRIVATE_PATHS.map((x) => `Disallow: ${x}`).join("\n");
+const SEARCH_BOTS = ["Googlebot", "Bingbot", "DuckDuckBot", "Applebot", "OAI-SearchBot", "ChatGPT-User", "PerplexityBot", "Perplexity-User", "Claude-SearchBot", "Claude-User"];
+const BLOCKED_BOTS = ["GPTBot", "ClaudeBot", "anthropic-ai", "CCBot", "Google-Extended", "Applebot-Extended", "Meta-ExternalAgent", "cohere-ai", "Bytespider", "PetalBot", "Diffbot", "ImagesiftBot", "Omgilibot", "AhrefsBot", "SemrushBot", "MJ12bot", "DataForSeoBot"];
+const ua = (list) => list.map((b) => `User-agent: ${b}`).join("\n");
+fs.writeFileSync(path.join(ROOT, "robots.txt"), `# Search engines and AI answer/search bots: allowed.
+${ua(SEARCH_BOTS)}
 Allow: /
-Disallow: /src/
-Disallow: /scripts/
-Disallow: /data/
-Disallow: /tests/
-Disallow: /boombastis-redesign-update/
-Disallow: /?q=
-Disallow: /id/?q=
+${dis}
+
+# AI-training crawlers and SEO scrapers: not allowed.
+# (Google-Extended and Applebot-Extended only control AI training; they do not affect Google Search or ads.)
+${ua(BLOCKED_BOTS)}
+Disallow: /
+
+# Everyone else (including the AdSense crawler Mediapartners-Google).
+User-agent: *
+Allow: /
+${dis}
 
 Sitemap: ${ORIGIN}/sitemap.xml
 `);
 fs.writeFileSync(path.join(ROOT, "CNAME"), HOST + "\n");
+// security.txt: Expires is rolled forward on every build (must be less than 1 year ahead, RFC 9116).
+if (STUDIO.email) {
+  const exp = new Date(Date.now() + 360 * 864e5).toISOString().replace(/\.\d+Z$/, "Z");
+  fs.mkdirSync(path.join(ROOT, ".well-known"), { recursive: true });
+  fs.writeFileSync(path.join(ROOT, ".well-known/security.txt"), `Contact: mailto:${STUDIO.email}\nExpires: ${exp}\nPreferred-Languages: id, en\nCanonical: ${ORIGIN}/.well-known/security.txt\n`);
+}
 
 // ---------- sitemap ----------
 const loc = (u) => ORIGIN + u;

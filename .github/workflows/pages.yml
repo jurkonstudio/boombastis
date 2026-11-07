@@ -40,6 +40,7 @@ jobs:
             --exclude 'node_modules' --exclude 'package.json' --exclude 'package-lock.json' \
             --exclude 'README.md' --exclude 'LICENSE-ASSETS.md' --exclude '.gitignore' --exclude '*.zip'
           touch _site/.nojekyll
+      # Keep upload-pages-artifact at v3: v4 drops hidden folders such as .well-known (security.txt).
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
