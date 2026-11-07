@@ -229,3 +229,9 @@ main.wide{max-width:1080px}
 .dlg-ul{margin:0;padding-left:20px;color:var(--text);line-height:1.8}
 @media(max-width:600px){.dlg[open]{grid-template-columns:1fr}.dlg-side{padding:18px}.pal{opacity:.8}.p3{display:none}}
 @media(prefers-reduced-motion:reduce){.pal,.pal i,.pals.hop .pal,.feat.swap .feat-in,.dlg[open]{animation:none!important}}
+/* EXIF remover */
+.badge.warn{background:#d9480f}
+.mdet{margin-top:6px;font-size:.85rem}.mdet summary{cursor:pointer;color:var(--sub);font-weight:600}
+.mlist{list-style:none;margin:6px 0 0;padding:8px 10px;border-radius:10px;background:var(--bg);border:1px solid var(--line);color:var(--text);overflow-wrap:anywhere}
+.mlist li{margin:2px 0}
+@media(max-width:520px){.item{flex-wrap:wrap}.item .btn{flex:1 1 100%}}

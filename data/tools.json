@@ -169,6 +169,17 @@
    "name": "Konverter JSON ke CSV dan CSV ke JSON",
    "desc": "JSON ke CSV dan sebaliknya, siap Excel.",
    "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"json-csv\"><rect x=\"3.5\" y=\"4.5\" width=\"17\" height=\"15\" rx=\"3\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M3.500 9.500h17M3.500 14.500h17M9.500 4.500v15M15 4.500v15\"/></svg>"
+  },
+  {
+   "slug": "/exif-remover/",
+   "lang": "en",
+   "cats": [
+    "image",
+    "security"
+   ],
+   "name": "EXIF Remover",
+   "desc": "Strip GPS location and camera data from photos. Pixels stay untouched.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"exif-remover\"><rect x=\"3.5\" y=\"4.5\" width=\"17\" height=\"15\" rx=\"3\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M8 9h8M8 12.500h5.500\"/><path d=\"M5.500 18.500 18.500 5.500\"/></svg>"
   }
  ],
  "site": {

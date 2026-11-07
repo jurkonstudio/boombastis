@@ -21,6 +21,7 @@ Live site: https://boombastis.my.id (static HTML, hosted on GitHub Pages).
 | JSON Formatter | `/json-formatter/` | Browser only |
 | Base64 Encoder / Decoder | `/base64/` | Browser only |
 | Text Case Converter | `/case-converter/` | Browser only |
+| EXIF Remover | `/exif-remover/` | Browser only |
 
 ## Project structure (v2.0)
 
@@ -82,6 +83,12 @@ connection. Bump `VERSION` in `sw.js` and add new tool URLs to `PRECACHE` on eve
 The site is plain static files and can be served by any static web server (`python3 -m http.server`).
 
 ## Patch notes
+
+### v2.1 (2026-11-07) - EXIF Remover
+- New tool `/exif-remover/`: removes EXIF (GPS, camera, serial, dates), XMP, IPTC, comments, PNG text chunks and data hidden after a JPEG's end marker. JPEG, PNG and WebP are rewritten byte for byte (no re-encode, pixels identical). Optional "keep rotation" flag, per-file report of what was found, a re-scan of the cleaned file, and a store-only ZIP download (no library).
+- Files: `src/pages/exif-remover/index.html`, `assets/exif.js`, `og/exif-remover.jpg`, `brand/icons/exif-remover.svg`, entry in `data/tools.json`, small additions to `assets/site.css`.
+- `tests/smoke.py` expectations updated (18 home cards, 3 tools in the Images chip).
+- Known, not from this change: `tests/smoke.py` reports horizontal overflow at 360 px on `/` and `/id/` (decorative `.pal` spans in the hero and the chip row). It also fails on the untouched v2.0 files.
 
 ### v2.0 (2026-11-06) - Global 2.0, phase 1 (UI/UX)
 - New interface: sticky header, light / dark / system theme button, mobile menu, skip link, new tool layout with About panel.
