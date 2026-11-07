@@ -235,3 +235,27 @@ main.wide{max-width:1080px}
 .mlist{list-style:none;margin:6px 0 0;padding:8px 10px;border-radius:10px;background:var(--bg);border:1px solid var(--line);color:var(--text);overflow-wrap:anywhere}
 .mlist li{margin:2px 0}
 @media(max-width:520px){.item{flex-wrap:wrap}.item .btn{flex:1 1 100%}}
+/* Typing speed test */
+#typing [hidden],#ttBoard[hidden]{display:none!important}
+.tt-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.tt-modes{display:flex;gap:6px}
+.tt-modes button{font:inherit;font-weight:600;padding:8px 14px;min-height:40px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer}
+.tt-modes button[aria-pressed=true]{background:linear-gradient(90deg,var(--a),var(--b));color:#fff;border-color:transparent}
+.tt-live{font-size:.95rem;color:var(--sub)}.tt-live b{color:var(--text);font-size:1.15rem;font-variant-numeric:tabular-nums}
+.tt-words{font:500 1.3rem/2.2rem ui-monospace,Menlo,Consolas,monospace;height:6.6rem;overflow:hidden;position:relative;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:6px 12px;cursor:text;scroll-behavior:auto}
+.tt-words .w{display:inline-block;margin-right:.7em;padding:0 3px;border-radius:5px;color:var(--text)}
+.tt-words .w.cur{background:rgba(255,59,48,.14);box-shadow:inset 0 -2px 0 var(--a)}
+.tt-words .w.cur.bad{background:rgba(220,38,38,.2);color:#dc2626}
+.tt-words .w.ok{color:var(--ok)}
+.tt-words .w.no{color:#dc2626;text-decoration:underline wavy}
+#ttInput,#ttName{font:inherit;font-size:1.05rem;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;width:100%}
+.tt-hint,.tt-msg,.tt-best{font-size:.85rem;color:var(--sub);margin:0}
+.tt-best{margin:10px 0 12px;font-size:.92rem}
+.tt-h{margin:0;font-size:1.1rem}
+.tt-lb{list-style:none;margin:0;padding:0;counter-reset:r}
+.tt-lb li{counter-increment:r;display:flex;gap:10px;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.tt-lb li:last-child{border-bottom:0}
+.tt-lb li span:before{content:counter(r) ". ";color:var(--sub);display:inline-block;min-width:2em}
+.tt-lb li span{overflow-wrap:anywhere}
+.tt-lb li b{flex:none;font-variant-numeric:tabular-nums}
+@media(max-width:520px){.tt-words{font-size:1.1rem;line-height:2rem;height:6rem}}

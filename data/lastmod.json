@@ -1,106 +1,110 @@
 {
  "/": {
-  "h": "9ae16cc71a",
+  "h": "f0ad0e9028",
   "d": "2026-11-07"
  },
  "/about/": {
-  "h": "c8a6824fe2",
+  "h": "6e37746aaa",
   "d": "2026-11-07"
  },
  "/base64/": {
-  "h": "e83ffef4fb",
+  "h": "2500ea360a",
   "d": "2026-11-07"
  },
  "/case-converter/": {
-  "h": "55c9620532",
+  "h": "45d981dd17",
   "d": "2026-11-07"
  },
  "/contact/": {
-  "h": "ddc5243e44",
+  "h": "0b51f96f22",
   "d": "2026-11-07"
  },
  "/exif-remover/": {
-  "h": "d11d56f601",
+  "h": "53edfcf030",
   "d": "2026-11-07"
  },
  "/hash-generator/": {
-  "h": "1d464da98c",
+  "h": "bfd892e7e8",
   "d": "2026-11-07"
  },
  "/id/": {
-  "h": "ba2f08c217",
+  "h": "117f0241c0",
   "d": "2026-11-07"
  },
  "/id/hitung-umur/": {
-  "h": "99c8f3e245",
+  "h": "47be3e1ba0",
   "d": "2026-11-07"
  },
  "/id/json-csv/": {
-  "h": "4404366df4",
+  "h": "2cc79a4d5c",
   "d": "2026-11-07"
  },
  "/id/kalkulator-thr/": {
-  "h": "336b92b78c",
+  "h": "be23035b98",
   "d": "2026-11-07"
  },
  "/id/kompres-foto/": {
-  "h": "5d1a555298",
+  "h": "df647a643b",
   "d": "2026-11-07"
  },
  "/id/kontak/": {
-  "h": "2cd3cfe38c",
+  "h": "ebf571562c",
   "d": "2026-11-07"
  },
  "/id/pace-lari/": {
-  "h": "9b2b5d72f5",
+  "h": "0e2bb8f8e8",
   "d": "2026-11-07"
  },
  "/id/privasi/": {
-  "h": "a7f82e507a",
+  "h": "c630976b4e",
   "d": "2026-11-07"
  },
  "/id/tentang/": {
-  "h": "7bb4b6022b",
+  "h": "ce48ae3c6e",
   "d": "2026-11-07"
  },
  "/id/terbilang/": {
-  "h": "b4a53a5496",
+  "h": "5fb4c663ed",
   "d": "2026-11-07"
  },
  "/image-compressor/": {
-  "h": "e44dd6ee8a",
+  "h": "8a9cea3292",
   "d": "2026-11-07"
  },
  "/ip-dns-checker/": {
-  "h": "6cfeb067f7",
+  "h": "7e378fc855",
   "d": "2026-11-07"
  },
  "/json-formatter/": {
-  "h": "1e514ff6e8",
+  "h": "4afd250035",
   "d": "2026-11-07"
  },
  "/password-generator/": {
-  "h": "29db663a3f",
+  "h": "e2943eccae",
   "d": "2026-11-07"
  },
  "/password-strength-checker/": {
-  "h": "7f93687796",
+  "h": "ee7d0453e0",
   "d": "2026-11-07"
  },
  "/privacy/": {
-  "h": "64d3dbddee",
+  "h": "9adcf0ebe8",
   "d": "2026-11-07"
  },
  "/qr-code-generator/": {
-  "h": "c9b9fb582d",
+  "h": "d024f33678",
+  "d": "2026-11-07"
+ },
+ "/typing-test/": {
+  "h": "75ef64b1ae",
   "d": "2026-11-07"
  },
  "/user-agent-checker/": {
-  "h": "00c0f2f74f",
+  "h": "453cb2ed63",
   "d": "2026-11-07"
  },
  "/word-counter/": {
-  "h": "4d15c6821a",
+  "h": "f5b5f3cea2",
   "d": "2026-11-07"
  }
 }

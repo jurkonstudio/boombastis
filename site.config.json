@@ -4,5 +4,9 @@
     "name": "Jurkon Studio",
     "founder": "Kalfin Agus Setiawan",
     "email": "calvfinka@yahoo.com"
+  },
+  "supabase": {
+    "url": "",
+    "anonKey": ""
   }
 }

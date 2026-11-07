@@ -180,6 +180,16 @@
    "name": "EXIF Remover",
    "desc": "Strip GPS location and camera data from photos. Pixels stay untouched.",
    "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"exif-remover\"><rect x=\"3.5\" y=\"4.5\" width=\"17\" height=\"15\" rx=\"3\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M8 9h8M8 12.500h5.500\"/><path d=\"M5.500 18.500 18.500 5.500\"/></svg>"
+  },
+  {
+   "slug": "/typing-test/",
+   "lang": "en",
+   "cats": [
+    "utility"
+   ],
+   "name": "Typing Speed Test",
+   "desc": "Test your WPM in 15, 30 or 60 seconds and join the leaderboard.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"typing-test\"><rect x=\"2.5\" y=\"6.5\" width=\"19\" height=\"11\" rx=\"3\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M6.5 10.5h.01M10 10.5h.01M13.5 10.5h.01M17 10.5h.01M7.5 14h9\"/></svg>"
   }
  ],
  "site": {

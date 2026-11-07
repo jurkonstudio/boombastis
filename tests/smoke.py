@@ -25,7 +25,7 @@ with sync_playwright() as p:
     ctx = br.new_context(viewport={"width": 390, "height": 800}); ctx.route(re.compile(r"^(?!http://localhost).*"), lambda r: r.abort()); pg = ctx.new_page()
     vis = lambda: pg.locator(".tcard:visible").count()
     pg.goto(B + "/"); 
-    if vis() != 18: bad(f"home shows {vis()} cards, expected 18")
+    if vis() != 19: bad(f"home shows {vis()} cards, expected 19")
     pg.fill("#q", "hash")
     if vis() != 1: bad("search 'hash' should show 1 card")
     pg.fill("#q", "xyzzy")
