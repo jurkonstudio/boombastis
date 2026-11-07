@@ -6,7 +6,12 @@ import path from "node:path";
 import crypto from "node:crypto";
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
-const ORIGIN = "https://boombastis.my.id";
+// Site address: ONE place to change when moving domain -> site.config.json ("origin"), or env SITE_ORIGIN.
+const CONFIG = JSON.parse(fs.readFileSync(path.join(ROOT, "site.config.json"), "utf8"));
+const ORIGIN = (process.env.SITE_ORIGIN || CONFIG.origin).replace(/\/+$/, "");
+if (!/^https:\/\/[a-z0-9.-]+$/i.test(ORIGIN)) throw new Error("site.config.json origin must look like https://example.com (no path)");
+const HOST = new URL(ORIGIN).hostname;
+const fillDomain = (s) => s.replaceAll("{{ORIGIN}}", ORIGIN).replaceAll("{{HOST}}", HOST);
 const TODAY = new Date().toISOString().slice(0, 10);
 const data = JSON.parse(fs.readFileSync(path.join(ROOT, "data/tools.json"), "utf8"));
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -210,7 +215,7 @@ for (const lang of ["en", "id"]) {
   emit(m, page(m, homeBody(lang), { wide: true, cls: "home", extra: [asset("assets/home.js")].concat(lang === "en" ? [asset("assets/legacy-hash.js")] : []) }));
 }
 for (const f of walk("src/pages")) {
-  const raw = read(f);
+  const raw = fillDomain(read(f));
   const mm = raw.match(/^<!--meta (.*?)-->\n/s);
   const p = JSON.parse(mm[1]);
   let body = raw.slice(mm[0].length).trim();
@@ -223,6 +228,21 @@ for (const f of walk("src/pages")) {
   } else body = `<div class="prose">\n${body}\n</div>`;
   emit(p, page(p, body, { wide: isTool }));
 }
+
+// ---------- robots.txt and CNAME (generated so they always match the configured domain) ----------
+fs.writeFileSync(path.join(ROOT, "robots.txt"), `User-agent: *
+Allow: /
+Disallow: /src/
+Disallow: /scripts/
+Disallow: /data/
+Disallow: /tests/
+Disallow: /boombastis-redesign-update/
+Disallow: /?q=
+Disallow: /id/?q=
+
+Sitemap: ${ORIGIN}/sitemap.xml
+`);
+fs.writeFileSync(path.join(ROOT, "CNAME"), HOST + "\n");
 
 // ---------- sitemap ----------
 const loc = (u) => ORIGIN + u;

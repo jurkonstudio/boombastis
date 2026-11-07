@@ -137,3 +137,16 @@ The site is plain static files and can be served by any static web server (`pyth
 ## License
 
 Brand assets are covered by `LICENSE-ASSETS.md`.
+
+## Pindah domain
+
+Alamat situs hanya diatur di satu tempat: `site.config.json` (`"origin"`). Ubah nilainya (misalnya `https://namabaru.com`), lalu jalankan:
+
+```
+node scripts/build.mjs
+node tests/check.mjs
+```
+
+Build otomatis memperbarui canonical, hreflang, Open Graph, JSON-LD, `sitemap.xml`, `robots.txt`, dan `CNAME`. Untuk uji coba tanpa mengubah file: `SITE_ORIGIN=https://contoh.com node scripts/build.mjs`.
+
+Yang masih manual saat pindah: DNS domain baru, redirect 301 dari domain lama (GitHub Pages tidak bisa; pakai Cloudflare), menambahkan domain baru di Google Search Console (fitur Change of Address) dan AdSense, serta memperbarui `ads.txt` bila perlu.

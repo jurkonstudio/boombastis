@@ -4,7 +4,7 @@ from playwright.sync_api import sync_playwright
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 srv = subprocess.Popen([sys.executable, "-m", "http.server", "8765", "-d", str(ROOT)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 time.sleep(1); B = "http://localhost:8765"; fails = []
-urls = re.findall(r"<loc>https://boombastis.my.id([^<]*)</loc>", (ROOT/"sitemap.xml").read_text())
+urls = re.findall(r"<loc>https?://[^/<]+([^<]*)</loc>", (ROOT/"sitemap.xml").read_text())
 def bad(msg): fails.append(msg); print(" -", msg)
 with sync_playwright() as p:
     br = p.chromium.launch()
