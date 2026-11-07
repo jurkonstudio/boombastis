@@ -220,6 +220,16 @@
    "name": "Reaction Time Test",
    "desc": "Measure your reaction time in milliseconds, with a leaderboard.",
    "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"reaction-time-test\"><rect x=\"3.5\" y=\"3.5\" width=\"17\" height=\"17\" rx=\"4\" fill=\"currentColor\" fill-opacity=\".16\"/><path d=\"M13 6.500 9 12.500h3l-1 5 4-6.500h-3z\"/></svg>"
+  },
+  {
+   "slug": "/instagram-non-followers/",
+   "lang": "en",
+   "cats": [
+    "utility"
+   ],
+   "name": "Instagram Non-Followers Checker",
+   "desc": "See who doesn't follow you back, from your own data export.",
+   "svg": "<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" role=\"img\" aria-label=\"instagram-non-followers\"><rect x=\"3.5\" y=\"3.5\" width=\"17\" height=\"17\" rx=\"4\" fill=\"currentColor\" fill-opacity=\".16\"/><circle cx=\"10\" cy=\"9.500\" r=\"2.500\"/><path d=\"M5.500 17c.4-2.400 2.300-3.800 4.500-3.800s4.100 1.400 4.500 3.800M15.500 10.500h3.500\"/></svg>"
   }
  ],
  "site": {

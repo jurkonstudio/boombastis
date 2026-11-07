@@ -24,6 +24,7 @@ Live site: https://boombastis.my.id (static HTML, hosted on GitHub Pages).
 | Typing Speed Test | `/typing-test/` | Browser; leaderboard uses Supabase (optional) |
 | CPS Test | `/cps-test/` | Browser; leaderboard uses Supabase (optional) |
 | Reaction Time Test | `/reaction-time-test/` | Browser; leaderboard uses Supabase (optional) |
+| Instagram Non-Followers Checker | `/instagram-non-followers/` | Browser only (reads the user's own data export) |
 | EXIF Remover | `/exif-remover/` | Browser only |
 
 ## Project structure (v2.0)

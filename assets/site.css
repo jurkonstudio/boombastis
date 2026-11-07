@@ -270,3 +270,14 @@ main.wide{max-width:1080px}
 .gm-pad.done{opacity:.75}
 .gm-rounds{margin:0;padding-left:1.4em;columns:2;font-variant-numeric:tabular-nums}
 @media(max-width:520px){.gm-pad{min-height:200px}}
+/* Non-followers checker */
+.nf-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.nf-tabs button{font:inherit;font-weight:600;padding:8px 12px;min-height:40px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer}
+.nf-tabs button[aria-pressed=true]{background:linear-gradient(90deg,var(--a),var(--b));color:#fff;border-color:transparent}
+.nf-list{list-style:none;margin:0;padding:0}
+.nf-list li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.nf-list li:last-child{border-bottom:0}
+.nf-list li span{overflow-wrap:anywhere}
+.nf-list a{flex:none;font-size:.88rem;font-weight:600;color:var(--text)}
+.nf-acts{display:flex;gap:8px;flex-wrap:wrap}
+.nf-bad{color:#dc2626}
