@@ -85,13 +85,18 @@ The site is plain static files and can be served by any static web server (`pyth
 
 ## Patch notes
 
+### v2.3 (2026-11-07) - Indonesian Typing Test + share images
+- New page `/id/tes-kecepatan-mengetik/` (Indonesian words, Indonesian UI strings, FAQPage and BreadcrumbList data). `assets/typing.js` picks the language from `<html lang>`. hreflang pair with `/typing-test/` added in `scripts/build.mjs` (`PAIRS`).
+- Separate leaderboards per language: run `supabase/typing-scores-lang.sql` once BEFORE deploying (adds `lang` column, view `typing_leaderboard` for English and `typing_leaderboard_id` for Indonesian). The English page code is unchanged by the migration.
+- Share images `og/typing-test.jpg` and `og/id-tes-kecepatan-mengetik.jpg` (1200x630, same style as the other tools); the English page no longer uses `/og.png`.
+- New Indonesian category `util` ("Utilitas & Keterampilan"), typewriter phrase on the `/id/` hub, `tests/smoke.py` expects 20 cards.
+
 ### v2.2 (2026-11-07) - Typing Speed Test + Supabase leaderboard
 - New tool `/typing-test/` (15, 30, 60 s; WPM, raw WPM, accuracy, personal best in the browser). The test works without any backend.
 - Optional leaderboard: run `supabase/typing-scores.sql` once in the Supabase SQL Editor, then fill `supabase.url` and `supabase.anonKey` in `site.config.json` and run `node scripts/build.mjs`. The build writes `assets/sb-config.js` and adds the Supabase host to `connect-src` only on the typing page. With an empty config the leaderboard stays hidden.
 - Security: Row Level Security (read and insert only, no update or delete), check constraints on every column, 3 submissions per name per minute, names limited to letters, numbers, space, `_` and `-`, names rendered as text. The anon key is public by design; never put the service role key in this repo.
 - Privacy pages (EN and ID) now describe the leaderboard data.
 - Files: `src/pages/typing-test/index.html`, `assets/typing.js`, `supabase/typing-scores.sql`, `data/tools.json`, `scripts/build.mjs`, `site.config.json`, `assets/site.css`, privacy sources, `tests/smoke.py` (19 cards).
-- TODO: add `og/typing-test.jpg` (the page currently uses `/og.png`).
 
 ### v2.1 (2026-11-07) - EXIF Remover
 - New tool `/exif-remover/`: removes EXIF (GPS, camera, serial, dates), XMP, IPTC, comments, PNG text chunks and data hidden after a JPEG's end marker. JPEG, PNG and WebP are rewritten byte for byte (no re-encode, pixels identical). Optional "keep rotation" flag, per-file report of what was found, a re-scan of the cleaned file, and a store-only ZIP download (no library).

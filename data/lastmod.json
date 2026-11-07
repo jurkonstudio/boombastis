@@ -1,110 +1,114 @@
 {
  "/": {
-  "h": "f0ad0e9028",
+  "h": "e6f97761a2",
   "d": "2026-11-07"
  },
  "/about/": {
-  "h": "6e37746aaa",
+  "h": "cb9af17c87",
   "d": "2026-11-07"
  },
  "/base64/": {
-  "h": "2500ea360a",
+  "h": "eba631ed96",
   "d": "2026-11-07"
  },
  "/case-converter/": {
-  "h": "45d981dd17",
+  "h": "8155fbbbd0",
   "d": "2026-11-07"
  },
  "/contact/": {
-  "h": "0b51f96f22",
+  "h": "37f083f223",
   "d": "2026-11-07"
  },
  "/exif-remover/": {
-  "h": "53edfcf030",
+  "h": "0d7d80ae24",
   "d": "2026-11-07"
  },
  "/hash-generator/": {
-  "h": "bfd892e7e8",
+  "h": "403e406b96",
   "d": "2026-11-07"
  },
  "/id/": {
-  "h": "117f0241c0",
+  "h": "cbce43c35d",
   "d": "2026-11-07"
  },
  "/id/hitung-umur/": {
-  "h": "47be3e1ba0",
+  "h": "98b72fef47",
   "d": "2026-11-07"
  },
  "/id/json-csv/": {
-  "h": "2cc79a4d5c",
+  "h": "27483c57e8",
   "d": "2026-11-07"
  },
  "/id/kalkulator-thr/": {
-  "h": "be23035b98",
+  "h": "126ad57871",
   "d": "2026-11-07"
  },
  "/id/kompres-foto/": {
-  "h": "df647a643b",
+  "h": "259f92c249",
   "d": "2026-11-07"
  },
  "/id/kontak/": {
-  "h": "ebf571562c",
+  "h": "082cec3f79",
   "d": "2026-11-07"
  },
  "/id/pace-lari/": {
-  "h": "0e2bb8f8e8",
+  "h": "ad13a0ae21",
   "d": "2026-11-07"
  },
  "/id/privasi/": {
-  "h": "c630976b4e",
+  "h": "aa05630f9f",
   "d": "2026-11-07"
  },
  "/id/tentang/": {
-  "h": "ce48ae3c6e",
+  "h": "340b27d9f5",
   "d": "2026-11-07"
  },
  "/id/terbilang/": {
-  "h": "5fb4c663ed",
+  "h": "278a5ca785",
+  "d": "2026-11-07"
+ },
+ "/id/tes-kecepatan-mengetik/": {
+  "h": "6c5273c36f",
   "d": "2026-11-07"
  },
  "/image-compressor/": {
-  "h": "8a9cea3292",
+  "h": "a1cd66b0e2",
   "d": "2026-11-07"
  },
  "/ip-dns-checker/": {
-  "h": "7e378fc855",
+  "h": "a6216bfe31",
   "d": "2026-11-07"
  },
  "/json-formatter/": {
-  "h": "4afd250035",
+  "h": "f43595af25",
   "d": "2026-11-07"
  },
  "/password-generator/": {
-  "h": "e2943eccae",
+  "h": "862e3a9346",
   "d": "2026-11-07"
  },
  "/password-strength-checker/": {
-  "h": "ee7d0453e0",
+  "h": "bc8edf9698",
   "d": "2026-11-07"
  },
  "/privacy/": {
-  "h": "9adcf0ebe8",
+  "h": "5055590ec9",
   "d": "2026-11-07"
  },
  "/qr-code-generator/": {
-  "h": "d024f33678",
+  "h": "07f12b3206",
   "d": "2026-11-07"
  },
  "/typing-test/": {
-  "h": "a1ba603edd",
+  "h": "a198d8a9db",
   "d": "2026-11-07"
  },
  "/user-agent-checker/": {
-  "h": "453cb2ed63",
+  "h": "6db17eeda7",
   "d": "2026-11-07"
  },
  "/word-counter/": {
-  "h": "f5b5f3cea2",
+  "h": "d385f54d5c",
   "d": "2026-11-07"
  }
 }

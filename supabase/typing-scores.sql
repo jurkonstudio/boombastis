@@ -6,6 +6,7 @@ create table if not exists public.typing_scores (
   duration   smallint    not null check (duration in (15, 30, 60)),
   wpm        smallint    not null check (wpm between 1 and 250),
   accuracy   smallint    not null check (accuracy between 50 and 100),
+  lang       text        not null default 'en' check (lang in ('en', 'id')),
   created_at timestamptz not null default now()
 );
 
@@ -39,13 +40,19 @@ drop trigger if exists typing_scores_guard on public.typing_scores;
 create trigger typing_scores_guard before insert on public.typing_scores
   for each row execute function public.typing_scores_guard();
 
--- Public leaderboard: best score per name and test length.
+-- Public leaderboards: best score per name and test length, one view per language.
 create or replace view public.typing_leaderboard with (security_invoker = true) as
   select distinct on (duration, lower(name)) name, duration, wpm, accuracy, created_at
-  from public.typing_scores
+  from public.typing_scores where lang = 'en'
   order by duration, lower(name), wpm desc, accuracy desc, created_at;
 
-grant select on public.typing_leaderboard to anon, authenticated;
+create or replace view public.typing_leaderboard_id with (security_invoker = true) as
+  select distinct on (duration, lower(name)) name, duration, wpm, accuracy, created_at
+  from public.typing_scores where lang = 'id'
+  order by duration, lower(name), wpm desc, accuracy desc, created_at;
+
+grant select on public.typing_leaderboard    to anon, authenticated;
+grant select on public.typing_leaderboard_id to anon, authenticated;
 
 -- Moderation: remove an inappropriate name from the SQL Editor (service role), for example:
 -- delete from public.typing_scores where lower(name) = 'badname';

@@ -45,7 +45,7 @@ const ver = (p) => crypto.createHash("md5").update(fs.readFileSync(path.join(ROO
 const asset = (p) => `/${p}?v=${ver(p)}`;
 
 // Pairs that are true translations of each other (the only ones that get hreflang).
-const PAIRS = { "/": "/id/", "/about/": "/id/tentang/", "/privacy/": "/id/privasi/", "/contact/": "/id/kontak/" };
+const PAIRS = { "/": "/id/", "/about/": "/id/tentang/", "/privacy/": "/id/privasi/", "/contact/": "/id/kontak/", "/typing-test/": "/id/tes-kecepatan-mengetik/" };
 const ALT = {};
 for (const [a, b] of Object.entries(PAIRS)) { ALT[a] = { en: a, id: b }; ALT[b] = { en: a, id: b }; }
 
@@ -66,14 +66,14 @@ const T = {
   id: {
     skip: "Langsung ke konten", tools: "Semua alat", about: "Tentang", switchTo: "English", switchShort: "EN",
     theme: "Tema", menu: "Menu", home: "Beranda", crumbs: "Jejak halaman", main: "Navigasi utama",
-    badge: "Alat berbasis browser · file tidak diunggah", h1: "Alat online gratis yang tetap <span>privat.</span>", twPre: "Saya butuh bantuan untuk", tw: [["mengompres foto", "kompres foto"], ["menghitung THR", "thr"], ["menghitung pace lari", "pace"], ["menghitung umur", "umur"], ["mengubah angka jadi huruf", "terbilang"], ["mengubah JSON ke CSV", "json"]], go: "Cari alat", featLbl: "UNGGULAN", open: "Buka", ready: "Siap dipakai", meet: "Kenali alatnya", sub: "Terbilang, THR, pace lari, umur, kompres foto, dan lainnya. Berjalan di browser, data Anda tidak diunggah.",
+    badge: "Alat berbasis browser · file tidak diunggah", h1: "Alat online gratis yang tetap <span>privat.</span>", twPre: "Saya butuh bantuan untuk", tw: [["mengompres foto", "kompres foto"], ["menghitung THR", "thr"], ["menghitung pace lari", "pace"], ["menghitung umur", "umur"], ["mengubah angka jadi huruf", "terbilang"], ["mengubah JSON ke CSV", "json"], ["menguji kecepatan mengetik", "mengetik"]], go: "Cari alat", featLbl: "UNGGULAN", open: "Buka", ready: "Siap dipakai", meet: "Kenali alatnya", sub: "Terbilang, THR, pace lari, umur, kompres foto, dan lainnya. Berjalan di browser, data Anda tidak diunggah.",
     search: "Cari alat", ph: "Cari alat, misalnya THR", all: "Semua", fav: "Favorit",
     one: "alat", many: "alat", none: "Alat tidak ditemukan", noneSub: "Coba kata lain atau pilih kategori yang berbeda.", clear: "Hapus filter",
     noFav: "Belum ada favorit. Ketuk ikon hati pada alat untuk menyimpannya di sini.",
     add: "Tambah ke favorit", rem: "Hapus dari favorit", footTools: "Alat", footId: "English tools", footCo: "Situs",
     legal: ["Tentang", "Privasi", "Kontak"], copy: "© 2026 " + (CONFIG.studio?.name || "Boombastis") + ". File dan kata sandi Anda tidak pernah meninggalkan browser.",
     themeNames: ["Sistem", "Terang", "Gelap"],
-    cats: { fin: "Keuangan & Pekerjaan", sport: "Olahraga", date: "Tanggal & Waktu", image: "Gambar", dev: "Developer & Data" },
+    cats: { fin: "Keuangan & Pekerjaan", sport: "Olahraga", date: "Tanggal & Waktu", image: "Gambar", dev: "Developer & Data", util: "Utilitas & Keterampilan" },
     title: "Alat online gratis, privat, dan cepat | Boombastis",
   },
 };
