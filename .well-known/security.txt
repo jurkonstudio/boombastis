@@ -1,4 +1,4 @@
 Contact: mailto:calvfinka@yahoo.com
-Expires: 2027-11-02T05:09:25Z
+Expires: 2027-11-02T05:29:00Z
 Preferred-Languages: id, en
 Canonical: https://boombastis.my.id/.well-known/security.txt
