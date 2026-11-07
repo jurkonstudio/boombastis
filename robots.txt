@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
+Disallow: /src/
+Disallow: /scripts/
+Disallow: /data/
+Disallow: /tests/
+Disallow: /boombastis-redesign-update/
+Disallow: /?q=
+Disallow: /id/?q=
 
 Sitemap: https://boombastis.my.id/sitemap.xml

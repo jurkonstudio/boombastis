@@ -149,12 +149,15 @@ const grad = (c) => GRAD[c] || GRAD.utility;
 const FAV_ICON = '<svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.8a4.3 4.3 0 0 1 7.5 2.7c0 5.4-7.5 10-7.5 10z"/></svg>';
 const icon = (x) => x.svg.replace(/ role="img" aria-label="[^"]*"/, ' aria-hidden="true"').replace(/width="30" height="30"/, 'width="28" height="28"');
 
+// Indonesian tools shown on the English home also belong to the "Bahasa Indonesia" chip.
+const catsOf = (x, t) => (x.lang === "id" && !t.cats[x.cats[0]] && t.cats.id ? [...x.cats, "id"] : x.cats);
+
 function card(x, t, i) {
   const text = (x.name + " " + x.desc).toLowerCase();
   const c = x.cats[0];
   const [g1, g2] = grad(c);
-  const code = `${t.cats[c] || ""} · BB-${String(i + 1).padStart(3, "0")}`;
-  return `<div class="tcard" data-slug="${x.slug}" data-cats="${x.cats.join(" ")}" data-text="${esc(text)}" style="--g1:${g1};--g2:${g2}"><a class="tc-link" href="${x.slug}"><span class="tc-head" aria-hidden="true"></span><span class="tc-ic">${icon(x)}</span><span class="tc-body"><span class="tc-meta">${esc(code)}</span><h2 class="tc-name">${esc(x.name)}</h2><p class="tc-sub">${esc(x.desc)}</p></span><span class="tc-foot"><span class="tc-ready"><i aria-hidden="true"></i>${t.ready}</span><span class="tc-btn">${t.open}</span></span></a><button class="fav" type="button" aria-pressed="false" aria-label="${t.add}: ${esc(x.name)}" data-add="${t.add}: ${esc(x.name)}" data-rem="${t.rem}: ${esc(x.name)}">${FAV_ICON}</button></div>`;
+  const code = `${t.cats[c] || (x.lang === "id" ? t.cats.id : "") || ""} · BB-${String(i + 1).padStart(3, "0")}`;
+  return `<div class="tcard" data-slug="${x.slug}" data-cats="${catsOf(x, t).join(" ")}" data-text="${esc(text)}" style="--g1:${g1};--g2:${g2}"><a class="tc-link" href="${x.slug}"><span class="tc-head" aria-hidden="true"></span><span class="tc-ic">${icon(x)}</span><span class="tc-body"><span class="tc-meta">${esc(code)}</span><h2 class="tc-name">${esc(x.name)}</h2><p class="tc-sub">${esc(x.desc)}</p></span><span class="tc-foot"><span class="tc-ready"><i aria-hidden="true"></i>${t.ready}</span><span class="tc-btn">${t.open}</span></span></a><button class="fav" type="button" aria-pressed="false" aria-label="${t.add}: ${esc(x.name)}" data-add="${t.add}: ${esc(x.name)}" data-rem="${t.rem}: ${esc(x.name)}">${FAV_ICON}</button></div>`;
 }
 
 function feat(x, t) {
@@ -166,7 +169,7 @@ function homeBody(lang) {
   const t = T[lang];
   const list = data.tools.filter((x) => (lang === "id" ? x.lang === "id" : true));
   const keys = Object.keys(t.cats);
-  const used = keys.filter((k) => list.some((x) => x.cats.includes(k)));
+  const used = keys.filter((k) => list.some((x) => catsOf(x, t).includes(k)));
   const chips = `<button class="chip" type="button" data-cat="all" aria-pressed="true">${t.all}</button>` + used.map((k) => `<button class="chip" type="button" data-cat="${k}" aria-pressed="false">${t.cats[k]}</button>`).join("");
   return `<section class="hero"><div class="pals" aria-hidden="true"><span class="pal p1"><i></i><i></i></span><span class="pal p2"><i></i><i></i></span><span class="pal p3"><i></i><i></i></span><span class="pal p4"><i></i><i></i></span></div><span class="hb-badge">${t.badge}</span><h1>${t.h1}</h1><p>${t.sub}</p>
 <p class="tw-line"><span class="tw-pre">${t.twPre}</span> <button class="tw-word" id="twWord" type="button" data-items="${esc(JSON.stringify(t.tw))}"><span class="tw-txt">${esc(t.tw[0][0])}</span><span class="tw-cur" aria-hidden="true"></span></button></p>
@@ -223,10 +226,20 @@ for (const f of walk("src/pages")) {
 
 // ---------- sitemap ----------
 const loc = (u) => ORIGIN + u;
+// lastmod = date the page content last changed (tracked in data/lastmod.json), not the build date.
+const LM_FILE = path.join(ROOT, "data/lastmod.json");
+const lm = fs.existsSync(LM_FILE) ? JSON.parse(fs.readFileSync(LM_FILE, "utf8")) : {};
+const pageHash = (u) => crypto.createHash("md5").update(fs.readFileSync(path.join(ROOT, u.replace(/\/$/, "/index.html").replace(/^\//, "")), "utf8").replace(/\?v=[0-9a-f]{8}/g, "")).digest("hex").slice(0, 10);
+for (const u of urls) {
+  const h = pageHash(u);
+  if (!lm[u] || lm[u].h !== h) lm[u] = { h, d: TODAY };
+}
+const lmSorted = Object.fromEntries(Object.entries(lm).filter(([u]) => urls.includes(u)).sort(([a], [b]) => a.localeCompare(b)));
+fs.writeFileSync(LM_FILE, JSON.stringify(lmSorted, null, 1) + "\n");
 const sm = urls.sort().map((u) => {
   const a = ALT[u];
   const links = a ? `<xhtml:link rel="alternate" hreflang="en" href="${loc(a.en)}"/><xhtml:link rel="alternate" hreflang="id" href="${loc(a.id)}"/><xhtml:link rel="alternate" hreflang="x-default" href="${loc(a.en)}"/>` : "";
-  return `  <url><loc>${loc(u)}</loc><lastmod>${TODAY}</lastmod>${links}</url>`;
+  return `  <url><loc>${loc(u)}</loc><lastmod>${lm[u].d}</lastmod>${links}</url>`;
 });
 fs.writeFileSync(path.join(ROOT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${sm.join("\n")}\n</urlset>\n`);
 

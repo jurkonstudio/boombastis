@@ -1,0 +1,47 @@
+# Publishes only the built site (not src/, scripts/, backups, tests) to GitHub Pages.
+# One-time setup: Repo Settings -> Pages -> Source: "GitHub Actions".
+name: Deploy site
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build and check
+        run: |
+          node scripts/build.mjs
+          node tests/check.mjs
+      - name: Collect publishable files
+        run: |
+          mkdir _site
+          rsync -a ./ _site/ \
+            --exclude '_site' --exclude '.git' --exclude '.github' \
+            --exclude 'src' --exclude 'scripts' --exclude 'tests' --exclude 'data' \
+            --exclude '.backup-*' --exclude 'boombastis-redesign-update' \
+            --exclude 'node_modules' --exclude 'package.json' --exclude 'package-lock.json' \
+            --exclude 'README.md' --exclude 'LICENSE-ASSETS.md' --exclude '.gitignore' --exclude '*.zip'
+          touch _site/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
