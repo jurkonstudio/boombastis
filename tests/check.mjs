@@ -3,7 +3,7 @@ import fs from "node:fs"; import path from "node:path"; import { execFileSync } 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
 const O = (process.env.SITE_ORIGIN || JSON.parse(fs.readFileSync(path.join(ROOT, "site.config.json"), "utf8")).origin).replace(/\/+$/, ""); const errs = [];
 const pages = []; (function w(d){for(const e of fs.readdirSync(path.join(ROOT,d),{withFileTypes:true})){const r=d?d+"/"+e.name:e.name;
- if(e.isDirectory()){if(!["src","scripts","tests","data",".git","node_modules","brand","og","assets"].includes(e.name))w(r)} else if(e.name==="index.html"||r==="404.html")pages.push(r)}})("");
+ if(e.isDirectory()){if(!["src","scripts","tests","data",".git","node_modules","brand","og","assets","admin"].includes(e.name))w(r)} else if(e.name==="index.html"||r==="404.html")pages.push(r)}})("");
 const url = (f) => "/" + f.replace(/index\.html$/, "");
 const html = Object.fromEntries(pages.map((f) => [url(f), fs.readFileSync(path.join(ROOT, f), "utf8")]));
 const titles = new Map(), descs = new Map();

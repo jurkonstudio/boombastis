@@ -192,3 +192,16 @@ Run `supabase/game-scores.sql` once in the Supabase SQL Editor (the typing test 
 ## PDF suite (v2.1)
 
 `assets/pdf.js` runs all PDF tools (one mode per page via `data-tool`); `assets/more.js` runs the extra utilities. Libraries are vendored in `assets/vendor/` (pdf-lib, pdf.js legacy build, JSZip) so no CDN or CSP change is needed. Page content is generated into `src/pages/<slug>/index.html`; run `node scripts/build.mjs` after edits.
+
+## Traffic analytics + admin panel (Supabase)
+
+Counts page views and shows them at `/admin/` (visitors, unique visitors, sessions, live users, country, top pages, referrers, device/browser/OS, language, live feed). No cookies, no IP stored. The country comes from the Cloudflare header that Supabase adds to every request.
+
+1. Create a Supabase project (can be a different one from the leaderboards).
+2. SQL Editor: run `supabase/analytics.sql`.
+3. Authentication -> Users -> Add user (email + password, auto confirm). Authentication -> Sign In / Providers: turn OFF "Allow new users to sign up".
+4. SQL Editor: run the `insert into public.analytics_admins ...` statement from the bottom of `analytics.sql` with your admin email.
+5. `site.config.json` -> `"analytics": {"url": "https://xxxx.supabase.co", "anonKey": "sb_publishable_..."}` (Project Settings -> API Keys; the publishable/anon key only, never the secret or service_role key).
+6. Push to `main` (the workflow runs the build) or run `node scripts/build.mjs`. Open `/admin/` and log in.
+
+With `analytics` empty, no tracker is added to any page. `/admin/` is `noindex`, not in the sitemap and not linked; the real protection is Supabase Auth plus the `is_analytics_admin()` check inside the read functions. Visitors with Do Not Track / Global Privacy Control are not counted, and localhost is ignored. Retention: see the comment at the end of `analytics.sql`.

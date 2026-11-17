@@ -8,5 +8,9 @@
   "supabase": {
     "url": "https://pxcicgzvmbxjlbsbwetp.supabase.co",
     "anonKey": "sb_publishable_N2QwfPlip3M31Gz4VXRtwA_zdoIhdxK"
+  },
+  "analytics": {
+    "url": "",
+    "anonKey": ""
   }
 }
