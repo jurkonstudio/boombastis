@@ -50,4 +50,4 @@ Disallow: /boombastis-redesign-update/
 Disallow: /?q=
 Disallow: /id/?q=
 
-Sitemap: https://boombastis.my.id/sitemap.xml
+Sitemap: https://boombastis.gowithdme.com/sitemap.xml

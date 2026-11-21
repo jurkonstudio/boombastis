@@ -4,7 +4,7 @@ Free online tools for images, text, passwords, networking and privacy. Most tool
 in the browser, so files and passwords are never uploaded. The IP & DNS checker is the exception:
 it calls public APIs (ipify, ipwho.is, Cloudflare DNS and Google DNS).
 
-Live site: https://boombastis.my.id (static HTML, hosted on GitHub Pages).
+Live site: https://boombastis.gowithdme.com (static HTML, hosted on GitHub Pages).
 
 ## Tools
 

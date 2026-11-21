@@ -1,6 +1,6 @@
 # Boombastis Brand Assets License
 
-Copyright (c) 2026 Boombastis (https://boombastis.my.id). All rights reserved.
+Copyright (c) 2026 Boombastis (https://boombastis.gowithdme.com). All rights reserved.
 Contact: calvfinka@yahoo.com
 
 ## Covered files
